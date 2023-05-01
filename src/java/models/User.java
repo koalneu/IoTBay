@@ -36,25 +36,21 @@ public class User implements Serializable {
     //method to add users to the array
     public static void addUser(User user){
         //if user is already in list, do not add
-            if (user != null ){
-                String emailAdd = user.getUserEmail();
+            String emailAdd = user.getUserEmail();
+            System.out.println("users before:");
 
-                System.out.println("users before:");
+            for (User u : users){
+                System.out.println(u.getUserFirstName());
+            }
+            
+            System.out.println("users after:");
 
-                for (User u : users){
-                    System.out.println(u.getUserFirstName());
-                }
-
-                System.out.println("users after:");
-
-                //if (!users.contains(user)){
-                    users.add(user);
-                //}
-
-                for (User u : users){
-                    System.out.println(u.getUserFirstName());
-                }
-                
+            if (!users.contains(user)){
+                users.add(user);
+            }
+            
+            for (User u : users){
+                System.out.println(u.getUserFirstName());
             }
     }
     
