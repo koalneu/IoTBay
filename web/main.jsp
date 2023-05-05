@@ -60,15 +60,15 @@
                     
                     //Update the database
                     //Set variables for the connection
-                    String dbuser = "test";
-                    String dbpass = "test";
+                    String dbuser = "iotadmin";
+                    String dbpass = "password";
                     String driver = "org.apache.derby.jdbc.ClientDriver";
 
                     //establish connection:
-                    Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/testing", dbuser, dbpass);
+                    Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
                     //update is used to seelct
                     //Statement to update the correct columns
-                    PreparedStatement update = conn.prepareStatement("UPDATE CUSTOMERS SET CUSTOMERFIRSTNAME=?, CUSTOMERLASTNAME=?, CUSTOMEREMAIL=?, CUSTOMERPASSWORD=?, CUSTOMERSTREET=?, CUSTOMERPOSTCODE=?, CUSTOMERCITY=?, CUSTOMERSTATE=?, CUSTOMERCOUNTRY=? WHERE CUSTOMEREMAIL=?");
+                    PreparedStatement update = conn.prepareStatement("UPDATE CUSTOMER SET CUSTOMERFIRSTNAME=?, CUSTOMERLASTNAME=?, CUSTOMEREMAIL=?, CUSTOMERPASSWORD=?, CUSTOMERSTREET=?, CUSTOMERPOSTCODE=?, CUSTOMERCITY=?, CUSTOMERSTATE=?, CUSTOMERCOUNTRY=? WHERE CUSTOMEREMAIL=?");
                     //Set the variables for the "update" statement
                     update.setString(1, fname);
                     update.setString(2, lname);
