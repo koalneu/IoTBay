@@ -29,13 +29,13 @@ Sections which look like the image below need to be adjusted accordingly to the 
 
 NEED TO DO:
 
-text field checks
+text field checks - ??? NOT SURE HOW TO DO
 
 move MODEL functions to Controller
 
-Handle guest -> automatically guest remove buttons etc.
+Handle guest -> automatically guest remove buttons etc. - FINISHED
 
-Add button to return to landing page on each screen
+Add button to return to landing page on each screen - FINISHED
 
 Database for acesss logs
 
