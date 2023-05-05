@@ -18,7 +18,12 @@ Summary:
 
 - Registered User: USES RegisteredUserPage.jsp, Basic functionality + Account functionality e.g, look, buy, view products and change current details, logout,                             view order history etc..
 
+![image](https://user-images.githubusercontent.com/126222338/236476165-55ebeac0-f6ea-4d90-a492-1a635a0fdec3.png)
+
+
 - Guest User: USES index.jsp, Basic functionality e.g, ability to order, view and look at products
+
+![image](https://user-images.githubusercontent.com/126222338/236475831-022501a9-1d1d-46da-8dc8-b345c5e981b3.png)
 
 
 
