@@ -25,3 +25,12 @@ DB table name: CUSTOMERS
 
 Sections which look like the image below need to be adjusted accordingly to the new DB
 ![Capture](https://user-images.githubusercontent.com/126222338/236109019-f0e00ebc-037f-4a71-aac1-7b23dfa0e217.PNG)
+
+
+NEED TO DO:
+
+text field checks
+move MODEL functions to Controller
+Handle guest -> automatically guest remove buttons etc.
+Add button to return to landing page on each screen
+Database for acesss logs
