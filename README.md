@@ -4,9 +4,23 @@ The database has been connected to account for the various variables and functio
 Need to double check the data fields for differences if any occurred between my database and the one we are working on but it should be the same.
 A new page has been added called Edit.jsp which is the update details page.
 
-Not sure if we need to change the "guest" login functions and how we will handle that - Needs to be discussed.
+NOTE:
 
-Not sure if i need to implement a delete account function aswell - Needs to be discussed.
+STRUCUTRE OF CODE HAS BEEN CHANGED:
+
+Concept behind it is you are automatically a guest so therefore i require the index.html being changed to a jsp page. This is the landing page where you would see all the items you can buy and you can login or register e.g., similar to amazons page:
+
+![image](https://user-images.githubusercontent.com/126222338/236471419-2dddee09-4de6-4a16-823b-0fe06a87e514.png)
+
+If the user completes the log's in or Registers then they are redirected to a new page where the session is set to the new user found or created and a new page called "RegisteredUserPage" which replaced the old page called "welcome.jsp". This page would act as the alternative page from the landing page as it would simulate the same functions although have a few extra functionalities such as the ability to view their own details in "profile" which was before called "main.jsp" and allows them to edit.
+
+![image](https://user-images.githubusercontent.com/126222338/236472223-ad4084a1-2775-48c3-848c-ba6c5293cfc5.png)
+
+Summary: Registered User: USES RegisteredUserPage.jsp, Basic functionality + Account functionality e.g, look, buy, view products and change current details, logout,                             view order history etc..
+
+              Guest User: USES index.jsp, Basic functionality e.g, ability to order, view and look at products
+
+NOTE: They should look essentially the same although one has more buttons!
 
 For reference this is the database that i have been working on locally:
 
