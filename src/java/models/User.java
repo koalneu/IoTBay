@@ -46,12 +46,12 @@ public class User implements Serializable {
     */
     public static User authenticateUser(String email, String password) {
     //Set variables for the connection
-    String dbuser = "test";
-    String dbpass = "test";
+    String dbuser = "iotadmin";
+    String dbpass = "password";
     try {
         //Establish connection:
-        Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/testing", dbuser, dbpass);
-        PreparedStatement command = conn.prepareStatement("SELECT * FROM CUSTOMERS WHERE CUSTOMEREMAIL = ?");
+        Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
+        PreparedStatement command = conn.prepareStatement("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = ?");
         //Find the user in the DB which has the same email
         command.setString(1, email);
         ResultSet resultSet = command.executeQuery();
