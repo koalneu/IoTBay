@@ -4,8 +4,6 @@ The database has been connected to account for the various variables and functio
 Need to double check the data fields for differences if any occurred between my database and the one we are working on but it should be the same.
 A new page has been added called Edit.jsp which is the update details page.
 
-NOTE:
-
 STRUCUTRE OF CODE HAS BEEN CHANGED:
 
 Concept behind it is you are automatically a guest so therefore i require the index.html being changed to a jsp page. This is the landing page where you would see all the items you can buy and you can login or register e.g., similar to amazons page:
@@ -20,13 +18,15 @@ Summary: Registered User: USES RegisteredUserPage.jsp, Basic functionality + Acc
 
               Guest User: USES index.jsp, Basic functionality e.g, ability to order, view and look at products
 
+
+
 NOTE: They should look essentially the same although one has more buttons!
 
-For reference this is the database that i have been working on locally:
+
 
 LOCAL VARIABLE NAMES:
 
-NOTE: NEEDS TO BE CHANGED TO FUNCTION WITH ACTUAL DB
+WHICH NEEDS TO BE CHANGED TO FUNCTION WITH ACTUAL DB
 
 Database name: TEST
 DB username: test
@@ -46,10 +46,6 @@ NEED TO DO:
 text field checks - ??? NOT SURE HOW TO DO
 
 move MODEL functions to Controller
-
-Handle guest -> automatically guest remove buttons etc. - FINISHED
-
-Add button to return to landing page on each screen - FINISHED
 
 Database for acesss logs
 
