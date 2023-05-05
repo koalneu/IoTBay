@@ -57,14 +57,14 @@
                 }
             } else {
                 //Set variables for the connection to DB
-                String dbuser = "test";
-                String dbpass = "test";
+                String dbuser = "iotadmin";
+                String dbpass = "password";
                 String driver = "org.apache.derby.jdbc.ClientDriver";
                 //establish connection: 
-                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/testing", dbuser, dbpass);
+                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
                 //statement
                 Statement statement = conn.createStatement();
-                String command = "INSERT INTO CUSTOMERS(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                String command = "INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY) VALUES(?,?,?,?,?,?,?,?,?,?)";
                 PreparedStatement pst = conn.prepareStatement(command);
                 //calculate the new ID
                 String rows = "select count(*) from CUSTOMERS";
