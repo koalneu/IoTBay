@@ -30,7 +30,11 @@ Sections which look like the image below need to be adjusted accordingly to the 
 NEED TO DO:
 
 text field checks
+
 move MODEL functions to Controller
+
 Handle guest -> automatically guest remove buttons etc.
+
 Add button to return to landing page on each screen
+
 Database for acesss logs
