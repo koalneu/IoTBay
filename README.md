@@ -38,3 +38,15 @@ Handle guest -> automatically guest remove buttons etc.
 Add button to return to landing page on each screen
 
 Database for acesss logs
+- ID
+
+- Name
+
+- Date
+
+- Time
+
+- Action
+
+- Message
+
