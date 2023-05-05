@@ -67,7 +67,7 @@
                 String command = "INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY) VALUES(?,?,?,?,?,?,?,?,?,?)";
                 PreparedStatement pst = conn.prepareStatement(command);
                 //calculate the new ID
-                String rows = "select count(*) from CUSTOMERS";
+                String rows = "select count(*) from CUSTOMER";
                 ResultSet retrieveResult = statement.executeQuery(rows);
                 retrieveResult.next();
                 int ID = retrieveResult.getInt(1);
