@@ -14,9 +14,11 @@ If the user completes the log's in or Registers then they are redirected to a ne
 
 ![image](https://user-images.githubusercontent.com/126222338/236472223-ad4084a1-2775-48c3-848c-ba6c5293cfc5.png)
 
-Summary: Registered User: USES RegisteredUserPage.jsp, Basic functionality + Account functionality e.g, look, buy, view products and change current details, logout,                             view order history etc..
+Summary: 
 
-              Guest User: USES index.jsp, Basic functionality e.g, ability to order, view and look at products
+- Registered User: USES RegisteredUserPage.jsp, Basic functionality + Account functionality e.g, look, buy, view products and change current details, logout,                             view order history etc..
+
+- Guest User: USES index.jsp, Basic functionality e.g, ability to order, view and look at products
 
 
 
