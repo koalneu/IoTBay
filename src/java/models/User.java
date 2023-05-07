@@ -131,17 +131,17 @@ public class User implements Serializable {
     //Add user function
     public void addUser(String fname, String lname, String email, String password, String street, String postcode, String city, String state, String country) throws SQLException{
         //Set variables for the connection to DB
-        String dbuser = "test";
-        String dbpass = "test";
+        String dbuser = "iotadmin";
+        String dbpass = "password";
         //establish connection: 
         try{
-            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/testing", dbuser, dbpass);
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
             //statement
             Statement statement = conn.createStatement();
-            String command = "INSERT INTO CUSTOMERS(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            String command = "INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY) VALUES(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = conn.prepareStatement(command);
             //calculate the new ID
-            String rows = "select count(*) from CUSTOMERS";
+            String rows = "select count(*) from CUSTOMER";
             ResultSet retrieveResult = statement.executeQuery(rows);
             retrieveResult.next();
             int ID = retrieveResult.getInt(1);
@@ -167,15 +167,15 @@ public class User implements Serializable {
     
     //update
     public static void updateUser(String originalEmail, String fname, String lname, String email, String password, String street, String postcode, String city, String state, String country) throws SQLException{
-        String dbuser = "test";
-        String dbpass = "test";
+        String dbuser = "iotadmin";
+        String dbpass = "password";
         String driver = "org.apache.derby.jdbc.ClientDriver";
 
         //establish connection:
-        Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/testing", dbuser, dbpass);
+        Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
         //update is used to seelct
         //Statement to update the correct columns
-        PreparedStatement update = conn.prepareStatement("UPDATE CUSTOMERS SET CUSTOMERFIRSTNAME=?, CUSTOMERLASTNAME=?, CUSTOMEREMAIL=?, CUSTOMERPASSWORD=?, CUSTOMERSTREET=?, CUSTOMERPOSTCODE=?, CUSTOMERCITY=?, CUSTOMERSTATE=?, CUSTOMERCOUNTRY=? WHERE CUSTOMEREMAIL=?");
+        PreparedStatement update = conn.prepareStatement("UPDATE CUSTOMER SET CUSTOMERFIRSTNAME=?, CUSTOMERLASTNAME=?, CUSTOMEREMAIL=?, CUSTOMERPASSWORD=?, CUSTOMERSTREET=?, CUSTOMERPOSTCODE=?, CUSTOMERCITY=?, CUSTOMERSTATE=?, CUSTOMERCOUNTRY=? WHERE CUSTOMEREMAIL=?");
         //Set the variables for the "update" statement
         update.setString(1, fname);
         update.setString(2, lname);
