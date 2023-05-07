@@ -16,7 +16,7 @@ import java.sql.Statement;
 public class AccessLog {
     public static void addAccessLogEntry(String email, String fname, String action) throws SQLException{
         try{
-            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/testing", "test", "test");
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", "iotadmin", "password");
             //statement
             Statement statement = conn.createStatement();
             String command = "INSERT INTO ACCESSLOGS(ACCESSLOGID,USERID,USERNAME,ACCESSTIME,ACTION) VALUES(?,?,?,?,?)";
@@ -29,7 +29,7 @@ public class AccessLog {
             int ACCESSLOGID = retrieveResult.getInt(1);
 
             //retrieve userID from DB
-            String getUserID = "SELECT CUSTOMERID FROM CUSTOMERS WHERE CUSTOMEREMAIL = ?";
+            String getUserID = "SELECT CUSTOMERID FROM CUSTOMER WHERE CUSTOMEREMAIL = ?";
             PreparedStatement userIDStatement = conn.prepareStatement(getUserID);
             userIDStatement.setObject(1, email);
             ResultSet retrieveID = userIDStatement.executeQuery();
