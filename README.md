@@ -52,7 +52,4 @@ NEED TO DO:
 
 text field checks - ??? NOT SURE HOW TO DO
 
-move MODEL functions to Controller
-
-Database for acesss logs
-
+Account for admin and staff logins - ?? NOT SURE WHATS HAPPENNING WITH THAT
