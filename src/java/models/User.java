@@ -10,91 +10,87 @@ email, password, and their address
 package models;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author (Tyler) Shi En Lim 13675919
- * @author Wilsan
+ * @author Wilson
  */
 public class User implements Serializable {
+
     public String userFirstName;
     public String userLastName;
     private String userEmail;
     private String userPassword;
     public String userStreet;
+    public String userCity;
     public String userPostCode;
     public String userState;
     public String userCountry;
     
     /*
-        to store list of users to access after session ends
-    */
-    public static List<User> users = new ArrayList<User>();
-    
-    //method to add users to the array
-    public static void addUser(User user){
-        //if user is already in list, do not add
-            String emailAdd = user.getUserEmail();
-            System.out.println("users before:");
-
-            for (User u : users){
-                System.out.println(u.getUserFirstName());
-            }
-            
-            System.out.println("users after:");
-
-            if (!users.contains(user)){
-                users.add(user);
-            }
-            
-            for (User u : users){
-                System.out.println(u.getUserFirstName());
-            }
-    }
-    
-    /*
-        method to authenticate user for logging in
-        
-        check if list is empty..?
-        if not empty, loop through the list
-            check input email == email in list
-            if yes, check input password == password in list
-                return user or set session to found user
+        Modified authenticateUser() to function with the database
+        NOTE: dbuser and dbpass have to be edited to the credentials for the database
+              conn must be changed from "testing" to the actual database name
+              
     */
     public static User authenticateUser(String email, String password) {
-        if (users.isEmpty()){
-            //if no registered users currently
-            System.out.println("empty list");
+    //Set variables for the connection
+    String dbuser = "iotadmin";
+    String dbpass = "password";
+    try {
+        //Establish connection:
+        Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
+        PreparedStatement command = conn.prepareStatement("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = ?");
+        //Find the user in the DB which has the same email
+        command.setString(1, email);
+        ResultSet resultSet = command.executeQuery();
+        //Check if a email has not been found
+        if(!resultSet.next()){
             return null;
-        }  else {
-            for (User u : users){
-                String systemUserEmail = u.getUserEmail();
-                if (systemUserEmail.equals(email)){
-                    String systemUserPassword = u.getUserPassword();
-                    if (systemUserPassword.equals(password)){
-                        //take you to the welcome page
-                        //returns user
-                        System.out.println("user found");
-                        return u;
-                    }
-                }
-            }
         }
-        return null;
+        //Copy items from DB into a user object
+        User user = new User(resultSet.getString("CUSTOMERFIRSTNAME"), resultSet.getString("CUSTOMERLASTNAME"), email, resultSet.getString("CUSTOMERPASSWORD"), resultSet.getString("CUSTOMERSTREET"), resultSet.getString("CUSTOMERCITY"), resultSet.getString("CUSTOMERPOSTCODE"), resultSet.getString("CUSTOMERSTATE"), resultSet.getString("CUSTOMERCOUNTRY"));
+        
+        conn.close();
+        
+        //Check if the password matches the user's input
+        if(password.equals(user.getUserPassword())){
+            return user;
+        }
+        else{
+            return null;
+        }
+        
+    } catch (SQLException ex) {
+        System.out.println("Error Establishing Connection!");
     }
+
+    return null;
+    }
+
     
     /*
     initialize constructors
     */
-    public User(String userFirstName, String userLastName, String userEmail, String userPassword, String userStreet, String userPostCode, String userState, String userCountry) {
+    public User(String userFirstName, String userLastName, String userEmail, String userPassword, String userStreet, String userPostCode,String userCity,String userState, String userCountry) {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userStreet = userStreet;
         this.userPostCode = userPostCode;
+        this.userCity = userCity;
         this.userState = userState;
         this.userCountry = userCountry;
     }
@@ -146,8 +142,16 @@ public class User implements Serializable {
         return userPostCode;
     }
 
-    public void setUserPostCode(String userPostCode) {
+    public void setUserPostCode(String userCity) {
         this.userPostCode = userPostCode;
+    }
+    
+    public String getUserCity() {
+        return userCity;
+    }
+
+    public void setUserCity(String userCity) {
+        this.userCity = userCity;
     }
 
     public String getUserState() {

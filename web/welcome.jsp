@@ -2,9 +2,14 @@
     Document   : welcome
     Created on : 7 Apr 2023, 12:11:22 am
     Author     : @author (Tyler) Shi En Lim 13675919
-    Author     : @author Wilsan 14269118
+    Author     : @author Wilson 14269118
 --%>
 
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="models.User" %>
 <!DOCTYPE html>
@@ -15,53 +20,77 @@
     </head>
     <body>
         <%
+            //Retrieve data from Register page
             String fname = request.getParameter("fname");
             String lname = request.getParameter("lname");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String street = request.getParameter("street");
+            String city = request.getParameter("city");
             String postcode = request.getParameter("postcode");
             String state = request.getParameter("state");
             String country = request.getParameter("country");
             String paymethod = request.getParameter("payment-method");
             
-            //check if fname is null
-            //if null -> registered user trying to login
-            //else -> coming from register page -> use the normal parameters
+            
             if (fname==null ) {
-                //create an user object
-                //set email, password to input
-                //call function
-                //if passes, set session
-                //if fails, wipe object
+                //User is coming from the Login Page
                 User user = new User(null, null, email, password, null,
-                null, null, null);
+                null, null,null, null);
+                //check if the credentials match any in the database and return a user
                 user = user.authenticateUser(email, password);
-                if (user == null ){
-                    //stay on login.jsp instead
-                    //provide error message
-                    System.out.println("empty");
+                if (user == null){
+                    //Incorrect Login Credentials
+                    //return to the login.jsp
                     response.sendRedirect("login.jsp");
-                } else {
-                    //get obj variables? and set
+                } 
+                else {
+                    //Credentials Passed authentication
+                    //Save data to variables for a new user object with the retrieved information
                     fname = user.getUserFirstName();
                     lname = user.getUserLastName();
                     street = user.getUserStreet();
                     postcode = user.getUserPostCode();
+                    city = user.getUserCity();
                     state = user.getUserState();
                     country = user.getUserCountry();
-                    System.out.println("can log in");
                 }
             } else {
-                System.out.println("come from register page ");
+                //Set variables for the connection to DB
+                String dbuser = "iotadmin";
+                String dbpass = "password";
+                String driver = "org.apache.derby.jdbc.ClientDriver";
+                //establish connection: 
+                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
+                //statement
+                Statement statement = conn.createStatement();
+                String command = "INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                PreparedStatement pst = conn.prepareStatement(command);
+                //calculate the new ID
+                String rows = "select count(*) from CUSTOMER";
+                ResultSet retrieveResult = statement.executeQuery(rows);
+                retrieveResult.next();
+                int ID = retrieveResult.getInt(1);
+                pst.setObject(1, ID);
+                pst.setObject(2, fname);
+                pst.setObject(3, lname);
+                pst.setObject(4, email);
+                pst.setObject(5, password);
+                pst.setObject(6, street);
+                pst.setObject(7, postcode);
+                pst.setObject(8, city);
+                pst.setObject(9, state);
+                pst.setObject(10, country);
+                pst.executeUpdate();
+                conn.close();
             }
         %>
         <h1>
             <%= "Welcome, " + fname + " " + lname %>
         </h1>
         <%
-            User user = new User(fname, lname, email, password, street,
-            postcode, state, country);
+            //create a new user object and set it as the current session
+            User user = new User(fname, lname, email, password, street, city,postcode, state, country);
             session.setAttribute("user", user);
         %>
         <button><a href="main.jsp">Main Page</a></button>
