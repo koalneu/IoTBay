@@ -22,7 +22,7 @@ public class DBManager {
     public User authenticateUser(String email, String password) {
     try {
         System.out.println("here1");
-        ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMERS WHERE CUSTOMEREMAIL = '" + email + "'");
+        ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
         //Check if a email has not been found
         if(!resultSet.next()){
             return null;
@@ -58,7 +58,7 @@ public class DBManager {
     
     public String userType(String email) {
         try {
-            ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMERS WHERE CUSTOMEREMAIL = '" + email + "'");
+            ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
             if (resultSet.next()) {
                 String userType = resultSet.getString("USERTYPE");
                 return userType;
@@ -74,11 +74,11 @@ public class DBManager {
     //Add user function
     public void addUser(String fname, String lname, String email, String password, String street, String postcode, String city, String state, String country, String userType) throws SQLException, ClassNotFoundException{
         try{
-            String command = "INSERT INTO CUSTOMERS(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY,USERTYPE) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+            String command = "INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY,USERTYPE) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = conn.prepareStatement(command);
             
             //calculate the new ID
-            String rows = "select count(*) from CUSTOMERS";
+            String rows = "select count(*) from CUSTOMER";
             ResultSet retrieveResult = st.executeQuery(rows);
             retrieveResult.next();
             int ID = retrieveResult.getInt(1);
@@ -106,7 +106,7 @@ public class DBManager {
         try {
             //update is used to seelct
             //Statement to update the correct columns
-            PreparedStatement update = conn.prepareStatement("UPDATE CUSTOMERS SET CUSTOMERFIRSTNAME=?, CUSTOMERLASTNAME=?, CUSTOMEREMAIL=?, CUSTOMERPASSWORD=?, CUSTOMERSTREET=?, CUSTOMERPOSTCODE=?, CUSTOMERCITY=?, CUSTOMERSTATE=?, CUSTOMERCOUNTRY=? WHERE CUSTOMEREMAIL=?");
+            PreparedStatement update = conn.prepareStatement("UPDATE CUSTOMER SET CUSTOMERFIRSTNAME=?, CUSTOMERLASTNAME=?, CUSTOMEREMAIL=?, CUSTOMERPASSWORD=?, CUSTOMERSTREET=?, CUSTOMERPOSTCODE=?, CUSTOMERCITY=?, CUSTOMERSTATE=?, CUSTOMERCOUNTRY=? WHERE CUSTOMEREMAIL=?");
             //Set the variables for the "update" statement
             update.setString(1, fname);
             update.setString(2, lname);
@@ -137,7 +137,7 @@ public class DBManager {
             int ACCESSLOGID = retrieveResult.getInt(1);
 
             //retrieve userID from DB
-            String getUserID = "SELECT CUSTOMERID FROM CUSTOMERS WHERE CUSTOMEREMAIL = ?";
+            String getUserID = "SELECT CUSTOMERID FROM CUSTOMER WHERE CUSTOMEREMAIL = ?";
             PreparedStatement userIDStatement = conn.prepareStatement(getUserID);
             userIDStatement.setObject(1, email);
             ResultSet retrieveID = userIDStatement.executeQuery();
