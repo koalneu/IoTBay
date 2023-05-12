@@ -2,7 +2,7 @@
     Document   : register
     Created on : 6 Apr 2023, 11:20:54 pm
     Author     : @author (Tyler) Shi En Lim 13675919
-    Author     : @author Wilsan 14269118
+    Author     : @author Wilson 14269118
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,7 +15,7 @@
     <body>
         <h1>IoTBay Customer Register Page</h1>
     </body>
-    <form method="post" action="welcome.jsp" >
+    <form method="post" action="index.jsp" >
         <table align="center" >
             <tr>
                 <th><label>First Name:</label></th>
@@ -36,6 +36,10 @@
             <tr>
                 <th><label>Street:</label></th>
                 <th><input type="text" name="street" required/></th>
+            </tr>
+            <tr>
+                <th><label>City:</label></th>
+                <th><input type="text" name="city" required/></th>
             </tr>
             <tr>
                 <th><label>PostCode:</label></th>

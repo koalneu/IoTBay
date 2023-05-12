@@ -10,95 +10,45 @@ email, password, and their address
 package models;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author (Tyler) Shi En Lim 13675919
- * @author Wilsan
+ * @author Wilson
  */
 public class User implements Serializable {
+
     public String userFirstName;
     public String userLastName;
     private String userEmail;
     private String userPassword;
     public String userStreet;
+    public String userCity;
     public String userPostCode;
     public String userState;
     public String userCountry;
     
     /*
-        to store list of users to access after session ends
-    */
-    public static List<User> users = new ArrayList<User>();
-    
-    //method to add users to the array
-    public static void addUser(User user){
-        //if user is already in list, do not add
-            if (user != null ){
-                String emailAdd = user.getUserEmail();
-
-                System.out.println("users before:");
-
-                for (User u : users){
-                    System.out.println(u.getUserFirstName());
-                }
-
-                System.out.println("users after:");
-
-                //if (!users.contains(user)){
-                    users.add(user);
-                //}
-
-                for (User u : users){
-                    System.out.println(u.getUserFirstName());
-                }
-                
-            }
-    }
-    
-    /*
-        method to authenticate user for logging in
-        
-        check if list is empty..?
-        if not empty, loop through the list
-            check input email == email in list
-            if yes, check input password == password in list
-                return user or set session to found user
-    */
-    public static User authenticateUser(String email, String password) {
-        if (users.isEmpty()){
-            //if no registered users currently
-            System.out.println("empty list");
-            return null;
-        }  else {
-            for (User u : users){
-                String systemUserEmail = u.getUserEmail();
-                if (systemUserEmail.equals(email)){
-                    String systemUserPassword = u.getUserPassword();
-                    if (systemUserPassword.equals(password)){
-                        //take you to the welcome page
-                        //returns user
-                        System.out.println("user found");
-                        return u;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-    
-    /*
     initialize constructors
     */
-    public User(String userFirstName, String userLastName, String userEmail, String userPassword, String userStreet, String userPostCode, String userState, String userCountry) {
+    public User(String userFirstName, String userLastName, String userEmail, String userPassword, String userStreet, String userPostCode,String userCity,String userState, String userCountry) {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userStreet = userStreet;
         this.userPostCode = userPostCode;
+        this.userCity = userCity;
         this.userState = userState;
         this.userCountry = userCountry;
     }
@@ -150,8 +100,16 @@ public class User implements Serializable {
         return userPostCode;
     }
 
-    public void setUserPostCode(String userPostCode) {
+    public void setUserPostCode(String userCity) {
         this.userPostCode = userPostCode;
+    }
+    
+    public String getUserCity() {
+        return userCity;
+    }
+
+    public void setUserCity(String userCity) {
+        this.userCity = userCity;
     }
 
     public String getUserState() {
@@ -168,5 +126,69 @@ public class User implements Serializable {
 
     public void setUserCountry(String userCountry) {
         this.userCountry = userCountry;
+    }
+    
+    //Add user function
+    public void addUser(String fname, String lname, String email, String password, String street, String postcode, String city, String state, String country) throws SQLException{
+        //Set variables for the connection to DB
+        String dbuser = "iotadmin";
+        String dbpass = "password";
+        //establish connection: 
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
+            //statement
+            Statement statement = conn.createStatement();
+            String command = "INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(command);
+            //calculate the new ID
+            String rows = "select count(*) from CUSTOMER";
+            ResultSet retrieveResult = statement.executeQuery(rows);
+            retrieveResult.next();
+            int ID = retrieveResult.getInt(1);
+            pst.setObject(1, ID);
+            pst.setObject(2, fname);
+            pst.setObject(3, lname);
+            pst.setObject(4, email);
+            pst.setObject(5, password);
+            pst.setObject(6, street);
+            pst.setObject(7, postcode);
+            pst.setObject(8, city);
+            pst.setObject(9, state);
+            pst.setObject(10, country);
+                
+            pst.executeUpdate();
+               
+            conn.close();
+        }
+        catch(Error e){
+        }
+            
+    }
+    
+    //update
+    public static void updateUser(String originalEmail, String fname, String lname, String email, String password, String street, String postcode, String city, String state, String country) throws SQLException{
+        String dbuser = "iotadmin";
+        String dbpass = "password";
+        String driver = "org.apache.derby.jdbc.ClientDriver";
+
+        //establish connection:
+        Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
+        //update is used to seelct
+        //Statement to update the correct columns
+        PreparedStatement update = conn.prepareStatement("UPDATE CUSTOMER SET CUSTOMERFIRSTNAME=?, CUSTOMERLASTNAME=?, CUSTOMEREMAIL=?, CUSTOMERPASSWORD=?, CUSTOMERSTREET=?, CUSTOMERPOSTCODE=?, CUSTOMERCITY=?, CUSTOMERSTATE=?, CUSTOMERCOUNTRY=? WHERE CUSTOMEREMAIL=?");
+        //Set the variables for the "update" statement
+        update.setString(1, fname);
+        update.setString(2, lname);
+        update.setString(3, email);
+        update.setString(4, password);
+        update.setString(5, street);
+        update.setString(7, city);
+        update.setInt(6, Integer.parseInt(postcode));
+        update.setString(8, state);
+        update.setString(9, country);
+        update.setString(10, originalEmail);
+
+        update.executeUpdate();
+        conn.close();
     }
 }
