@@ -9,10 +9,10 @@ import java.sql.Connection;
 
 
 public class DB {
-    protected String URL = "jdbc:derby://localhost:1527/testing";  
-    protected String db = "testing";//name of the database   
-    protected String dbuser = "test";//db root user   
-    protected String dbpass = "test"; //db root password     
+    protected String URL = "jdbc:derby://localhost:1527/IoTDatabase";  
+    protected String db = "IoTDatabase";//name of the database   
+    protected String dbuser = "iotadmin";//db root user   
+    protected String dbpass = "password"; //db root password     
     protected Connection conn; //connection null-instance to be initialized in sub-classes
     
 }
