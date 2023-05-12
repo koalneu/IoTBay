@@ -1,18 +1,22 @@
 # Implementation of the Login, Register and Update user details
 
-The database has been connected to account for the various variables and functions although the code must be edited to account for the database's login credentials and name.
-Need to double check the data fields for differences if any occurred between my database and the one we are working on but it should be the same.
-A new page has been added called Edit.jsp which is the update details page.
+New Table to the database has been added and a new java model has been added to contain the accesslogs function (NOT SURE IF IT IS CORRECT BUT I PLACED IT THERE FOR NOW SINCE WE WILL HAVE TO BE USING IT SEVERAL TIMES), THIS MUST BE ADDED YOURSELF as my DB is local and doesnt work anyways
 
-Not sure if we need to change the "guest" login functions and how we will handle that - Needs to be discussed.
+This is the databse information below:
 
-Not sure if i need to implement a delete account function aswell - Needs to be discussed.
+![image](https://user-images.githubusercontent.com/126222338/236673372-84636a0f-ce81-4f63-8a1f-9c52737fd96e.png)
 
-For reference this is the database that i have been working on locally:
+WHERE:
+- ACCESSLOGID integer
+- USERID integer
+- USERNAME String
+- ACESSTIME TimeStamp
+- Action String
+
 
 LOCAL VARIABLE NAMES:
 
-NOTE: NEEDS TO BE CHANGED TO FUNCTION WITH ACTUAL DB
+WHICH NEEDS TO BE CHANGED TO FUNCTION WITH ACTUAL DB
 
 Database name: TEST
 DB username: test
@@ -29,24 +33,6 @@ Sections which look like the image below need to be adjusted accordingly to the 
 
 NEED TO DO:
 
-text field checks
+text field checks - ??? NOT SURE HOW TO DO
 
-move MODEL functions to Controller
-
-Handle guest -> automatically guest remove buttons etc.
-
-Add button to return to landing page on each screen
-
-Database for acesss logs
-- ID
-
-- Name
-
-- Date
-
-- Time
-
-- Action
-
-- Message
-
+Account for admin and staff logins - ?? NOT SURE WHATS HAPPENNING WITH THAT

@@ -24,11 +24,11 @@
             
             /*NOTES FOR THE JSP CODE BELOW:
              *  Register page is copied and adjusted to have the customer's details inputted into text fields already
-             *  New button "Save Changes" POST's information the customer's has changed to main.jsp & updates the DB accordingly
+             *  New button "Save Changes" POST's information the customer's has changed to profile.jsp & updates the DB accordingly
             */
         %>
         <h1><%= fname + " " + lname + "'s Details" %></h1>
-        <form method="post" action="main.jsp" >
+        <form method="post" action="profile.jsp" >
             <table align="center" >
                 <tr>
                     <th><label>First Name:</label></th>

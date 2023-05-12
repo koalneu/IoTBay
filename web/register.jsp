@@ -15,7 +15,7 @@
     <body>
         <h1>IoTBay Customer Register Page</h1>
     </body>
-    <form method="post" action="welcome.jsp" >
+    <form method="post" action="index.jsp" >
         <table align="center" >
             <tr>
                 <th><label>First Name:</label></th>
