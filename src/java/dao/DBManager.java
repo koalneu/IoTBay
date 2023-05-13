@@ -25,8 +25,11 @@ public class DBManager {
         while(rs.next()){
            String name = rs.getString("PRODUCTNAME");
            int ID = rs.getInt("PRODUCTID");
+           String desc = rs.getString("PRODUCTDESC");
            double price = rs.getDouble("PRODUCTPRICE");
-           products.add(new Product(name, ID, price)); 
+           String image = rs.getString("PRODUCTIMAGE");
+           int stock = rs.getInt("PRODUCTSTOCK");
+           products.add(new Product(ID, name, desc, price, image, stock)); 
         }
         //System.out.println("products acquired");
         return products;    

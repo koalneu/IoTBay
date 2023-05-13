@@ -47,7 +47,7 @@ public class OrderController extends HttpServlet {
             LinkedList<Product> products = (LinkedList<Product>) session.getAttribute("products");
             Product productAdded = new Product();
             for(Product product : products){
-                if(product.getName().equals(productName)){
+                if(product.getProductName().equals(productName)){
                     productAdded = product;
                 }
             }

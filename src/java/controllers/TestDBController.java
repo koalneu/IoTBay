@@ -139,7 +139,7 @@ public class TestDBController {
             ArrayList<Product> products = db.fetchProducts();
             System.out.println("PRODUCTS TABLE: ");
             products.stream().forEach((product) -> {
-                System.out.printf("%-10d %-50s %-50s %-10.2f %-10d \n", product.getProductID(), product.getProductName(), product.getProductDesc(), product.getProductPrice(), product.getProductStock());
+                System.out.printf("%-10d %-50s %-50s $%-10.2f %-10d \n", product.getProductID(), product.getProductName(), product.getProductDesc(), product.getProductPrice(), product.getProductStock());
             });
             System.out.println();
         } catch (SQLException ex) {
