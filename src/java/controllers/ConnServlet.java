@@ -5,6 +5,8 @@
 package controllers;
 
 import models.dao.*;
+import DAO.DBConnector;
+import DAO.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -49,17 +51,15 @@ public class ConnServlet extends HttpServlet {
         conn = db.openConnection();
         try{
             manager = new DBManager(conn);
-            //delete these two lines
-            ArrayList<Product> products = manager.fetchProducts();
-            session.setAttribute("products", products);
+            
         }catch(SQLException ex){
             System.out.println("error in doGet ConnServlet"); 
         }
+        //add manager to session
         session.setAttribute("manager", manager);
+
     }
-    
-    //this function automatically calls when you close the application
-    //so no need to call it anywhere
+
     @Override
     public void destroy(){
         try{

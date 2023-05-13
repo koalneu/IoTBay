@@ -1,8 +1,10 @@
 # Implementation of the Login, Register and Update user details
 
-New Table to the database has been added and a new java model has been added to contain the accesslogs function (NOT SURE IF IT IS CORRECT BUT I PLACED IT THERE FOR NOW SINCE WE WILL HAVE TO BE USING IT SEVERAL TIMES), THIS MUST BE ADDED YOURSELF as my DB is local and doesnt work anyways
+**IMPLEMENTED THE CONTROLLER MODEL STUFF FOR THE DB MADE DIFFERENT SCREENS FOR THE ADMIN AND STAFF**
 
-This is the databse information below:
+ - DATABASE FOR ACCESSLOGS NEEDS TO BE ADDED IF U HAVE NOT ADDED IT YET
+
+**CUSTOMER DATABASE NEEDS A NEW COLUMN ADDED - USERTYPE STRING (SIZE 50 CHARS)**
 
 ![image](https://user-images.githubusercontent.com/126222338/236673372-84636a0f-ce81-4f63-8a1f-9c52737fd96e.png)
 

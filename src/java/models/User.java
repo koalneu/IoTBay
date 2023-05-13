@@ -1,12 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-/*
-user is a JavaBean that store customer details such as first and last name,
-email, password, and their address
-*/
-
 package models;
 
 import java.io.Serializable;
@@ -37,11 +28,12 @@ public class User implements Serializable {
     public String userPostCode;
     public String userState;
     public String userCountry;
+    public String userType;
     
     /*
     initialize constructors
     */
-    public User(String userFirstName, String userLastName, String userEmail, String userPassword, String userStreet, String userPostCode,String userCity,String userState, String userCountry) {
+    public User(String userFirstName, String userLastName, String userEmail, String userPassword, String userStreet, String userPostCode,String userCity,String userState, String userCountry, String userType) {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userEmail = userEmail;
@@ -51,6 +43,7 @@ public class User implements Serializable {
         this.userCity = userCity;
         this.userState = userState;
         this.userCountry = userCountry;
+        this.userType = userType;
     }
     
     /*
@@ -191,4 +184,12 @@ public class User implements Serializable {
         update.executeUpdate();
         conn.close();
     }
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+    
 }

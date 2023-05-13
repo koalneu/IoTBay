@@ -5,6 +5,7 @@
     Author     : @author Wilson 14269118
 --%>
 
+<%@page import="DAO.DBManager"%>
 <%@page import="models.AccessLog"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="models.User" %>
@@ -14,17 +15,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Logout Page</title>
     </head>
-    <body>
-        <h1 align="center">You have successfully logged out</h1>
-        <h2 align="center"><a href="index.jsp">Go back to home page</a></h2>
-        <% 
-            
-            //Set the current user object by retrieving data from the session
-            User user = (User)session.getAttribute("user");
-            
-            AccessLog accesslog = new AccessLog();
-            accesslog.addAccessLogEntry(user.getUserEmail(), user.getUserFirstName(), "Log out");
-            session.invalidate(); 
-        %>
-    </body>
+    <form method="post" action="logoutController">
+        <body>
+                <h1 align="center">You have successfully logged out</h1>
+                <h3 align="center"><button  type="submit" >Return to home page</button></h3>
+        </body>
+    </form>
 </html>

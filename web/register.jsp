@@ -15,7 +15,17 @@
     <body>
         <h1>IoTBay Customer Register Page</h1>
     </body>
-    <form method="post" action="index.jsp" >
+    <%  //Retrieve errors
+        String fnameErr = (String) session.getAttribute("fnameErr");
+        String lnameErr = (String) session.getAttribute("lnameErr");
+        String emailErr = (String) session.getAttribute("emailErr");
+        String passwordErr = (String) session.getAttribute("passwordErr");
+        String streetErr = (String) session.getAttribute("streetErr");
+        String cityErr = (String) session.getAttribute("cityErr");
+        String postcodeErr = (String) session.getAttribute("postcodeErr");
+        String countryErr = (String) session.getAttribute("countryErr");
+    %>
+    <form method="post" action="registerController" >
         <table align="center" >
             <tr>
                 <th><label>First Name:</label></th>
@@ -66,13 +76,22 @@
                 <th><input type="text" name="country" placeholder="Enter your country.." required/></th>
             </tr>
             <tr>
-                <th><label>Payment Method:</label></th>
-                <th><input type="radio" name="payment-method" value="Credit Card"/><label>Credit Card</label></th>
-            </tr>
-            <tr>
                 <th><button type="button" onClick="history.back()" >Cancel</button></th>
                 <th><input type="submit" value="Register" /></th>
             </tr>
+            <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <label style="color: red;"><%=(fnameErr != null ? fnameErr : "")%></label>
+                        <label style="color: red;"><%=(lnameErr != null ? lnameErr : "")%></label>
+                        <label style="color: red;"><%=(emailErr != null ? emailErr : "")%></label>
+                        <label style="color: red;"><%=(passwordErr != null ? passwordErr : "")%></label>
+                        <label style="color: red;"><%=(streetErr != null ? streetErr : "")%></label>
+                        <label style="color: red;"><%=(cityErr != null ? cityErr : "")%></label>
+                        <label style="color: red;"><%=(postcodeErr != null ? postcodeErr : "")%></label>
+                        <label style="color: red;"><%=(countryErr != null ? countryErr : "")%></label>
+                    </td>
+            </tr>
+
         </table>
     </form>
 </html>

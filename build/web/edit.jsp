@@ -14,6 +14,7 @@
     </head>
     <body>
         <%
+             String errorMessage = (String) request.getSession().getAttribute("errorMessage"); 
             //Set the object from retrieving data from session
             User user = (User)session.getAttribute("user");
         
@@ -22,13 +23,19 @@
             String state = user.getUserState();
             //Retrieve information from the current set user
             
-            /*NOTES FOR THE JSP CODE BELOW:
-             *  Register page is copied and adjusted to have the customer's details inputted into text fields already
-             *  New button "Save Changes" POST's information the customer's has changed to profile.jsp & updates the DB accordingly
-            */
+            //Retrieve errors
+            String fnameErr = (String) session.getAttribute("fnameErr");
+            String lnameErr = (String) session.getAttribute("lnameErr");
+            String emailErr = (String) session.getAttribute("emailErr");
+            String passwordErr = (String) session.getAttribute("passwordErr");
+            String streetErr = (String) session.getAttribute("streetErr");
+            String cityErr = (String) session.getAttribute("cityErr");
+            String postcodeErr = (String) session.getAttribute("postcodeErr");
+            String countryErr = (String) session.getAttribute("countryErr");
         %>
+
         <h1><%= fname + " " + lname + "'s Details" %></h1>
-        <form method="post" action="profile.jsp" >
+        <form method="post" action="editController" >
             <table align="center" >
                 <tr>
                     <th><label>First Name:</label></th>
@@ -79,13 +86,22 @@
                     <th><input type="text" name="country" placeholder="Enter your country.." value="${user.userCountry}" required/></th>
                 </tr>
                 <tr>
-                    <th><label>Payment Method:</label></th>
-                    <th><input type="radio" name="payment-method" value="Credit Card"/><label>Credit Card</label></th>
-                </tr>
-                <tr>
-                    <th><button type="button" onClick="history.back()" >Cancel</button></th>
+                    <th><button><a href="profile.jsp">Cancel</a></button></th>
                     <th><input type="submit" value="Save Changes" /></th>
                 </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <label style="color: red;"><%=(fnameErr != null ? fnameErr : "")%></label>
+                        <label style="color: red;"><%=(lnameErr != null ? lnameErr : "")%></label>
+                        <label style="color: red;"><%=(emailErr != null ? emailErr : "")%></label>
+                        <label style="color: red;"><%=(passwordErr != null ? passwordErr : "")%></label>
+                        <label style="color: red;"><%=(streetErr != null ? streetErr : "")%></label>
+                        <label style="color: red;"><%=(cityErr != null ? cityErr : "")%></label>
+                        <label style="color: red;"><%=(postcodeErr != null ? postcodeErr : "")%></label>
+                        <label style="color: red;"><%=(countryErr != null ? countryErr : "")%></label>
+                    </td>
+                </tr>
+
             </table>
         </form>
     </body>
