@@ -26,7 +26,7 @@ public class Test {
             DBManager manager = new DBManager(conn);
             products = manager.getProducts();
             for(Product product : products){
-                System.out.println(product.getProductName() + " " + product.getProductID() + " " + product.getProductPrice());
+                System.out.println(product.getName() + " " + product.getProductID() + " " + product.getPrice());
             }
             int orderCount = manager.countOrderRows();
             System.out.println("Order Count is = " + orderCount);
@@ -45,10 +45,10 @@ public class Test {
         Product product = new Product("Hummus", 4, 20.75);
         for(Map.Entry<Product, Integer> pair : productsOrdered.entrySet()){
             if(pair.getKey().equals(product)){
-                System.out.println(pair.getKey().getProductName() + " is in the HashMap");
+                System.out.println(pair.getKey().getName() + " is in the HashMap");
             }
             else{
-                System.out.println(pair.getKey().getProductName() + " " + pair.getValue());
+                System.out.println(pair.getKey().getName() + " " + pair.getValue());
             }
         }
     }   
