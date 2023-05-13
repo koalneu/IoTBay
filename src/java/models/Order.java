@@ -4,26 +4,32 @@
  */
 package models;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
  *
  * @author mjra9
  */
-public class Order {
+public class Order implements Serializable{
     private int orderID;
     private int userID;
     private String status;
-    private String date;
-    private LinkedList<Product> products;
+    private Date date;
+    private boolean isPayed;
+    private HashMap<Product, Integer> products;
     
     
-    public Order(int ID, int userID, String date){
+    public Order(int ID, int userID){
         this.orderID = orderID;
-        this.products = new LinkedList<Product>();
+        this.products = new HashMap<Product, Integer>();
         this.userID = userID;
-        this.date = date;
-        this.status = "In Cart";
+        this.date = new Date();
+        //processing or shipped
+        this.status = "Processing";
+        this.isPayed = false;
     }
 
     public int getOrderID() {
@@ -38,16 +44,24 @@ public class Order {
         return status;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public LinkedList<Product> getProducts() {
+    public boolean isIsPayed() {
+        return isPayed;
+    }
+
+    public HashMap<Product, Integer> getProducts() {
         return products;
     }
 
+    public void setIsPayed(boolean isPayed) {
+        this.isPayed = isPayed;
+    }
+ 
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
 }

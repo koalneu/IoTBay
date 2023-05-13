@@ -97,7 +97,6 @@
             <h2> Available Products: </h2>
             <jsp:include page="products.jsp" flush = "true"/> 
         </div>
-              
     </body>
 </html>
 <link rel="stylesheet" href="./css/profile.css">

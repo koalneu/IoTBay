@@ -1,3 +1,4 @@
+<%@page import="models.Order"%>
 <%@page import="controllers.userController"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>

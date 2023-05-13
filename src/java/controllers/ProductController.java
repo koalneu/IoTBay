@@ -45,5 +45,5 @@ public class ProductController extends HttpServlet {
         }
         session.setAttribute("products", products);
         request.getRequestDispatcher("products.jsp").include(request, response);
-    }
+    }   
 }

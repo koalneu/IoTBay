@@ -23,18 +23,31 @@ public class DBManager {
         ResultSet rs = st.executeQuery(fetch);
         LinkedList<Product> products = new LinkedList<Product>();
         while(rs.next()){
-           /*String name = rs.getString(2);
-           int ID = Integer.parseInt(rs.getString(1));
-           double price = Double.parseDouble(rs.getString(4)); */
-           int ID = rs.getInt(1);
-           String name = rs.getString(2);
-           String desc = rs.getString(3);
-           double price = rs.getDouble(4);
-           String image = rs.getString(5);
-           int stock = rs.getInt(6);
+           String name = rs.getString("PRODUCTNAME");
+           int ID = rs.getInt("PRODUCTID");
+           String desc = rs.getString("PRODUCTDESC");
+           double price = rs.getDouble("PRODUCTPRICE");
+           String image = rs.getString("PRODUCTIMAGE");
+           int stock = rs.getInt("PRODUCTSTOCK");
            products.add(new Product(ID, name, desc, price, image, stock)); 
         }
         //System.out.println("products acquired");
         return products;    
+    }
+    
+    public int getUserID (String email) throws SQLException{
+        String fetch = "SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = " + "\'" + email + "\'";
+        ResultSet rs = st.executeQuery(fetch);
+        rs.next();
+        int ID = rs.getInt("CUSTOMERID");
+        return ID;
+    }
+    
+    public int countOrderRows() throws SQLException{
+        String fetch = "SELECT COUNT(*) FROM ORDERS"; 
+        ResultSet rs = st.executeQuery(fetch);
+        rs.next();
+        int ID = rs.getInt(1);
+        return ID;
     }
 }

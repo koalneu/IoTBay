@@ -17,6 +17,7 @@
             LinkedList<Product> products = new LinkedList<Product>();
             products = (LinkedList<Product>) session.getAttribute("products");
         %>
+<!--        <form action="/OrderController" method="post">-->
             <table align = "center">
                 <th>Product ID</th>
                 <th> Name </th>
@@ -33,15 +34,18 @@
                         String name = product.getName();
                         int ID = product.getProductID();
                         double price = product.getPrice(); %>
-                
+
                         <tr>
                             <td><%=ID%></td>
                             <td><%=name%></td>
                             <td><%=price%></td>
+                            <td><button><a href = "OrderController?productName=<%=name%>" > Add to order</a></button></td>
                         </tr>
                 <%  }
                  } %>
             </table>
-           
+            <button><a href = "OrderController"> View Order </a></button>
+            <!--<input type = "button" value = "View Order">-->
+        <!--</form>-->   
     </body>
 </html>

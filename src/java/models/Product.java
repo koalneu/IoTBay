@@ -4,13 +4,14 @@
  */
 package models;
 
-
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
  * @author mjra9
  */
-public class Product{
+public class Product implements Serializable{
     public int productID;
     public String productName;
     public String productDesc;
@@ -25,6 +26,15 @@ public class Product{
         this.productPrice = price;
         this.productImage = image;
         this.productStock = stock;
+    }
+    
+    public Product() {
+        this.productID = 0;
+        this.productName = "";
+        this.productDesc = "";
+        this.productPrice = 0;
+        this.productImage = "";
+        this.productStock = 0;
     }
     
     public int getProductID() {
@@ -74,4 +84,31 @@ public class Product{
     public void setProductStock(int stock) {
         this.productStock = stock;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.productName);
+        hash = 79 * hash + this.productID;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Product other = (Product) obj;
+        if (this.productID != other.productID) {
+            return false;
+        }
+        return Objects.equals(this.productName, other.productName);
+    }
+    
 }
