@@ -4,11 +4,12 @@
  */
 package controllers;
 
-import dao.*;
+import models.dao.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,7 +50,7 @@ public class ConnServlet extends HttpServlet {
         try{
             manager = new DBManager(conn);
             //delete these two lines
-            LinkedList<Product> products = manager.getProducts();
+            ArrayList<Product> products = manager.fetchProducts();
             session.setAttribute("products", products);
         }catch(SQLException ex){
             System.out.println("error in doGet ConnServlet"); 

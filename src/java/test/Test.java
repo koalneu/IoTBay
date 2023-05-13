@@ -4,9 +4,10 @@
  */
 package test;
 
-import dao.*;
+import models.dao.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -19,12 +20,12 @@ import models.*;
  */
 public class Test {
     public static void main(String[] args){
-        LinkedList<Product> products = new LinkedList<Product>();
+        ArrayList<Product> products = new ArrayList<Product>();
         try{
             DBConnector connector = new DBConnector();
             Connection conn = connector.openConnection();
             DBManager manager = new DBManager(conn);
-            products = manager.getProducts();
+            products = manager.fetchProducts();
             for(Product product : products){
                 System.out.println(product.getProductName() + " " + product.getProductID() + " " + product.getProductPrice());
             }

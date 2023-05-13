@@ -15,6 +15,22 @@ public class DBManager {
         st = conn.createStatement();
     }
     
+    //Functions from Mark's branch
+    public int countOrderRows() throws SQLException {
+        String fetch = "SELECT COUNT (*) FROM ORDERS";
+        ResultSet rs = st.executeQuery(fetch);
+        rs.next();
+        int ID = rs.getInt(1);
+        return ID;
+    }
+    public int getUserID(String email) throws SQLException {
+        String fetch = "SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = " + "\'" + email + "\'";
+        ResultSet rs = st.executeQuery(fetch);
+        rs.next();
+        int ID = rs.getInt("CUSTOMERID");
+        return ID;
+    }
+    
     //Functions related to products in the database
     //search product by name
     public Product findProduct(String name) throws SQLException {

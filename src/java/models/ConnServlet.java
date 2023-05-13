@@ -1,7 +1,7 @@
 //insert package statement
 //package *your package name*
 
-import dao.*;
+import models.dao.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;

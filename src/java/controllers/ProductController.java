@@ -4,11 +4,12 @@
  */
 package controllers;
 
-import dao.*;
+import models.dao.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,9 +38,9 @@ public class ProductController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
-        LinkedList<Product> products = new LinkedList<Product>();
+        ArrayList<Product> products = new ArrayList<Product>();
         try{
-            products = manager.getProducts();  
+            products = manager.fetchProducts();  
         } catch(SQLException ex){
             System.out.println("Error getting products");
         }
