@@ -5,41 +5,74 @@
 package models;
 
 import java.io.Serializable;
-import java.util.Objects;
-
-
 
 /**
  *
  * @author mjra9
  */
 public class Product implements Serializable{
-    private String name;
-    private int productID;
-    private double price;
+    public int productID;
+    public String productName;
+    public String productDesc;
+    public double productPrice;
+    public String productImage;
+    public int productStock;
     
-    public Product(String name, int ID, double price){
-        this.name = name;
-        this.productID = ID;
-        this.price = price;
+    public Product(int id, String name, String desc, double price, String image, int stock) {
+        this.productID = id;
+        this.productName = name;
+        this.productDesc = desc;
+        this.productPrice = price;
+        this.productImage = image;
+        this.productStock = stock;
     }
     
-    public Product(){
-        this.name = "";
-        this.productID = 0;
-        this.price = 0.0;
-    }
-    
-    public String getName() {
-        return name;
-    }
-
     public int getProductID() {
         return productID;
     }
-
-    public double getPrice() {
-        return price;
+    
+    public void setProductID(int id) {
+        this.productID = id;
+    }
+    
+    public String getProductName() {
+        return productName;
+    }
+    
+    public void setProductName(String name) {
+        this.productName = name;
+    }
+    
+    public String getProductDesc() {
+        return productDesc;
+    }
+    
+    public void setProductDesc(String desc) {
+        this.productDesc = desc;
+    }
+    
+    public double getProductPrice() {
+        return productPrice;
+    }
+    
+    public void setProductPrice(double price) {
+        this.productPrice = price;
+    }
+    
+    public String getProductImage() {
+        return productImage;
+    }
+    
+    public void setProductImage(String image) {
+        this.productImage = image;
+    }
+    
+    public int getProductStock() {
+        return productStock;
+    }
+    
+    public void setProductStock(int stock) {
+        this.productStock = stock;
     }
 
     @Override
@@ -67,9 +100,5 @@ public class Product implements Serializable{
         }
         return Objects.equals(this.name, other.name);
     }
-
-
-    
-    
     
 }
