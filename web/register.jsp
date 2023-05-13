@@ -76,13 +76,22 @@
                 <th><input type="text" name="country" placeholder="Enter your country.." required/></th>
             </tr>
             <tr>
-                <th><label>Payment Method:</label></th>
-                <th><input type="radio" name="payment-method" value="Credit Card"/><label>Credit Card</label></th>
-            </tr>
-            <tr>
                 <th><button type="button" onClick="history.back()" >Cancel</button></th>
                 <th><input type="submit" value="Register" /></th>
             </tr>
+            <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <label style="color: red;"><%=(fnameErr != null ? fnameErr : "")%></label>
+                        <label style="color: red;"><%=(lnameErr != null ? lnameErr : "")%></label>
+                        <label style="color: red;"><%=(emailErr != null ? emailErr : "")%></label>
+                        <label style="color: red;"><%=(passwordErr != null ? passwordErr : "")%></label>
+                        <label style="color: red;"><%=(streetErr != null ? streetErr : "")%></label>
+                        <label style="color: red;"><%=(cityErr != null ? cityErr : "")%></label>
+                        <label style="color: red;"><%=(postcodeErr != null ? postcodeErr : "")%></label>
+                        <label style="color: red;"><%=(countryErr != null ? countryErr : "")%></label>
+                    </td>
+            </tr>
+
         </table>
     </form>
 </html>

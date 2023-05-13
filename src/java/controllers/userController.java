@@ -30,7 +30,7 @@ public class userController {
             return null;
         }
         //Copy items from DB into a user object
-        User user = new User(resultSet.getString("CUSTOMERFIRSTNAME"), resultSet.getString("CUSTOMERLASTNAME"), email, resultSet.getString("CUSTOMERPASSWORD"), resultSet.getString("CUSTOMERSTREET"), resultSet.getString("CUSTOMERCITY"), resultSet.getString("CUSTOMERPOSTCODE"), resultSet.getString("CUSTOMERSTATE"), resultSet.getString("CUSTOMERCOUNTRY"));
+        User user = new User(resultSet.getString("CUSTOMERFIRSTNAME"), resultSet.getString("CUSTOMERLASTNAME"), email, resultSet.getString("CUSTOMERPASSWORD"), resultSet.getString("CUSTOMERSTREET"), resultSet.getString("CUSTOMERCITY"), resultSet.getString("CUSTOMERPOSTCODE"), resultSet.getString("CUSTOMERSTATE"), resultSet.getString("CUSTOMERCOUNTRY"), resultSet.getString("USERTYPE"));
         
         conn.close();
         

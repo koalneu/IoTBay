@@ -5,8 +5,6 @@
 package controllers;
 
 import models.dao.*;
-package controllers;
-
 import DAO.DBConnector;
 import DAO.DBManager;
 import java.io.IOException;
