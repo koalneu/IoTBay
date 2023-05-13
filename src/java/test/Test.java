@@ -22,7 +22,7 @@ public class Test {
             DBManager manager = new DBManager(conn);
             LinkedList<Product> products = manager.getProducts();
             for(Product product : products){
-                System.out.println(product.getName() + " " + product.getProductID() + " " + product.getPrice());
+                System.out.println(product.getProductName() + " " + product.getProductID() + " " + product.getProductPrice());
             }
         } catch(ClassNotFoundException | SQLException ex){
             System.out.println("no connection");
