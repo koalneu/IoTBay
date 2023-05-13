@@ -6,6 +6,7 @@
 --%>
 
 <%@page import="DAO.DBManager"%>
+<%@page import="models.AccessLog"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="models.User" %>
 <!DOCTYPE html>

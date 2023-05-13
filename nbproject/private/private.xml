@@ -22,6 +22,28 @@
             <file>file:/C:/Users/Wilson/Documents/NetBeansProjects/IoTBay/IoTBay1/IoTBay/web/index.jsp</file>
             <file>file:/C:/Users/Wilson/Documents/NetBeansProjects/IoTBay/IoTBay1/IoTBay/web/login.jsp</file>
             <file>file:/C:/Users/Wilson/Documents/NetBeansProjects/IoTBay/IoTBay1/IoTBay/web/css/welcome.css</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/controllers/userController.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/checkout.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/models/Order.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/models/User.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/models/AccessLog.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/order.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/dao/DBConnector.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/dao/DBManager.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/logout.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/dao/DB.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/login.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/profile.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/index.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/controllers/OrderController.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/controllers/ProductController.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/controllers/ConnServlet.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/register.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/products.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/web/edit.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/models/Product.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Desktop/IoTBay%20Order%20Implementation/src/java/test/Test.java</file>
         </group>
     </open-files>
 </project-private>

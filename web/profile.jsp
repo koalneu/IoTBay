@@ -7,6 +7,7 @@
 
 <%@page import="DAO.DBManager"%>
 <%@page import="controllers.Validator"%>
+<%@page import="models.AccessLog"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>

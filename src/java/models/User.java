@@ -1,6 +1,16 @@
 package models;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -83,7 +93,7 @@ public class User implements Serializable {
         return userPostCode;
     }
 
-    public void setUserPostCode(String userPostCode) {
+    public void setUserPostCode(String userCity) {
         this.userPostCode = userPostCode;
     }
     
@@ -111,6 +121,69 @@ public class User implements Serializable {
         this.userCountry = userCountry;
     }
     
+    //Add user function
+    public void addUser(String fname, String lname, String email, String password, String street, String postcode, String city, String state, String country) throws SQLException{
+        //Set variables for the connection to DB
+        String dbuser = "iotadmin";
+        String dbpass = "password";
+        //establish connection: 
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
+            //statement
+            Statement statement = conn.createStatement();
+            String command = "INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(command);
+            //calculate the new ID
+            String rows = "select count(*) from CUSTOMER";
+            ResultSet retrieveResult = statement.executeQuery(rows);
+            retrieveResult.next();
+            int ID = retrieveResult.getInt(1);
+            pst.setObject(1, ID);
+            pst.setObject(2, fname);
+            pst.setObject(3, lname);
+            pst.setObject(4, email);
+            pst.setObject(5, password);
+            pst.setObject(6, street);
+            pst.setObject(7, postcode);
+            pst.setObject(8, city);
+            pst.setObject(9, state);
+            pst.setObject(10, country);
+                
+            pst.executeUpdate();
+               
+            conn.close();
+        }
+        catch(Error e){
+        }
+            
+    }
+    
+    //update
+    public static void updateUser(String originalEmail, String fname, String lname, String email, String password, String street, String postcode, String city, String state, String country) throws SQLException{
+        String dbuser = "iotadmin";
+        String dbpass = "password";
+        String driver = "org.apache.derby.jdbc.ClientDriver";
+
+        //establish connection:
+        Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/IoTDatabase", dbuser, dbpass);
+        //update is used to seelct
+        //Statement to update the correct columns
+        PreparedStatement update = conn.prepareStatement("UPDATE CUSTOMER SET CUSTOMERFIRSTNAME=?, CUSTOMERLASTNAME=?, CUSTOMEREMAIL=?, CUSTOMERPASSWORD=?, CUSTOMERSTREET=?, CUSTOMERPOSTCODE=?, CUSTOMERCITY=?, CUSTOMERSTATE=?, CUSTOMERCOUNTRY=? WHERE CUSTOMEREMAIL=?");
+        //Set the variables for the "update" statement
+        update.setString(1, fname);
+        update.setString(2, lname);
+        update.setString(3, email);
+        update.setString(4, password);
+        update.setString(5, street);
+        update.setString(7, city);
+        update.setInt(6, Integer.parseInt(postcode));
+        update.setString(8, state);
+        update.setString(9, country);
+        update.setString(10, originalEmail);
+
+        update.executeUpdate();
+        conn.close();
+    }
     public String getUserType() {
         return userType;
     }

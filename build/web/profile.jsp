@@ -57,6 +57,14 @@
         </table>
         <button><a href="index.jsp">Back</a></button>
         <button><a href="edit.jsp">Edit Details</a></button>
+
+        <button type="button" onClick="history.back()" >Back</button>    
+        <button><a href="edit.jsp">Edit Details</a></button>
+        <!--<button><a href = "ProductServlet"> View Products </button>-->
+        <div align = "center">
+            <h2> Available Products: </h2>
+            <jsp:include page="products.jsp" flush = "true"/> 
+        </div>
     </body>
 </html>
 <link rel="stylesheet" href="./css/profile.css">

@@ -1,3 +1,10 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+package controllers;
+
+import models.dao.*;
 package controllers;
 
 import DAO.DBConnector;
@@ -6,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,11 +22,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.*;
 
+/**
+ *
+ * @author mjra9
+ */
 public class ConnServlet extends HttpServlet {
     private DBConnector db;
     private DBManager manager;
     private Connection conn;
-
+    
+    //this function runs once you load in the index page
+    //make sure to include:
+    //<jsp:include page="/ConnServlet" flush = "true">
+    //in index.jsp file
+    
     @Override
     public void init(){
         try{
