@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 public class Validator {
     
     //Place patterns here
-    private final String stringPattern = "^[a-zA-Z]{0,50}$"; //String size <= 50 and only chars (fname, lname, city, street, country)
+    private final String stringPattern = "^[a-zA-Z ]{0,50}$"; //String size <= 50 and only chars (fname, lname, city, street, country)
     private final String emailPattern = "([a-zA-Z0-9]+)(([._-])([a-zA-Z0-9]+))*(@)([a-z]+)(.)([a-z]{3})((([.])[a-z]{0,2})*)"; //Copied from tut
     private final String passwordPattern = "^.{8,}$"; //Minimum string length = 8
     private final String postcodePattern = "\\d{4}"; //4 digits
