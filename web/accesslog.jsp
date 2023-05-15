@@ -10,7 +10,6 @@
     <h1 align="center">Access logs</h1>
     
     <form action="accesslogController" method="post">
-        <!-- Include any form fields or input elements here -->
         <div style="text-align: center;">
             <input type="submit" value="Show Access Logs">
         </div>
@@ -19,8 +18,7 @@
     
     <% ArrayList<ArrayList<String>> accessLogs = (ArrayList<ArrayList<String>>) request.getAttribute("accessLogs");
     
-    
-    // Check if accessLogs is not null and not empty before iterating and displaying the data
+
     if (accessLogs != null && !accessLogs.isEmpty()) {
     %>
         <table align="center">
