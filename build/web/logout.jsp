@@ -5,7 +5,7 @@
     Author     : @author Wilson 14269118
 --%>
 
-<%@page import="DAO.DBManager"%>
+<%@page import="models.dao.DBManager"%>
 <%@page import="models.AccessLog"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="models.User" %>
