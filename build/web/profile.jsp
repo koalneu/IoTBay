@@ -5,7 +5,7 @@
     Author     : @author Wilson 14269118
 --%>
 
-<%@page import="DAO.DBManager"%>
+<%@page import="models.dao.DBManager"%>
 <%@page import="controllers.Validator"%>
 <%@page import="models.AccessLog"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -28,6 +28,9 @@
         <%
             //Set the current user object by retrieving data from the session
             User user = (User)session.getAttribute("user");
+            //operations for order history
+            String saved = "saved";
+            String payed = "payed";
         %>
         <h1>Profile Page</h1>
         
@@ -58,6 +61,9 @@
         </table>
         <button><a href="index.jsp">Back</a></button>
         <button><a href="edit.jsp">Edit Details</a></button>
+        <button><a href="OrderHistoryController?action=<%=saved%>">View Saved orders</a></button>
+        <button><a href="OrderHistoryController?action=<%=payed%>"">View Order History</a></button>
     </body>
+    
 </html>
 <link rel="stylesheet" href="./css/profile.css">

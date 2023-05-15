@@ -1,5 +1,5 @@
 <%@ page import="controllers.Validator" %>
-<%@ page import="DAO.DBManager" %>
+<%@ page import="models.dao.DBManager" %>
 <%@ page import="models.User" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.Objects" %>
@@ -37,8 +37,11 @@
         %>
                         </div>
         </div>
-
+                <div align = "center">
+                        <button><a href = "ProductServlet"> View Products </a></button>
+                </div>
         <jsp:include page="/ConnServlet" flush="true"/>
+        <%--<jsp:include page = "products.jsp" flush ="true"/>--%>
     </body>
 </html>
 <link rel="stylesheet" href="./css/index.css"/>

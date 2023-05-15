@@ -1,6 +1,7 @@
 package controllers;
 
-import DAO.DBManager;
+//import DAO.DBManager;
+import models.dao.DBManager;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -55,7 +56,7 @@ public class loginController extends HttpServlet {
                     // Handle the exception
                 }
             }
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             // Handle the exception
         }
     }

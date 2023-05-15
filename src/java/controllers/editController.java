@@ -1,6 +1,6 @@
 package controllers;
 
-import DAO.DBManager;
+//import DAO.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.User;
+import models.dao.DBManager;
 
 /**
  *
@@ -42,42 +43,42 @@ public class editController extends HttpServlet {
         //Validate inputs
         if(!validator.validateStringPattern(fname)){
             session.setAttribute("fnameErr", "Error: first name must be less than 50 characters");
-            System.out.println("fname");
+            //System.out.println("fname");
             request.getRequestDispatcher("edit.jsp").include(request, response);
         }
         else if(!validator.validateStringPattern(lname)){
             session.setAttribute("lnameErr", "Error: last name must be less than 50 characters");
-            System.out.println("lnam");
+            //System.out.println("lnam");
             request.getRequestDispatcher("edit.jsp").include(request, response);
         }
         else if(!validator.validateEmail(email)){
             session.setAttribute("emailErr", "Error: email format incorrect");
-            System.out.println("em");
+            //System.out.println("em");
             request.getRequestDispatcher("edit.jsp").include(request, response);
         }
         else if(!validator.validatePassword(password)){
             session.setAttribute("passwordErr", "Error: password must be at least 8 characters");
-            System.out.println("pas");
+            //System.out.println("pas");
             request.getRequestDispatcher("edit.jsp").include(request, response);
         }
         else if(!validator.validateStringPattern(street)){
             session.setAttribute("streetErr", "Error: street name must be less than 50 characters");
-            System.out.println("st");
+            //System.out.println("st");
             request.getRequestDispatcher("edit.jsp").include(request, response);
         }
         else if(!validator.validateStringPattern(city)){
             session.setAttribute("cityErr", "Error: city name must be less than 50 characters");
-            System.out.println("c");
+            //System.out.println("c");
             request.getRequestDispatcher("edit.jsp").include(request, response);
         }
         else if(!validator.validatepostCode(postcode)){
             session.setAttribute("postcodeErr", "Error: postcode format incorrect");
-            System.out.println("pc");
+            //System.out.println("pc");
             request.getRequestDispatcher("edit.jsp").include(request, response);
         }
         else if(!validator.validateStringPattern(country)){
             session.setAttribute("countryErr", "Error: country name must be less than 50 characters");
-            System.out.println("c");
+            //System.out.println("c");
             request.getRequestDispatcher("edit.jsp").include(request, response);
         }
         else{

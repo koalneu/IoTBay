@@ -18,40 +18,56 @@
             Order order = (Order) session.getAttribute("order");
             User user = (User) session.getAttribute("user");
             double totalPrice = 0;
+            String add = "+";
+            String subtract = "-";
             
         %>
             <div align = "center">
                 <h1>Current Order:</h1>
 
-                <h2 align> User:<%= user.getUserFirstName() + user.getUserLastName()%></h2>
-                <%if(order != null) {%>
-                <form method = "post" action = "/OrderController">
+                <h2 align> User: <%= user.getUserFirstName() + " " +  user.getUserLastName()%></h2>
+                <%if (order == null){%>
+                    <p> Order is currently empty please add products to your order using the previous page</p>  
+                <%}else if(!(order.getOrderLine().isEmpty())) {%>
+                
                     <table cellspacing = "10">
                         <tr>
                             <th> Product: </th>
                             <th> Quantity: </th>
                             <th> Price: </th>
                         </tr>
-                            <% for(Map.Entry<Product, Integer> product : order.getProducts().entrySet()){ 
-                            String name = product.getKey().getName(); 
-                            int quantity = product.getValue();
-                            double price =product.getKey().getPrice();
-                            totalPrice += price * quantity;
+                            <% 
+                           
+                            for(OrderLine product : order.getOrderLine()){ 
+                                String name = product.getProduct().getProductName(); 
+                                int quantity = product.getQuantity();
+                                double price = product.getPrice();
+                                totalPrice += price;
+                                
                             %>
                                 <tr>
                                     <td><%=name%></td>
-                                    <td><%=quantity%></td>
-                                    <td>$<%=price * quantity%></td>
+                                    <td>
+                                        <button><a href = "OrderLineController?productName=<%=name%>&operation=<%=subtract%>"> - </a></button> 
+                                            <%=quantity%>  
+                                         <button><a href = "OrderLineController?productName=<%=name%>&operation=<%=add%>"> + </a></button>
+                                    </td>
+                                    <td>$<%=price%></td>
                                 </tr>
                             <% }%>
                     </table>
                             <p> Total = $<%= totalPrice%> </p>
+                            
+                <form method = "post" action = "/OrderLineController">
                     <input type = "submit" value = "Proceed to checkout"/>
+                    <!--<button><a href = "OrderLineController" > Proceed to checkout </button>-->
                 </form>
             </div>
             
         <%}else { %>
-            <p> Order is currently empty please add products to your order using the previous page</p>
+        <p>
+            Order is currently empty <a href = "OrderLineController"> Click here </a> to go back and browse products. 
+        </p>
         <%}%>
        
     </body>

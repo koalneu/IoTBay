@@ -12,6 +12,12 @@
         <title>Checkout</title>
     </head>
     <body>
+        <%
+            String saveOrder = "save";
+            String payOrder = "pay";
+        %>
         <h1>Insert checkout here!</h1>
+        <button><a href = "CheckoutController?action=<%=saveOrder%>"> Pay later</a></button>
+        <button><a href = "CheckoutController?action=<%=payOrder%>"> Pay Order</a></button>
     </body>
 </html>
