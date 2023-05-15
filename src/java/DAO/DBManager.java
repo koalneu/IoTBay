@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
 import models.User;
 
 public class DBManager {
@@ -17,6 +18,48 @@ public class DBManager {
     public DBManager(Connection conn) throws SQLException{
         st = conn.createStatement();
         this.conn = conn;
+    }
+    
+    public ArrayList<ArrayList<String>> getAccessLogs(String email){
+        try{
+            // Retrieve the ID from the Email
+            String fetch = "SELECT * FROM CUSTOMERS WHERE CUSTOMEREMAIL = ?";
+            PreparedStatement stmt = conn.prepareStatement(fetch);
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            String ID = rs.getString("CUSTOMERID");
+            // END OF THE FUNCTION
+            ArrayList<ArrayList<String>> accessLogs = new ArrayList<>();
+           
+            String query = "SELECT * FROM ACCESSLOGS WHERE USERID = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, Integer.parseInt(ID));
+            ResultSet resultSet = statement.executeQuery();
+                
+            while(resultSet.next()){
+                ArrayList<String> logEntry = new ArrayList<>();
+                
+                int accessLogID = resultSet.getInt("ACCESSLOGID");
+                String userName = resultSet.getString("USERNAME");
+                String accessTime = resultSet.getString("ACCESSTIME");
+                String action = resultSet.getString("ACTION");
+                
+                logEntry.add(accessLogID+"");
+                logEntry.add(ID+"");
+                logEntry.add(userName);
+                logEntry.add(accessTime);
+                logEntry.add(action);
+                
+                accessLogs.add(logEntry);
+            }
+            
+            return accessLogs;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null; 
     }
     
     public User authenticateUser(String email, String password) {
