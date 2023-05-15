@@ -24,6 +24,7 @@
         %>
             <button class="headerBtn"><a href="logout.jsp">Logout</a></button>
             <button class="headerBtn"><a href="profile.jsp">Profile</a></button>
+            <button class="headerBtn"><a href="accesslog.jsp">Access logs</a></button>
         
         <%
             } else {
