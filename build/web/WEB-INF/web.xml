@@ -72,6 +72,14 @@
         <servlet-name>EditPaymentController</servlet-name>
         <url-pattern>/EditPaymentController</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DeletePaymentController</servlet-name>
+        <servlet-class>controllers.DeletePaymentController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeletePaymentController</servlet-name>
+        <url-pattern>/DeletePaymentController</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>
         <url-pattern>/ConnServlet</url-pattern>

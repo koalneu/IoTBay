@@ -460,7 +460,17 @@ public class DBManager {
         } catch (SQLException ex) {
             System.out.println("Error Establishing Connection!");
             ex.printStackTrace();
+        }
     }
+    //delete payment method entry
+    public void deletePaymentMethod(String email){
+        try{
+            PreparedStatement delete = conn.prepareStatement("DELETE FROM PAYMENTMETHOD WHERE PAYMETHODID=(SELECT CUSTOMERID FROM CUSTOMER WHERE CUSTOMEREMAIL='"+email+"')");
+            delete.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error Establishing Connection!");
+            ex.printStackTrace();
+        }
     }
 }
     

@@ -42,7 +42,8 @@
                 </tr>
                 <tr>
                     <th><button><a href="index.jsp">Cancel</a></button></th>
-                    <th><button><a href="editpaymentprofile.jsp">Edit payment details</a></button></th>
+                    <th><button><a href="deletepayment.jsp">Delete details</a></button></th>
+                    <th><button><a href="editpaymentprofile.jsp">Edit details</a></button></th>
                 </tr>
             </table>
         </form>
