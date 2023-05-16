@@ -25,14 +25,6 @@
         <form method="post" >
             <table class="payment-table" align="center" >
                 <tr>
-                    <th><label>Payment Amount:</label></th>
-                    <th><input 
-                            type="text" name="paymentAmount"
-                            placeholder="Enter amount..." 
-                        />
-                    </th>
-                </tr>
-                <tr>
                     <th><label>Card Number:</label></th>
                     <th>${paymethod.payMethodCardNo}</th>
                 </tr>
@@ -61,14 +53,6 @@
         <h1>Add New Payment Details</h1>
         <form method="post" action="PaymentController" >
             <table align="center" >
-                <tr>
-                    <th><label>Payment Amount:</label></th>
-                    <th><input 
-                            type="text" name="paymentAmount"
-                            placeholder="Enter amount..." 
-                        />
-                    </th>
-                </tr>
                 <tr>
                     <th><label>Card Number:</label></th>
                     <th>

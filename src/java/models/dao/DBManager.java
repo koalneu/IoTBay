@@ -370,7 +370,7 @@ public class DBManager {
         }
         return false;
     }
-
+    //create payment entry
     public void addPayment(int amount ) throws SQLException{
         try {
             //statement
@@ -394,16 +394,15 @@ public class DBManager {
             
         }
     }
-    
-    public void addPayMethod(int cardno, String cardname, String cardDate, int cardcvv) throws SQLException {
+    //create paymethod entry
+    public void addPayMethod(String email, int cardno, String cardname, String cardDate, int cardcvv) throws SQLException {
         try {
             //statement
             Statement statement = conn.createStatement();
             String command = "INSERT INTO PAYMENTMETHOD(PAYMETHODID, PAYMETHODCARDNO, PAYMETHODCARDHOLDER, PAYMETHODCARDSECURITY,PAYMETHODCARDEXPIRY) VALUES(?,?,?,?,?)";
             PreparedStatement pst = conn.prepareStatement(command);
-            //calculate the new ID
-            String rows = "select count(*) from PAYMENTMETHOD";
-            ResultSet retrieveResult = statement.executeQuery(rows);
+            //set id to customer's id
+            ResultSet retrieveResult = statement.executeQuery("SELECT CUSTOMERID FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
             retrieveResult.next();
             int ID = retrieveResult.getInt(1);
             pst.setObject(1, ID);
@@ -415,21 +414,22 @@ public class DBManager {
             
             System.out.println("done");
         } catch (Error e){
-            
         }
     }
     //get payment method
-    public PaymentMethod getPayMethod(int cardNo){
+    public PaymentMethod getPayMethod(String email){
         try {
         System.out.println("here1");
-        ResultSet resultSet = st.executeQuery("SELECT * FROM PAYMENTMETHOD WHERE PAYMETHODCARDNO = "+cardNo+"");
+        //get all payment methods using customer email to get customer id
+        //paymethodid == customerid
+        ResultSet resultSet = st.executeQuery("SELECT*FROM PAYMENTMETHOD WHERE PAYMETHODID=(SELECT CUSTOMERID FROM CUSTOMER WHERE  CUSTOMEREMAIL = '" + email + "')");
         if(!resultSet.next()){
             return null;
         }        
         //Copy items from DB into a payment method object
         PaymentMethod paymethod = new PaymentMethod(
             resultSet.getInt("PAYMETHODID"),
-            cardNo,
+            resultSet.getInt("PAYMETHODCARDNO"),
             resultSet.getString("PAYMETHODCARDHOLDER"), 
             resultSet.getInt("PAYMETHODCARDSECURITY"), 
             resultSet.getDate("PAYMETHODCARDEXPIRY")
@@ -440,6 +440,18 @@ public class DBManager {
         ex.printStackTrace();
     }
     return null;
+    }
+    //update payment method entry
+    public void updatePaymentMethod(int cardno, String cardname, String cardDate, int cardcvv) throws Exception{
+        try {
+            //statement
+            Statement statement = conn.createStatement();
+            String command = "INSERT INTO PAYMENTMETHOD(PAYMETHODID, PAYMETHODCARDNO, PAYMETHODCARDHOLDER, PAYMETHODCARDSECURITY,PAYMETHODCARDEXPIRY) VALUES(?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(command);   
+        } catch (SQLException ex) {
+            System.out.println("Error Establishing Connection!");
+            ex.printStackTrace();
+    }
     }
 }
     

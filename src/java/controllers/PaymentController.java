@@ -29,18 +29,19 @@ public class PaymentController extends HttpServlet{
         HttpSession session = request.getSession();
 
         //Retrieve created payment details
-        int amount = Integer.parseInt(request.getParameter("paymentAmount"));
+        //int amount = Integer.parseInt(request.getParameter("paymentAmount"));
         int cardNo = Integer.parseInt(request.getParameter("cardno"));
         int cvv = Integer.parseInt(request.getParameter("cardcvv"));
         String cardName = request.getParameter("cardname");
         String cardDate = request.getParameter("cardexpiry");        
         DBManager manager = (DBManager) session.getAttribute("manager");
+        User user = (User)session.getAttribute("user");
         
         try {
-            manager.addPayment(amount);
-            manager.addPayMethod(cardNo,cardName, cardDate, cvv);
+            //manager.addPayment(amount);
+            manager.addPayMethod(user.getUserEmail(),cardNo,cardName, cardDate, cvv);
             //set session attribute for payment to be the returned payment object
-            PaymentMethod paymethod = manager.getPayMethod(cardNo);
+            PaymentMethod paymethod = manager.getPayMethod(user.getUserEmail());
             session.setAttribute("paymethod", paymethod);
             request.getRequestDispatcher("index.jsp").include(request, response);
         } catch (SQLException ex) {

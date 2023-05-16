@@ -27,7 +27,7 @@ public class EditPaymentController extends HttpServlet {
         HttpSession session = request.getSession();
         
         //Retrieve updated payment details
-        int amount = Integer.parseInt(request.getParameter("paymentAmount"));
+        //int amount = Integer.parseInt(request.getParameter("paymentAmount"));
         int cardNo = Integer.parseInt(request.getParameter("cardno"));
         int cvv = Integer.parseInt(request.getParameter("cardcvv"));
         String cardName = request.getParameter("cardname");
@@ -35,7 +35,7 @@ public class EditPaymentController extends HttpServlet {
         DBManager manager = (DBManager) session.getAttribute("manager");
         
         try {
-            
+            //update payment details to customer's payment details using email value column
         } catch (SQLException ex) {
              Logger.getLogger(PaymentController.class.getName()).log(Level.SEVERE, null, ex);
          }  

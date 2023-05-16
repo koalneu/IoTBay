@@ -21,14 +21,6 @@
         <form method="post" >
             <table class="payment-table" align="center" >
                 <tr>
-                    <th><label>Payment Amount:</label></th>
-                    <th><input 
-                            type="text" name="paymentAmount"
-                            placeholder="Enter amount..." 
-                        />
-                    </th>
-                </tr>
-                <tr>
                     <th><label>Card Number:</label></th>
                     <th>
                         <input 
@@ -63,7 +55,7 @@
                 </tr>
                 <tr>
                     <th><button><a href="payment.jsp">Cancel</a></button></th>
-                    <th><button><a>Edit payment details</a></button></th>
+                    <th><button><a>Update payment details</a></button></th>
                 </tr>
             </table>
         </form>
