@@ -419,14 +419,18 @@ public class DBManager {
         }
     }
     //get payment method
-    public PaymentMethod getPayMethod(String cardName){
+    public PaymentMethod getPayMethod(int cardNo){
         try {
         System.out.println("here1");
-        ResultSet resultSet = st.executeQuery("SELECT * FROM PAYMENTMETHOD WHERE PAYMETHODCARDHOLER = '" + cardName + "'");
+        ResultSet resultSet = st.executeQuery("SELECT * FROM PAYMENTMETHOD WHERE PAYMETHODCARDNO = "+cardNo+"");
+        if(!resultSet.next()){
+            return null;
+        }        
         //Copy items from DB into a payment method object
         PaymentMethod paymethod = new PaymentMethod(
-            resultSet.getInt("PAYMETHODCARDNO"), 
-            cardName,
+            resultSet.getInt("PAYMETHODID"),
+            cardNo,
+            resultSet.getString("PAYMETHODCARDHOLDER"), 
             resultSet.getInt("PAYMETHODCARDSECURITY"), 
             resultSet.getDate("PAYMETHODCARDEXPIRY")
         );

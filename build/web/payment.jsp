@@ -18,6 +18,7 @@
             PaymentMethod paymethod = (PaymentMethod) session.getAttribute("paymethod");
 
             if (paymethod != null) {
+                System.out.println("is not null");
                 //has payment details created
         %>
         <h1>Update Payment Details</h1>
@@ -71,7 +72,9 @@
         </form>
         <%
             } else {
-                //Guest User
+                System.out.println("is null");
+                //System.out.println(paymethod.getPayMethodCardNo());
+                //No payment details
         %>
         <h1>Add New Payment Details</h1>
         <form method="post" action="PaymentController" >
@@ -81,6 +84,7 @@
                     <th><input 
                             type="text" name="paymentAmount"
                             placeholder="Enter amount..." 
+                            value="${paymethod.cardHolder}"
                         />
                     </th>
                 </tr>
@@ -90,6 +94,8 @@
                         <input 
                             type="text" name="cardno" 
                             placeholder="Enter credit card number..." 
+                            value="${user.userEmail}"
+
                         />
                     </th>
                 </tr>

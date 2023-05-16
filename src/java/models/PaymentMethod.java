@@ -24,7 +24,8 @@ public class PaymentMethod implements Serializable{
     private int payMethodCardSecurity;
     private Date payMethodCardExpiry;
 
-    public PaymentMethod(int payMethodCardNo, String payMethodCardHolder, int payMethodCardSecurity, Date payMethodCardExpiry) {
+    public PaymentMethod(int payMethodID, int payMethodCardNo, String payMethodCardHolder, int payMethodCardSecurity, Date payMethodCardExpiry) {
+        this.payMethodID = payMethodID;
         this.payMethodCardNo = payMethodCardNo;
         this.payMethodCardHolder = payMethodCardHolder;
         this.payMethodCardSecurity = payMethodCardSecurity;
