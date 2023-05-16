@@ -40,7 +40,8 @@ public class PaymentController extends HttpServlet{
             manager.addPayment(amount);
             manager.addPayMethod(cardNo,cardName, cardDate, cvv);
             //set session attribute for payment to be the returned payment object
-            
+            PaymentMethod paymethod = manager.getPayMethod(cardName);
+            session.setAttribute("paymethod", paymethod);
             request.getRequestDispatcher("index.jsp").include(request, response);
         } catch (SQLException ex) {
              Logger.getLogger(PaymentController.class.getName()).log(Level.SEVERE, null, ex);

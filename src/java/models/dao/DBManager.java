@@ -423,12 +423,7 @@ public class DBManager {
         try {
         System.out.println("here1");
         ResultSet resultSet = st.executeQuery("SELECT * FROM PAYMENTMETHOD WHERE PAYMETHODCARDHOLER = '" + cardName + "'");
-        //Check if a email has not been found
-        if(!resultSet.next()){
-            return null;
-            
-        }
-        //Copy items from DB into a user object
+        //Copy items from DB into a payment method object
         PaymentMethod paymethod = new PaymentMethod(
             resultSet.getInt("PAYMETHODCARDNO"), 
             cardName,
