@@ -1,6 +1,7 @@
 package controllers;
 
-import DAO.DBManager;
+//import DAO.DBManager;
+import models.dao.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ public class logoutController extends HttpServlet {
         try {
             manager.addAccessLogEntry(user.getUserEmail(), user.getUserFirstName(), "Log out");
             session.invalidate();
-            
+  
             response.sendRedirect("index.jsp");
         } catch (SQLException ex) {
             Logger.getLogger(logoutController.class.getName()).log(Level.SEVERE, null, ex);

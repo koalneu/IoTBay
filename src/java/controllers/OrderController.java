@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -44,12 +45,14 @@ public class OrderController extends HttpServlet {
         if(productName != null){
             User user = (User) session.getAttribute("user");
             Order order = (Order) session.getAttribute("order");
-            LinkedList<Product> products = (LinkedList<Product>) session.getAttribute("products");
+            ArrayList<Product> products = (ArrayList<Product>) session.getAttribute("products");
             Product productAdded = new Product();
             for(Product product : products){
                 if(product.getProductName().equals(productName)){
                     productAdded = product;
                 }
+            } if(user == null){
+                //user = new User();
             }
             if(order == null){
                 try{
@@ -57,22 +60,20 @@ public class OrderController extends HttpServlet {
                 }catch(SQLException ex){
                     System.out.print("unable to get user ID in orderController");
                 }
-                order.getProducts().put(productAdded, 1);
+                order.addToOrderLine(new OrderLine (productAdded, order.getOrderID(), 1));
             }
-            else if (order.getProducts().containsKey(productAdded)){
-                HashMap<Product, Integer> productsInOrder = order.getProducts();
-                productsInOrder.put(productAdded, productsInOrder.get(productAdded) + 1);
-
+            else if (order.checkProduct(productAdded) != null){
+                OrderLine productToAdd = order.checkProduct(productAdded);
+                order.addQuantity(productToAdd);
             }
             else{
-                HashMap<Product, Integer> productsInOrder = order.getProducts();
-                productsInOrder.put(productAdded, 1);
+                order.addToOrderLine(new OrderLine(productAdded, order.getOrderID(), 1));
             }
             session.setAttribute("order", order);
-            request.getRequestDispatcher("profile.jsp").include(request, response);
-        }
+            request.getRequestDispatcher("products.jsp").include(request, response);
+        } 
         else{
-            request.getRequestDispatcher("order.jsp").include(request, response);
+            request.getRequestDispatcher("cart.jsp").include(request, response);
         }
     }
 
@@ -87,7 +88,7 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("checkout.jpg").include(request, response);
+        
     }
 
 

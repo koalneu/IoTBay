@@ -38,7 +38,7 @@ public class ProductController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
-        ArrayList<Product> products = new ArrayList<Product>();
+        ArrayList<Product> products = new ArrayList<>();
         try{
             products = manager.fetchProducts();  
         } catch(SQLException ex){

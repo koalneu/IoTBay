@@ -32,6 +32,18 @@
         <servlet-name>staffServlet</servlet-name>
         <servlet-class>controllers.staffServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderLineController</servlet-name>
+        <servlet-class>controllers.OrderLineController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckoutController</servlet-name>
+        <servlet-class>controllers.CheckoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderHistoryController</servlet-name>
+        <servlet-class>controllers.OrderHistoryController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -85,8 +97,16 @@
         <url-pattern>/OrderController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PaymentController</servlet-name>
-        <url-pattern>/PaymentController</url-pattern>
+        <servlet-name>OrderLineController</servlet-name>
+        <url-pattern>/OrderLineController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutController</servlet-name>
+        <url-pattern>/CheckoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryController</servlet-name>
+        <url-pattern>/OrderHistoryController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

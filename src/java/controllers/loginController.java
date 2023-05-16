@@ -1,6 +1,7 @@
 package controllers;
 
-import DAO.DBManager;
+//import DAO.DBManager;
+import models.dao.DBManager;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -34,7 +35,7 @@ public class loginController extends HttpServlet {
                 // Take the user back to the login.jsp page
                 // Provide an error message
                 session.setAttribute("loginErr", "Invalid credentials. Please try again.");
-                request.getRequestDispatcher("login.jsp").include(request,   response);
+                request.getRequestDispatcher("login.jsp").include(request, response);
             } else {
                 // Correct details
                 session.setAttribute("user", user);
@@ -55,7 +56,7 @@ public class loginController extends HttpServlet {
                     // Handle the exception
                 }
             }
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             // Handle the exception
         }
     }
