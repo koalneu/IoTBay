@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.User;
@@ -160,6 +161,52 @@ public class DBManager {
         }
            
     }
+
+     public void addPayment(int amount ) throws SQLException{
+        try {
+            //statement
+            Statement statement = conn.createStatement();
+            String command = "INSERT INTO PAYMENT(PAYMENTID, PAYMETHODID, PAYMENTAMOUNT) VALUES(?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(command);
+            //calculate the new ID
+            String rows = "select count(*) from PAYMENT";
+            ResultSet retrieveResult = statement.executeQuery(rows);
+            retrieveResult.next();
+            int ID = retrieveResult.getInt(1);
+            pst.setObject(1, ID);
+            pst.setObject(2, ID);
+            pst.setObject(3, amount);
+            
+            pst.executeUpdate();
+            
+            //copy items into a new payment + payment method object
+            
+        } catch (Error e) {
+            
+        }
+    }
     
-    
+    public void addPayMethod(int cardno, String cardname, String cardDate, int cardcvv) throws SQLException {
+        try {
+            //statement
+            Statement statement = conn.createStatement();
+            String command = "INSERT INTO PAYMENTMETHOD(PAYMETHODID, PAYMETHODCARDNO, PAYMETHODCARDHOLDER, PAYMETHODCARDSECURITY,PAYMETHODCARDEXPIRY) VALUES(?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(command);
+            //calculate the new ID
+            String rows = "select count(*) from PAYMENTMETHOD";
+            ResultSet retrieveResult = statement.executeQuery(rows);
+            retrieveResult.next();
+            int ID = retrieveResult.getInt(1);
+            pst.setObject(1, ID);
+            pst.setObject(2, cardno);
+            pst.setObject(3, cardname);
+            pst.setObject(4, cardcvv);
+            pst.setDate(5, java.sql.Date.valueOf(cardDate));
+            pst.executeUpdate();   
+            
+            System.out.println("done");
+        } catch (Error e){
+            
+        }
+    }
 }

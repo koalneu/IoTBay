@@ -33,9 +33,9 @@
                             <th> Price: </th>
                         </tr>
                             <% for(Map.Entry<Product, Integer> product : order.getProducts().entrySet()){ 
-                            String name = product.getKey().getName(); 
+                            String name = product.getKey().getProductName(); 
                             int quantity = product.getValue();
-                            double price =product.getKey().getPrice();
+                            double price =product.getKey().getProductPrice();
                             totalPrice += price * quantity;
                             %>
                                 <tr>

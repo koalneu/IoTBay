@@ -24,7 +24,11 @@
         %>
             <button class="headerBtn"><a href="logout.jsp">Logout</a></button>
             <button class="headerBtn"><a href="profile.jsp">Profile</a></button>
-        
+            <button class="headerBtn"><a href="products.jsp">Product</a></button>
+            <button class="headerBtn"><a href="payment.jsp">Payment</a></button>
+            <button class="headerBtn"><a href="paymentprofile.jsp">Pay Details</a></button>
+            <button class="headerBtn"><a href="order.jsp">Order</a></button>
+
         <%
             } else {
                 //Guest User

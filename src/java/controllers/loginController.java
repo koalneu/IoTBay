@@ -34,7 +34,7 @@ public class loginController extends HttpServlet {
                 // Take the user back to the login.jsp page
                 // Provide an error message
                 session.setAttribute("loginErr", "Invalid credentials. Please try again.");
-                request.getRequestDispatcher("login.jsp").include(request, response);
+                request.getRequestDispatcher("login.jsp").include(request,   response);
             } else {
                 // Correct details
                 session.setAttribute("user", user);
