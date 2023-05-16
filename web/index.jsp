@@ -25,7 +25,13 @@
         %>
             <button class="headerBtn"><a href="logout.jsp">Logout</a></button>
             <button class="headerBtn"><a href="profile.jsp">Profile</a></button>
+            <%
+                if (user.getUserType().equals("Staff")) {
+            %>
             <button class="headerBtn"><a href="staffProducts.jsp">Staff Products</a></button>
+            <%
+                }
+            %>
         
         <%
             } else {

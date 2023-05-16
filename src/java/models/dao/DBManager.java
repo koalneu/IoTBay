@@ -215,10 +215,21 @@ public class DBManager {
     }
     //add product to database
     public void addProduct(String name, String desc, double price, String image, int stock) throws SQLException {
-        String rows = "SELECT COUNT(*) FROM PRODUCT";
+        /*String rows = "SELECT COUNT(*) FROM PRODUCT";
         ResultSet retrieveResult = st.executeQuery(rows);
         retrieveResult.next();
-        int ID = retrieveResult.getInt(1);
+        int ID = retrieveResult.getInt(1); */
+        String query = "SELECT * FROM IOTADMIN.PRODUCT";
+        ResultSet rs = st.executeQuery(query);
+        int ID = 0;
+        while (rs.next()) {
+            int temp = rs.getInt(1) + 1;
+            if (temp > ID) {
+                ID = temp;
+            }
+        }
+        
+        //System.out.println("New product ID: " + ID);
         st.executeUpdate("INSERT INTO IOTADMIN.PRODUCT " + "(PRODUCTID, PRODUCTNAME, PRODUCTDESC, PRODUCTPRICE, PRODUCTIMAGE, PRODUCTSTOCK)" + " VALUES ("+ID+", '"+name+"', '"+desc+"', "+price+", '"+image+"', "+stock+")");
     }
     //update all details of a product by ID
@@ -255,6 +266,27 @@ public class DBManager {
             String image = rs.getString(5);
             int stock = rs.getInt(6);
             temp.add(new Product(id, name, desc, price, image, stock));
+        }
+        return temp;
+    }
+    public ArrayList<Product> fetchPopular() throws SQLException {
+        String fetch = "SELECT * FROM PRODUCT";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Product> temp = new ArrayList();
+        int count = 0;
+        while (count < 5) {
+            while (rs.next()) {
+                int stock = rs.getInt(6);
+                if (stock < 10) {
+                    int id = rs.getInt(1);
+                    String name = rs.getString(2);
+                    String desc = rs.getString(3);
+                    double price = rs.getDouble(4);
+                    String image = rs.getString(5);
+                    temp.add(new Product(id, name, desc, price, image, stock));
+                    count++;
+                }
+            }
         }
         return temp;
     }

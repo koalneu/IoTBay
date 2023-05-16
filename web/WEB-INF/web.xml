@@ -113,6 +113,14 @@
         <servlet-name>ProductClickController</servlet-name>
         <url-pattern>/ProductClickController</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteProductController</servlet-name>
+        <servlet-class>controllers.DeleteProductController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteProductController</servlet-name>
+        <url-pattern>/DeleteProductController</url-pattern>
+    </servlet-mapping>
 
     <session-config>
         <session-timeout>

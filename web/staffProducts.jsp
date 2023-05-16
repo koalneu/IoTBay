@@ -53,7 +53,7 @@
             }
         %>
             <%
-                if (productList == null) {
+                if (productList.isEmpty()) {
                     System.out.println("No products found");
             %>
             <tr>

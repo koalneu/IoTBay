@@ -35,6 +35,7 @@
             if (user.getUserType().equals("Staff")) {
         %>
         <button><a href="staffEditProduct.jsp">Edit product details</a></button>
+        <button><a href="DeleteProductController?productID=${product.productID}">Delete product</a></button>
         <%
             } else {
         %>
