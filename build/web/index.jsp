@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="models.Product"%>
 <%@ page import="controllers.Validator" %>
 <%@ page import="models.dao.DBManager" %>
 <%@ page import="models.User" %>
@@ -18,16 +20,16 @@
             <%
             User user = (User) session.getAttribute("user");
             boolean isLoggedIn = (user != null && !Objects.equals(user.getUserEmail(), ""));
+            DBManager manager = (DBManager) session.getAttribute("manager");
 
             if (isLoggedIn) {
                 //Logged In
         %>
             <button class="headerBtn"><a href="logout.jsp">Logout</a></button>
-            <button class="headerBtn"><a href="profile.jsp">Profile</a></button>
-        
+            <button class="headerBtn"><a href="profile.jsp">Profile</a></button>      
         <%
             } else {
-                //Guest User
+                //Guest User ${pageContext.request.contextPath}/
         %>
 
                         <th><button class="headerBtn"><a href="login.jsp">Login</a></button></th>
@@ -35,11 +37,16 @@
         <%
             }
         %>
-                        </div>
+                        
+        
         </div>
-                <div align = "center">
-                        <button><a href = "ProductServlet"> View Products </a></button>
-                </div>
+        </div>
+        
+        <div class="centerBttn" align="center">
+            <button><a href="staffProducts.jsp">View All Products</a></button>
+        </div>
+                        
+
         <jsp:include page="/ConnServlet" flush="true"/>
         <%--<jsp:include page = "products.jsp" flush ="true"/>--%>
     </body>

@@ -30,5 +30,6 @@
                 */
             %>
         </form>
+        <button class="headerBtn"><a href="staffProducts.jsp">Staff Products</a></button>
     </body>
 </html>

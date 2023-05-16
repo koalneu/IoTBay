@@ -1,6 +1,5 @@
 package controllers;
 
-//import DAO.DBManager;
 import models.dao.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
