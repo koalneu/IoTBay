@@ -28,7 +28,6 @@ public class Payment implements Serializable {
         this.paymentID = paymentID;
         this.payMethodID = payMethodID;
         this.paymentAmount = paymentAmount;
-        PaymentMethod paymethod = new PaymentMethod();
     }
 
     public int getPaymentID() {

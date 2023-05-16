@@ -418,6 +418,30 @@ public class DBManager {
             
         }
     }
+    //get payment method
+    public PaymentMethod getPayMethod(String cardName){
+        try {
+        System.out.println("here1");
+        ResultSet resultSet = st.executeQuery("SELECT * FROM PAYMENTMETHOD WHERE PAYMETHODCARDHOLER = '" + cardName + "'");
+        //Check if a email has not been found
+        if(!resultSet.next()){
+            return null;
+            
+        }
+        //Copy items from DB into a user object
+        PaymentMethod paymethod = new PaymentMethod(
+            resultSet.getInt("PAYMETHODCARDNO"), 
+            cardName,
+            resultSet.getInt("PAYMETHODCARDSECURITY"), 
+            resultSet.getDate("PAYMETHODCARDEXPIRY")
+        );
+        return paymethod;
+    } catch (SQLException ex) {
+        System.out.println("Error Establishing Connection!");
+        ex.printStackTrace();
+    }
+    return null;
+    }
 }
     
     

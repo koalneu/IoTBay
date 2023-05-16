@@ -14,3 +14,21 @@ h1 {
 form {
     text-align: center;
 }
+body {
+    text-align: center;
+    align-content: center;
+}
+
+.payment-table{
+    text-align: center;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#paymentprofile-table {
+    text-align: center;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
