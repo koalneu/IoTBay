@@ -18,7 +18,7 @@
             PaymentMethod paymethod = (PaymentMethod) session.getAttribute("paymethod");
         %>
         <h1>Update Payment Details</h1>
-        <form method="post" >
+        <form method="post" action="EditPaymentController" >
             <table class="payment-table" align="center" >
                 <tr>
                     <th><label>Card Number:</label></th>
@@ -55,7 +55,7 @@
                 </tr>
                 <tr>
                     <th><button><a href="payment.jsp">Cancel</a></button></th>
-                    <th><button><a>Update payment details</a></button></th>
+                    <th><input type="submit" value="Update payment details" /></th>
                 </tr>
             </table>
         </form>

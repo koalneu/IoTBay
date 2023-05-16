@@ -442,12 +442,21 @@ public class DBManager {
     return null;
     }
     //update payment method entry
-    public void updatePaymentMethod(int cardno, String cardname, String cardDate, int cardcvv) throws Exception{
+    public void updatePaymentMethod(String email, int cardno, String cardname, String cardDate, int cardcvv) throws Exception{
         try {
-            //statement
-            Statement statement = conn.createStatement();
-            String command = "INSERT INTO PAYMENTMETHOD(PAYMETHODID, PAYMETHODCARDNO, PAYMETHODCARDHOLDER, PAYMETHODCARDSECURITY,PAYMETHODCARDEXPIRY) VALUES(?,?,?,?,?)";
-            PreparedStatement pst = conn.prepareStatement(command);   
+            ResultSet resultSet = st.executeQuery("SELECT * FROM PAYMENTMETHOD WHERE PAYMETHODID=(SELECT CUSTOMERID FROM CUSTOMER WHERE  CUSTOMEREMAIL = '" + email + "')");
+            resultSet.next();
+            //update statement
+            PreparedStatement update = conn.prepareStatement("UPDATE PAYMENTMETHOD SET PAYMETHODID=?, PAYMETHODCARDNO=?, PAYMETHODCARDHOLDER=?, PAYMETHODCARDSECURITY=?, PAYMETHODCARDEXPIRY=? WHERE PAYMETHODID=?");
+            //Set the variables for the "update" statement
+            update.setInt(1, resultSet.getInt("PAYMETHODID"));
+            update.setInt(2, cardno);
+            update.setString(3, cardname);
+            update.setInt(4, cardcvv);
+            update.setDate(5, java.sql.Date.valueOf(cardDate));
+            update.setInt(6, resultSet.getInt("PAYMETHODID"));
+            update.executeUpdate();
+            
         } catch (SQLException ex) {
             System.out.println("Error Establishing Connection!");
             ex.printStackTrace();
