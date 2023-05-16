@@ -38,6 +38,7 @@
                         <input 
                             type="text" name="cardno" 
                             placeholder="Enter credit card number..." 
+                            value="${paymethod.payMethodCardNo}"
                         />
                     </th>
                 </tr>
@@ -46,14 +47,14 @@
                     <th><input 
                             type="text" name="cardname" 
                             placeholder="Enter card holder name.." 
-
+                            value="${paymethod.payMethodCardHolder}"
                         /></th>
                 </tr>
                 <tr>
                     <th><label>Card Expiration Date:</label></th>
                     <th><input 
                             type="date" name="cardexpiry" 
-                            
+                            value="${paymethod.payMethodCardExpiry}"
                         /></th>
                 </tr>
                 <tr>
@@ -61,7 +62,7 @@
                     <th><input 
                             type="text" name="cardcvv" 
                             placeholder="Enter card 3 digits.." 
-                            
+                            value="${paymethod.payMethodCardSecurity}"
                         /></th>
                 </tr>
                 <tr>
@@ -84,7 +85,6 @@
                     <th><input 
                             type="text" name="paymentAmount"
                             placeholder="Enter amount..." 
-                            value="${paymethod.cardHolder}"
                         />
                     </th>
                 </tr>
@@ -94,8 +94,6 @@
                         <input 
                             type="text" name="cardno" 
                             placeholder="Enter credit card number..." 
-                            value="${user.userEmail}"
-
                         />
                     </th>
                 </tr>
