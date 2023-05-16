@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controllers;
-
 import models.dao.DBManager;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,17 +17,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.*;
-
 /**
  *
  * @author tylershienlim
  */
-public class PaymentController extends HttpServlet{
+public class EditPaymentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-
-        //Retrieve created payment details
+        
+        //Retrieve updated payment details
         int amount = Integer.parseInt(request.getParameter("paymentAmount"));
         int cardNo = Integer.parseInt(request.getParameter("cardno"));
         int cvv = Integer.parseInt(request.getParameter("cardcvv"));
@@ -37,14 +35,9 @@ public class PaymentController extends HttpServlet{
         DBManager manager = (DBManager) session.getAttribute("manager");
         
         try {
-            manager.addPayment(amount);
-            manager.addPayMethod(cardNo,cardName, cardDate, cvv);
-            //set session attribute for payment to be the returned payment object
-            PaymentMethod paymethod = manager.getPayMethod(cardNo);
-            session.setAttribute("paymethod", paymethod);
-            request.getRequestDispatcher("index.jsp").include(request, response);
+            
         } catch (SQLException ex) {
              Logger.getLogger(PaymentController.class.getName()).log(Level.SEVERE, null, ex);
-         }        
+         }  
     }
 }
