@@ -73,7 +73,7 @@ public class OrderController extends HttpServlet {
             request.getRequestDispatcher("products.jsp").include(request, response);
         } 
         else{
-            request.getRequestDispatcher("order.jsp").include(request, response);
+            request.getRequestDispatcher("cart.jsp").include(request, response);
         }
     }
 

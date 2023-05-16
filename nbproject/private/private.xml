@@ -3,26 +3,30 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/test/Test.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/logoutController.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/web/profile.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/models/dao/DBConnector.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/models/dao/DBManager.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/models/Order.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/models/Product.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/registerController.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/Validator.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/web/orderHistory.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/OrderHistoryController.java</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/web/staff.jsp</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/web/products.jsp</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/models/OrderLine.java</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/editController.java</file>
-            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/test/Test.java</file>
-            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/logoutController.java</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/loginController.java</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/ConnServlet.java</file>
-            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/models/dao/DBConnector.java</file>
-            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/models/dao/DBManager.java</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/web/checkout.jsp</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/OrderLineController.java</file>
-            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/models/Order.java</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/ProductController.java</file>
-            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/models/Product.java</file>
-            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/registerController.java</file>
-            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/Validator.java</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/web/cart.jsp</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/web/index.jsp</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/OrderController.java</file>
-            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/web/orderHistory.jsp</file>
+            <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/TestDBController.java</file>
             <file>file:/C:/Users/mjra9/OneDrive/Documents/GitHub/IoTBay/src/java/controllers/CheckoutController.java</file>
         </group>
     </open-files>

@@ -53,7 +53,7 @@ public class OrderLineController extends HttpServlet {
                 order.addQuantity(productToUpdate);
                 //System.out.println("adding to order");
             }
-            request.getRequestDispatcher("order.jsp").include(request, response);
+            request.getRequestDispatcher("cart.jsp").include(request, response);
         }    
     }
 
