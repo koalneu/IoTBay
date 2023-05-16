@@ -13,9 +13,13 @@
         <title>Create Payment Details</title>
     </head>
     <body>
+        <%
+            User user = (User) session.getAttribute("user");
+            PaymentMethod paymethod = (PaymentMethod) session.getAttribute("paymethod");
+        %>
         <h1>Update Payment Details</h1>
         <form method="post" >
-            <table align="center" >
+            <table class="payment-table" align="center" >
                 <tr>
                     <th><label>Payment Amount:</label></th>
                     <th><input 
@@ -30,6 +34,7 @@
                         <input 
                             type="text" name="cardno" 
                             placeholder="Enter credit card number..." 
+                            value="${paymethod.payMethodCardNo}"
                         />
                     </th>
                 </tr>
@@ -38,14 +43,14 @@
                     <th><input 
                             type="text" name="cardname" 
                             placeholder="Enter card holder name.." 
-
+                            value="${paymethod.payMethodCardHolder}"
                         /></th>
                 </tr>
                 <tr>
                     <th><label>Card Expiration Date:</label></th>
                     <th><input 
                             type="date" name="cardexpiry" 
-                            
+                            value="${paymethod.payMethodCardExpiry}"
                         /></th>
                 </tr>
                 <tr>
@@ -53,12 +58,12 @@
                     <th><input 
                             type="text" name="cardcvv" 
                             placeholder="Enter card 3 digits.." 
-                            
+                            value="${paymethod.payMethodCardSecurity}"
                         /></th>
                 </tr>
                 <tr>
-                    <th><button ><a href="paymentprofile.jsp" >Cancel</a></button></th>
-                    <th><input type="submit" value="Save payment details" /></th>
+                    <th><button><a href="payment.jsp">Cancel</a></button></th>
+                    <th><button><a>Edit payment details</a></button></th>
                 </tr>
             </table>
         </form>

@@ -18,10 +18,10 @@
             PaymentMethod paymethod = (PaymentMethod) session.getAttribute("paymethod");
 
             if (paymethod != null) {
-                System.out.println("is not null");
                 //has payment details created
+                //view payment
         %>
-        <h1>Update Payment Details</h1>
+        <h1>View Payment Details</h1>
         <form method="post" >
             <table class="payment-table" align="center" >
                 <tr>
@@ -34,48 +34,29 @@
                 </tr>
                 <tr>
                     <th><label>Card Number:</label></th>
-                    <th>
-                        <input 
-                            type="text" name="cardno" 
-                            placeholder="Enter credit card number..." 
-                            value="${paymethod.payMethodCardNo}"
-                        />
-                    </th>
+                    <th>${paymethod.payMethodCardNo}</th>
                 </tr>
                 <tr>
                     <th><label>Credit Card Name:</label></th>
-                    <th><input 
-                            type="text" name="cardname" 
-                            placeholder="Enter card holder name.." 
-                            value="${paymethod.payMethodCardHolder}"
-                        /></th>
+                    <th>${paymethod.payMethodCardHolder}</th>
                 </tr>
                 <tr>
                     <th><label>Card Expiration Date:</label></th>
-                    <th><input 
-                            type="date" name="cardexpiry" 
-                            value="${paymethod.payMethodCardExpiry}"
-                        /></th>
+                    <th>${paymethod.payMethodCardExpiry}</th>
                 </tr>
                 <tr>
                     <th><label>CVV code:</label></th>
-                    <th><input 
-                            type="text" name="cardcvv" 
-                            placeholder="Enter card 3 digits.." 
-                            value="${paymethod.payMethodCardSecurity}"
-                        /></th>
+                    <th>${paymethod.payMethodCardSecurity}</th>
                 </tr>
                 <tr>
-                    <th><button type="button" onClick="history.back()" >Cancel</button></th>
-                    <th><input type="submit" value="Save payment details" /></th>
+                    <th><button><a href="index.jsp">Cancel</a></button></th>
+                    <th><button><a href="editpaymentprofile.jsp">Edit payment details</a></button></th>
                 </tr>
             </table>
         </form>
         <%
             } else {
-                System.out.println("is null");
-                //System.out.println(paymethod.getPayMethodCardNo());
-                //No payment details
+                //No payment details so create a new payment
         %>
         <h1>Add New Payment Details</h1>
         <form method="post" action="PaymentController" >
@@ -121,7 +102,7 @@
                         /></th>
                 </tr>
                 <tr>
-                    <th><button type="button" onClick="history.back()" >Cancel</button></th>
+                    <th><button><a href="index.jsp">Cancel</a></button></th>
                     <th><input type="submit" value="Save payment details" /></th>
                 </tr>
             </table>
