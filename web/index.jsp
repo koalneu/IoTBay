@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="models.Product"%>
 <%@ page import="controllers.Validator" %>
 <%@ page import="models.dao.DBManager" %>
 <%@ page import="models.User" %>
@@ -18,21 +20,13 @@
             <%
             User user = (User) session.getAttribute("user");
             boolean isLoggedIn = (user != null && !Objects.equals(user.getUserEmail(), ""));
-            session.setAttribute("imageSRC", "img/test image.jpg");
+            DBManager manager = (DBManager) session.getAttribute("manager");
 
             if (isLoggedIn) {
                 //Logged In
         %>
             <button class="headerBtn"><a href="logout.jsp">Logout</a></button>
-            <button class="headerBtn"><a href="profile.jsp">Profile</a></button>
-            <%
-                if (user.getUserType().equals("Staff")) {
-            %>
-            <button class="headerBtn"><a href="staffProducts.jsp">Staff Products</a></button>
-            <%
-                }
-            %>
-        
+            <button class="headerBtn"><a href="profile.jsp">Profile</a></button>      
         <%
             } else {
                 //Guest User ${pageContext.request.contextPath}/
@@ -43,10 +37,15 @@
         <%
             }
         %>
-                        </div>
+                        
+        
+        </div>
+        </div>
+        
+        <div class="centerBttn" align="center">
+            <button><a href="staffProducts.jsp">View All Products</a></button>
         </div>
                         
-        <img class="imgTest" alt="Image cannot be displayed" src=imageLocation width="200" height="100"/>
 
         <jsp:include page="/ConnServlet" flush="true"/>
     </body>

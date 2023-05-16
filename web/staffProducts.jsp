@@ -4,6 +4,7 @@
     Author     : benjamin
 --%>
 
+<%@page import="java.util.Objects"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="models.dao.DBManager"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -21,10 +22,32 @@
         <%
             String searchProductErr = (String) session.getAttribute("searchProductErr");
             User user = (User) session.getAttribute("user");
+            boolean isLoggedIn = (user != null && !Objects.equals(user.getUserEmail(), ""));
             DBManager manager = (DBManager) session.getAttribute("manager");
             ArrayList productList = manager.fetchProducts();
             session.setAttribute("products", productList);
         %>
+        <div class="header">
+            <a href="index.jsp" class="left">IOT Store</a>
+            <div class="right">
+                <%
+                    if (isLoggedIn) {
+                        //Logged In
+                %>
+                    <button class="headerBtn"><a href="logout.jsp">Logout</a></button>
+                    <button class="headerBtn"><a href="profile.jsp">Profile</a></button>      
+                <%
+                    } else {
+                        //Guest User ${pageContext.request.contextPath}/
+                %>
+
+                    <th><button class="headerBtn"><a href="login.jsp">Login</a></button></th>
+                    <th><button class="headerBtn"><a href="register.jsp">Register</a></button></th>
+                <%
+                    }
+                %>
+            </div>
+        </div>
         <h1>IoTBay Product Catalogue</h1>
         <form method="get" action="SearchProductController">
             <table align="center">
@@ -44,7 +67,7 @@
             </table>
         </form>
         <% 
-            if (user.getUserType().equals("Staff")) {
+            if (isLoggedIn && user.getUserType().equals("Staff")) {
         %>
         <div class="centerBttn">
             <button class="bttn"><a href="newProduct.jsp">Add product</a></button>
@@ -77,9 +100,10 @@
                 }
             %>        
                         
-        <div class="centerBttn">
+        <div class="centerBttn" align="center">
             <button><a href="index.jsp">Back to home page</a></button>
         </div>
     </body>
 </html>
-<link rel="stylesheet" href="./css/productPage.css"/>
+<link rel="stylesheet" href="./css/index.css"/>
+

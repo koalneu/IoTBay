@@ -4,6 +4,7 @@
     Author     : legob
 --%>
 
+<%@page import="java.util.Objects"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
@@ -22,6 +23,7 @@
     <body>
         <%
             User user = (User) session.getAttribute("user");
+            boolean isLoggedIn = (user != null && !Objects.equals(user.getUserEmail(), ""));
             Product product = (Product) session.getAttribute("product");
         %>
         <h1 align="center"><%= product.getProductName() %></h1>
@@ -32,7 +34,7 @@
         <button><a href="staffProducts.jsp">Return to products page</a></button>
         
         <%
-            if (user.getUserType().equals("Staff")) {
+            if (isLoggedIn && user.getUserType().equals("Staff")) {
         %>
         <button><a href="staffEditProduct.jsp">Edit product details</a></button>
         <button><a href="DeleteProductController?productID=${product.productID}">Delete product</a></button>
