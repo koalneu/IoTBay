@@ -6,6 +6,7 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,12 +38,19 @@ public class OrderLineController extends HttpServlet {
         else{
             Order order = (Order) session.getAttribute("order");
             ArrayList<Product> products = (ArrayList<Product>) session.getAttribute("products");
-                Product productAdded = new Product();
-                for(Product product : products){
-                    if(product.getProductName().equals(productName)){
-                        productAdded = product;
-                    }
+            if(products == null){
+                try{
+                    products = manager.fetchProducts();
+                }catch(SQLException ex){
+                    System.out.println("error in getting products in OrderlineController " + ex.getMessage());
                 }
+            }
+            Product productAdded = new Product();
+            for(Product product : products){
+                if(product.getProductName().equals(productName)){
+                    productAdded = product;
+                }
+            }
             OrderLine productToUpdate = order.checkProduct(productAdded);
             if (operation.equals("-")){
                 order.subtractQuantity(productToUpdate);

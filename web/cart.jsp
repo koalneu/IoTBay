@@ -62,6 +62,7 @@
                     <input type = "submit" value = "Proceed to checkout"/>
                     <!--<button><a href = "OrderLineController" > Proceed to checkout </button>-->
                 </form>
+                 <button><a href = "products.jsp"> Browse Products </a></button>
             </div>
             
         <%}else { %>

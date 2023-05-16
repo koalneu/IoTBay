@@ -21,7 +21,7 @@
         %>
         <div align = "center">
             <h1><%=type.equals("saved") ? "Saved Orders" : "Order History"%></h1>
-            <%if (orders != null){%>
+            <%if (!orders.isEmpty()){%>
                 <h2> User: <%=user.getUserFirstName() + " " + user.getUserLastName()%> </h2>
                 <table cellspacing = "10">
                     <tr>
@@ -32,11 +32,13 @@
                     <tr>
                         <td><%= order.getOrderID()%></td>
                         <td><%= order.getDate()%></td>
+                        <td><button><a href = "ViewOrderController?type=<%=type%>&orderID=<%=order.getOrderID()%>"> View Order</a></button></td>
                     </tr>
                     <% }%>
                 </table>
             <%} else {%>
                 <p>you have no saved orders/order history</p>
+                <p> <a href = "profile.jsp"> Click Here </a> to go back to profile page</p>
             <%}%>
         </div>
         

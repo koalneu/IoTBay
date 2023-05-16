@@ -19,8 +19,7 @@ import models.dao.DBManager;
  *
  * @author mjra9
  */
-public class CheckoutController extends HttpServlet {
-
+public class ViewOrderController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,38 +36,18 @@ public class CheckoutController extends HttpServlet {
         //processRequest(request, response);
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
-        Order order = (Order) session.getAttribute("order");
-        User user = (User) session.getAttribute("user");
-        String action = request.getParameter("action");
-        if(action.equals("save")){
-            try{
-                if(manager.findOrder(order.getOrderID()) != null){
-                    manager.updateOrder(order);
-                }
-                else{
-                    manager.addOrder(order);
-                }
-                manager.addAccessLogEntry(user.getUserEmail(), user.getUserFirstName(), "saved order #" + order.getOrderID());
-            } catch(ClassNotFoundException | SQLException ex){
-                System.out.println("error adding order to database " + order.getOrderID() + " " + ex.getMessage()); 
-            }
+        String type = request.getParameter("type");
+        int orderID = Integer.parseInt(request.getParameter("orderID"));
+        try{
+            Order order = manager.findOrder(orderID);
+            order.setOrderLine(manager.getOrderLine(orderID));
+            session.setAttribute("orderToView", order);
+        } catch(SQLException ex){
+            System.out.println("Error in getting order to view " + ex.getMessage());
         }
-        else if(action.equals("pay")){
-            order.setIsPayed(true);
-            try{
-                if(manager.findOrder(order.getOrderID()) != null){
-                    manager.updateOrder(order);
-                }
-                else{
-                    manager.addOrder(order);
-                }
-                manager.addAccessLogEntry(user.getUserEmail(), user.getUserFirstName(), "placed order #" + order.getOrderID());
-            } catch(ClassNotFoundException | SQLException ex){
-                System.out.println("error adding order to database"  + order.getOrderID() + " " + ex.getMessage());
-            }
-        }
-        session.setAttribute("order", null);
-        response.sendRedirect("index.jsp");
+        
+        session.setAttribute("viewOrderType", type);    
+        request.getRequestDispatcher("viewOrder.jsp").include(request, response);
     }
 
     /**
@@ -84,4 +63,5 @@ public class CheckoutController extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
     }
+
 }

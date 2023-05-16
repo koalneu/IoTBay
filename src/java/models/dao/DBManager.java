@@ -165,14 +165,19 @@ public class DBManager {
     //order implementation CRUD
     //Functions from Mark's branch
     public int countOrderRows() throws SQLException {
-        String fetch = "SELECT COUNT (*) FROM ORDERS";
+        String fetch = "SELECT * FROM IOTADMIN.ORDERS";
         ResultSet rs = st.executeQuery(fetch);
-        rs.next();
-        int ID = rs.getInt(1);
+        int ID = 0;
+        while(rs.next()){
+            int temp = rs.getInt(1) + 1;
+            if(temp > ID){
+                ID = temp;
+            }
+        }
         return ID;
     }
     public int getUserID(String email) throws SQLException {
-        String fetch = "SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = " + "\'" + email + "\'";
+        String fetch = "SELECT * FROM IOTADMIN.CUSTOMER WHERE CUSTOMEREMAIL = " + "\'" + email + "\'";
         ResultSet rs = st.executeQuery(fetch);
         rs.next();
         int ID = rs.getInt("CUSTOMERID");
@@ -192,7 +197,26 @@ public class DBManager {
         
         for(OrderLine product : order.getOrderLine()){
             addOrderLine(product);
+            if(isPayed){
+                updateProductStock(product.getProduct().getProductID(), product.getProduct().getProductStock() - product.getQuantity());
+            }
         }
+    }
+    
+//    public void updateOrderLine(OrderLine orderLine){
+//        st.executeUpdate()
+//    }
+    public boolean findOrderLine(OrderLine orderLine) throws SQLException{
+        String fetch = "SELECT  * FROM IOTADMIN.ORDERLINEITEM WHERE PRODUCTID=" + orderLine.getProduct().getProductID() + " AND ORDERID =" + orderLine.getOrderID();
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+            int oID = rs.getInt("ORDERID");
+            int pID = rs.getInt("PRODUCTID");
+            if(pID == orderLine.getProduct().getProductID() && oID == orderLine.getOrderID()){
+                return true;
+            }
+        }
+        return false;
     }
     
     public void addOrderLine(OrderLine orderLine) throws SQLException {
@@ -224,6 +248,14 @@ public class DBManager {
         }
        
         return orders;
+    }
+    //delete order and its orderline
+    public void deleteOrder(int orderID) throws SQLException{
+        st.executeUpdate("DELETE FROM IOTADMIN.ORDERS WHERE ORDERID = " + orderID);
+        
+    }
+    public void deleteOrderLine(int orderID) throws SQLException{
+        st.executeUpdate("DELETE FROM IOTADMIN.ORDERLINEITEM WHERE ORDERID = " + orderID);
     }
     
     public ArrayList<OrderLine> getOrderLine(int orderID) throws SQLException{
@@ -279,6 +311,17 @@ public class DBManager {
         return null;       
     }
     
+    //updates order
+    public void updateOrder(Order order) throws SQLException{
+        SimpleDateFormat sm = new SimpleDateFormat("MM/dd/yyyy");
+        String date = sm.format(new Date());
+        boolean isPayed = order.isIsPayed();
+        st.executeUpdate("UPDATE IOTADMIN.ORDERS SET ORDERDATE = \'" + date +"\' , ISPAYED =" + isPayed + " WHERE ORDERID = " + order.getOrderID());
+        deleteOrderLine(order.getOrderID());
+        for(OrderLine orderLine : order.getOrderLine()){
+            addOrderLine(orderLine);
+        }
+    }
     
     //Functions related to products in the database
     //search product by name
@@ -318,6 +361,10 @@ public class DBManager {
     //update only the stock of a product by name
     public void updateProductStock(String name, int stock) throws SQLException {
         st.executeUpdate("UPDATE IOTADMIN.PRODUCT SET PRODUCTSTOCK="+stock+" WHERE PRODUCTNAME='"+name+"'");
+    }
+    //update only the stock of a product by ID
+    public void updateProductStock(int productID, int stock) throws SQLException {
+        st.executeUpdate("UPDATE IOTADMIN.PRODUCT SET PRODUCTSTOCK="+stock+" WHERE PRODUCTID="+productID );
     }
     //delete a product by name
     public void deleteProduct(String name) throws SQLException {

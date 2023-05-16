@@ -44,6 +44,14 @@
         <servlet-name>OrderHistoryController</servlet-name>
         <servlet-class>controllers.OrderHistoryController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewOrderController</servlet-name>
+        <servlet-class>controllers.ViewOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateOrderController</servlet-name>
+        <servlet-class>controllers.UpdateOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -103,6 +111,14 @@
     <servlet-mapping>
         <servlet-name>OrderHistoryController</servlet-name>
         <url-pattern>/OrderHistoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOrderController</servlet-name>
+        <url-pattern>/ViewOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateOrderController</servlet-name>
+        <url-pattern>/UpdateOrderController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
