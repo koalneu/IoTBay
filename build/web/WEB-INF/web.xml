@@ -44,6 +44,14 @@
         <servlet-name>OrderHistoryController</servlet-name>
         <servlet-class>controllers.OrderHistoryController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddShipmentController</servlet-name>
+        <servlet-class>controllers.AddShipmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditShipment</servlet-name>
+        <servlet-class>controllers.EditShipment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -112,8 +120,14 @@
         <servlet-name>OrderHistoryController</servlet-name>
         <url-pattern>/OrderHistoryController</url-pattern>
     </servlet-mapping>
-    
-    
+    <servlet-mapping>
+        <servlet-name>AddShipmentController</servlet-name>
+        <url-pattern>/AddShipmentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditShipment</servlet-name>
+        <url-pattern>/EditShipment</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

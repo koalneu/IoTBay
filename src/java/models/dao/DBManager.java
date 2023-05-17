@@ -34,7 +34,7 @@ public class DBManager {
         User user = new User(
             resultSet.getString("CUSTOMERFIRSTNAME"), 
             resultSet.getString("CUSTOMERLASTNAME"), 
-            email, 
+            resultSet.getString("CUTOMEREMAIL") , 
             resultSet.getString("CUSTOMERPASSWORD"), 
             resultSet.getString("CUSTOMERSTREET"),  
             resultSet.getString("CUSTOMERPOSTCODE"),
@@ -418,6 +418,169 @@ public class DBManager {
             
         }
     }
+        public int getOrderID(int ID) throws SQLException {
+        String fetch = "SELECT * FROM ORDERS WHERE ORDERID = " + "\'" + ID + "\'";
+        ResultSet rs = st.executeQuery(fetch);
+        rs.next();
+        int orderID = rs.getInt("ORDERID");
+        return orderID;
+    }
+    public Shipment findShipment(int ID) throws SQLException {
+        String fetch = "select * from IOTADMIN.DELIVERY where DELIVERYID = '" + ID + "'";
+        ResultSet rs = st.executeQuery(fetch);
+        
+        while (rs.next()) {
+            int shipmentID = rs.getInt(1);
+            if (shipmentID == ID) {
+                String shipmentStreet = rs.getString(2);
+                int shipmentPostCode = rs.getInt(3);
+                String shipmentCity = rs.getString(4);
+                String shipmentState = rs.getString(5);
+                String shipmentCountry = rs.getString(6);
+                int orderId = rs.getInt(7);
+                String shipmentMethod = rs.getString(8);
+              
+
+                return new Shipment(shipmentID, shipmentStreet, shipmentPostCode, shipmentCity,shipmentState, shipmentCountry,orderId, shipmentMethod);
+            }
+        }
+        return null;
+    }
+    
+     public Shipment findShipment(String street) throws SQLException {
+        String fetch = "select * from IOTADMIN.DELIVERY where DELIVERYSTREET = '" + street + "'";
+        ResultSet rs = st.executeQuery(fetch);
+        
+        while (rs.next()) {
+            String shipmentStreet = rs.getString(2);
+            if (shipmentStreet.equals(street)) {
+                 int shipmentID = rs.getInt(1);
+               
+                int shipmentPostCode = rs.getInt(3);
+                String shipmentCity = rs.getString(4);
+                String shipmentState = rs.getString(5);
+                String shipmentCountry = rs.getString(6);
+                int orderId = rs.getInt(7);
+                String shipmentMethod = rs.getString(8);
+              
+
+                return new Shipment(shipmentID, shipmentStreet, shipmentPostCode, shipmentCity,shipmentState, shipmentCountry,orderId, shipmentMethod);
+            }
+        }
+        return null;
+    }
+     
+    /**
+     *
+     * @param ID
+     * @param street
+     * @param postCode
+     * @param city
+     * @param state
+     * @param country
+     * @param method
+     * @throws SQLException
+     */
+    public void addShipment(String street, int postCode, String city,String state,String country, String method) throws SQLException {
+          /*String rows = "SELECT COUNT(*) FROM DELIVERY";
+        ResultSet retrieveResult = st.executeQuery(rows);
+        retrieveResult.next();
+        
+        int ID = retrieveResult.getInt(1);
+        int orderID = retrieveResult.getInt(1);*/
+        String rows = "SELECT COUNT(*) FROM DELIVERY";
+        ResultSet rs = st.executeQuery(rows);
+        int ID = 0;
+       
+        while (rs.next()){  
+            int temp = rs.getInt(1)+1;
+           
+            if(temp>ID){
+                ID = temp;
+                
+               
+            }
+        
+        }
+        
+        st.executeUpdate("INSERT INTO IOTADMIN.DELIVERY " + "(DELIVERYID,DELIVERYSTREET,DELIVERYPOSTCODE,DELIVERYCITY,DELIVERYSTATE,DELIVERYCOUNTRY,ORDERID,DELIVERYMETHOD)" + " VALUES ("+ID+", '"+street+"', "+postCode+", '"+city+"','"+state+"','"+country+"', '"+method+"')");
+    }
+     public void linkShipment(int shipmentID, int orderID) throws SQLException{
+       
+        try{
+            //statement
+            String command ="INSERT INTO DELIVERY(DELIVERYID,ORDERID) VALUES ("+shipmentID+","+orderID+")";
+            PreparedStatement pst = conn.prepareStatement(command);
+            
+            String rows = "select count(*) from IOTADMIN.DELIVERY";
+            String row = "select count(*) FROM IOTADMIN.ORDERS";
+            ResultSet retrieveResult = st.executeQuery(rows);
+            ResultSet rs = st.executeQuery(row);
+            retrieveResult.next();
+            shipmentID = retrieveResult.getInt(1);
+            orderID = rs.getInt(1);
+            pst.setObject(1, shipmentID);
+            pst.setObject(7, orderID);
+           
+            
+                
+            pst.executeUpdate();
+               
+            conn.close();
+        }
+        catch(Error e){
+        }
+     }
+     
+     
+    public void updateShipment(int ID, String street, int postCode, String city,String country, String method, String state) throws SQLException {
+        st.executeUpdate("UPDATE IOTADMIN.DELIVERY SET DELIVERYSTREET= "+street+",DELIVERYPOSTCODE= "+postCode+",DELIVERYCITY= "+city+",DELIVERYTATE= "+state+",DELIVERYCOUNTRY= "+country+" ,DELIVERYMETHOD= "+method+" WHERE DELIVERYID= "+ID+"");
+    }         
+    
+     public void deleteShipment(int ID) throws SQLException {
+        st.executeUpdate("DELETE FROM IOTADMIN.DELIVERY WHERE DELIVERYID='"+ID+"'");
+    }
+         //fetch list of shipments
+    public ArrayList<Shipment> fetchShipment() throws SQLException {
+        String fetch = "SELECT * FROM DELIVERY";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Shipment> temp = new ArrayList();
+        
+        while (rs.next()) {
+            int ID = rs.getInt(1);
+            String street = rs.getString(2);
+            int postCode = rs.getInt(3);
+            String city = rs.getString(4);
+            String state = rs.getString(5);
+            String country = rs.getString(6);
+            int orderId = rs.getInt(7);
+            String method = rs.getString(8);
+            temp.add(new Shipment(ID, street, postCode, city,state, country, orderId, method));
+        }
+        return temp;
+    }
+     public boolean checkShipment(int ID) throws SQLException {
+        String fetch = "SELECT * FROM IOTADMIN.DELIVERY WHERE DELIVERYID="+ID+"";
+        ResultSet rs = st.executeQuery(fetch);
+        
+        while (rs.next()) {
+            int shipmentID = rs.getInt(1);
+            if (shipmentID == ID) {
+                return true;
+            }
+        }
+        return false;
+    }
+      public int findShipmentIdForOrder(int orderId) throws SQLException {
+    String fetch = "SELECT DELIVERYID FROM DELIVERY WHERE ORDERID = " + orderId;
+    ResultSet rs = st.executeQuery(fetch);
+
+    if (rs.next()) {
+        return rs.getInt(1);
+    } else {
+        return -1; // or throw an exception, depending on your requirements
+    }
 }
-    
-    
+}
+
+      
