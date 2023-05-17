@@ -1,5 +1,5 @@
 <%@ page import="controllers.Validator" %>
-<%@ page import="DAO.DBManager" %>
+<%@ page import="models.dao.DBManager" %>
 <%@ page import="models.User" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.Objects" %>

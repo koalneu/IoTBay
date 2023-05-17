@@ -5,7 +5,7 @@
     Author     : @author Wilson 14269118
 --%>
 
-<%@page import="DAO.DBManager"%>
+<%@page import="models.dao.DBManager"%>
 <%@page import="controllers.Validator"%>
 <%@page import="models.AccessLog"%>
 <%@page import="java.sql.PreparedStatement"%>

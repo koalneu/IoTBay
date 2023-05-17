@@ -1,6 +1,6 @@
 package controllers;
 
-import DAO.DBManager;
+import models.dao.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;

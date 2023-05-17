@@ -4,7 +4,7 @@
     Author     : Wilson
 --%>
 
-<%@page import="DAO.DBManager"%>
+<%@page import="models.dao.DBManager"%>
 <%@page import="models.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,5 +30,6 @@
                 */
             %>
         </form>
+        <button class="headerBtn"><a href="staffProducts.jsp">Staff Products</a></button>
     </body>
 </html>
