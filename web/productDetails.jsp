@@ -27,7 +27,7 @@
             Product product = (Product) session.getAttribute("product");
         %>
         <h1 align="center"><%= product.getProductName() %></h1>
-        <img class="center" src="${product.getProductImage()}" alt="Image cannot be loaded"/>
+        <img class="center" src="${product.getProductImage()}" alt="Image cannot be loaded" width:"400" height:"200"/>
         <h2 align="center"><%= product.getProductDesc() %></h2>
         <h2 align="center"><%= "$" + product.getProductPrice() %></h2>
         <h2 align="center"><%= "Stock remaining: " + product.getProductStock() %></h2>

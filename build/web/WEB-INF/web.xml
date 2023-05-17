@@ -37,10 +37,6 @@
         <url-pattern>/loginController</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>ProductServlet</servlet-name>
-        <servlet-class>controllers.ProductController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>OrderController</servlet-name>
         <servlet-class>controllers.OrderController</servlet-class>
     </servlet>
@@ -73,14 +69,9 @@
         <url-pattern>/staffServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProductServlet</servlet-name>
-        <url-pattern>/ProductServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>SearchProductController</servlet-name>
         <servlet-class>controllers.SearchProductController</servlet-class>
@@ -121,7 +112,6 @@
         <servlet-name>DeleteProductController</servlet-name>
         <url-pattern>/DeleteProductController</url-pattern>
     </servlet-mapping>
-
     <session-config>
         <session-timeout>
             30
