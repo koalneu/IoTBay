@@ -27,14 +27,17 @@ public class AddShipmentController extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+         Validator validator = new Validator();
         DBManager manager = (DBManager) session.getAttribute("manager");
         Order order = (Order) session.getAttribute("order");
         User user = (User) session.getAttribute("user");
         Shipment shipment = (Shipment) session.getAttribute("shipment");
         ArrayList<Shipment> shipments = new ArrayList<Shipment>();
+        validator.clear(session);
 
-        if (user != null ) {
-           
+
+        
+            
             String street = request.getParameter("street");
             String city = request.getParameter("city");
             String postcode = request.getParameter("postcode");
@@ -43,42 +46,59 @@ public class AddShipmentController extends HttpServlet {
             int postCode = Integer.parseInt(postcode);
             String method = request.getParameter("method");
             int orderID = order.getOrderID();
-            int shipmentID = shipment.getShipmentID();
+            //int shipmentID = shipment.getShipmentID();
             // Set the address details in the shipment object
-           try{ 
-               if (shipment == null) {
+          
+            try {
+           
+                if(!validator.validateStringPattern(street)){
+            session.setAttribute("streetErr", "Error: street name must be less than 50 characters");
+            request.getRequestDispatcher("addShipment.jsp").include(request, response);
+            }
+            else if(!validator.validateStringPattern(city)){
+            session.setAttribute("cityErr", "Error: city name must be less than 50 characters");
+            request.getRequestDispatcher("addShipment.jsp").include(request, response);
+            }
+            else if(!validator.validatepostCode(postcode)){
+            session.setAttribute("postcodeErr", "Error: postcode format incorrect");
+            request.getRequestDispatcher("addShipment.jsp").include(request, response);
+            }
+            else if(!validator.validateStringPattern(country)){
+            session.setAttribute("countryErr", "Error: country name must be less than 50 characters");
+            
+            request.getRequestDispatcher("addShipment.jsp").include(request, response);
+            }
+            else{
+                 
+                    if (shipment == null) {
                      
                     shipment = new Shipment();
-                    manager.linkShipment(shipmentID,orderID);
-                    manager.addShipment(street, postCode, city, state, country, method);
+
+                    //manager.linkShipment(shipmentID,orderID);
+                    manager.addShipment(street, postCode, city, state, country,orderID, method);
                     shipment = manager.findShipment(street);
-                    shipments = manager.fetchShipment();// Add the shipment to the ArrayList
+                    //shipments = manager.fetchShipment();// Add the shipment to the ArrayList
 
                     session.setAttribute("shipment", shipment);
                     request.getRequestDispatcher("shipmentDetails.jsp").include(request, response);
                 }
+                }
                
-           else{
-                shipment.setShipmentId(shipmentID);
-                shipment.setOrderID(orderID);
-                shipment.setShipmentStreet(street);
-                shipment.setShipmentCity(city);
-                shipment.setShipmentPostCode(postCode);
-                shipment.setShipmentCountry(country);
-                shipment.setShipmentState(state);
-                shipment.setShipmentMethod(method);
-                session.setAttribute("shipment", shipment);
-                request.getRequestDispatcher("shipmentDetails.jsp").include(request, response);
-                  
-    }
-           }
+                
+            }
             catch (SQLException ex)
                 {
                     Logger.getLogger(AddShipmentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+        
+                  
     }
+   
+           
+            
+    
                 
-   }
+   
 
 
    @Override

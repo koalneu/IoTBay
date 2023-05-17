@@ -1,8 +1,8 @@
-<%@ page import="controllers.Validator" %>
-<%@ page import="models.dao.DBManager" %>
-<%@ page import="models.User" %>
-<%@ page import="java.net.URLEncoder" %>
-<%@ page import="java.util.Objects" %>
+<%@page import="controllers.Validator" %>
+<%@page import="models.dao.DBManager" %>
+<%@page import="models.User" %>
+<%@page import="java.net.URLEncoder" %>
+<%@page import="java.util.Objects" %>
 
 <!DOCTYPE html>
 <html>
@@ -28,14 +28,16 @@
             <button class="headerBtn"><a href="payment.jsp">Payment</a></button>
             <button class="headerBtn"><a href="paymentprofile.jsp">Pay Details</a></button>
             <button class="headerBtn"><a href="order.jsp">Order</a></button>
+            <button class="headerBtn"><a href="shipmentDetails.jsp">shipment</a></button>
+<button class="headerBtn"><a href="addShipment.jsp">add shipment</a></button>
 
         <%
             } else {
                 //Guest User
         %>
 
-                        <th><button class="headerBtn"><a href="login.jsp">Login</a></button></th>
-                        <th><button class="headerBtn"><a href="register.jsp">Register</a></button></th>
+                        <button class="headerBtn"><a href="login.jsp">Login</a></button>
+                       <button class="headerBtn"><a href="register.jsp">Register</a></button>
         <%
             }
         %>

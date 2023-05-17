@@ -44,5 +44,7 @@ public class Validator {
         session.removeAttribute("cityErr");
         session.removeAttribute("postcodeErr");
         session.removeAttribute("countryErr");
+        
+
     }
 }

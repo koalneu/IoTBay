@@ -12,6 +12,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="models.User" %>
+<%@page import="models.dao.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,7 +37,7 @@
             if (fname==null ) {
                 //User is coming from the Login Page
                 User user = new User(null, null, email, password, null,
-                null, null,null, null);
+                null, null,null, null,null);
                 //check if the credentials match any in the database and return a user
                 user = user.authenticateUser(email, password);
                 if (user == null){
@@ -90,7 +91,7 @@
         </h1>
         <%
             //create a new user object and set it as the current session
-            User user = new User(fname, lname, email, password, street, city,postcode, state, country);
+            User user = new User(fname, lname, email, password, street, city,postcode, state, country, null);
             session.setAttribute("user", user);
         %>
         <button><a href="main.jsp">Main Page</a></button>

@@ -481,7 +481,7 @@ public class DBManager {
      * @param method
      * @throws SQLException
      */
-    public void addShipment(String street, int postCode, String city,String state,String country, String method) throws SQLException {
+    public void addShipment(String street, int postCode, String city,String state,String country,int orderID, String method) throws SQLException {
           /*String rows = "SELECT COUNT(*) FROM DELIVERY";
         ResultSet retrieveResult = st.executeQuery(rows);
         retrieveResult.next();
@@ -503,7 +503,7 @@ public class DBManager {
         
         }
         
-        st.executeUpdate("INSERT INTO IOTADMIN.DELIVERY " + "(DELIVERYID,DELIVERYSTREET,DELIVERYPOSTCODE,DELIVERYCITY,DELIVERYSTATE,DELIVERYCOUNTRY,ORDERID,DELIVERYMETHOD)" + " VALUES ("+ID+", '"+street+"', "+postCode+", '"+city+"','"+state+"','"+country+"', '"+method+"')");
+        st.executeUpdate("INSERT INTO IOTADMIN.DELIVERY " + "(DELIVERYID,DELIVERYSTREET,DELIVERYPOSTCODE,DELIVERYCITY,DELIVERYSTATE,DELIVERYCOUNTRY,ORDERID,DELIVERYMETHOD)" + " VALUES ("+ID+", '"+street+"', "+postCode+", '"+city+"','"+state+"','"+country+"',"+ID+", '"+method+"')");
     }
      public void linkShipment(int shipmentID, int orderID) throws SQLException{
        
@@ -534,7 +534,7 @@ public class DBManager {
      
      
     public void updateShipment(int ID, String street, int postCode, String city,String country, String method, String state) throws SQLException {
-        st.executeUpdate("UPDATE IOTADMIN.DELIVERY SET DELIVERYSTREET= "+street+",DELIVERYPOSTCODE= "+postCode+",DELIVERYCITY= "+city+",DELIVERYTATE= "+state+",DELIVERYCOUNTRY= "+country+" ,DELIVERYMETHOD= "+method+" WHERE DELIVERYID= "+ID+"");
+        st.executeUpdate("UPDATE IOTADMIN.DELIVERY SET DELIVERYSTREET= "+street+",DELIVERYPOSTCODE= "+postCode+",DELIVERYCITY= "+city+",DELIVERYSTATE= "+state+",DELIVERYCOUNTRY= "+country+" ,DELIVERYMETHOD= "+method+" WHERE DELIVERYID= "+ID+"");
     }         
     
      public void deleteShipment(int ID) throws SQLException {
