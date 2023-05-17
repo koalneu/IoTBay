@@ -111,6 +111,12 @@
     <servlet-mapping>
         <servlet-name>DeleteProductController</servlet-name>
         <url-pattern>/DeleteProductController</url-pattern>
+        <servlet-name>accesslogController</servlet-name>
+        <servlet-class>controllers.accesslogController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>accesslogController</servlet-name>
+        <url-pattern>/accesslogController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
