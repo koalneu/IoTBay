@@ -42,14 +42,7 @@ public class GuestCheckOutController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         String action = request.getParameter("action");
         String email = request.getParameter("email");
-        if(user.getUserType().equals("guest") && action.equals("pay")){
-           order.setIsPayed(true);
-           request.getRequestDispatcher("checkout.jsp").include(request, response);
-        }else if(user.getUserType().equals("guest") && action.equals("save")){
-           order.setIsPayed(true);
-           request.getRequestDispatcher("checkout.jsp").include(request, response);
-        }
-        else if(action.equals("save")){
+        if(action.equals("save")){
             try{
                 if(manager.findOrder(order.getOrderID()) != null){
                     manager.updateOrder(order);
@@ -78,7 +71,6 @@ public class GuestCheckOutController extends HttpServlet {
         }
         session.setAttribute("order", null);
         response.sendRedirect("index.jsp");
-        request.getRequestDispatcher("guestCheckout.jsp").include(request, response);
     }
 
     /**

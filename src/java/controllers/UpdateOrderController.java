@@ -57,7 +57,7 @@ public class UpdateOrderController extends HttpServlet {
                    user = new User();
                    order.setUserID(0);
                }
-               if(user.getUserType().equals("guest")){
+               else if(user.getUserType().equals("guest")){
                    order.setUserID(0);
                }
                 session.setAttribute("order", order);

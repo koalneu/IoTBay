@@ -405,8 +405,9 @@ public class DBManager {
     public void updateOrder(Order order) throws SQLException{
         SimpleDateFormat sm = new SimpleDateFormat("MM/dd/yyyy");
         String date = sm.format(new Date());
+        int userID = order.getUserID();
         boolean isPayed = order.isIsPayed();
-        st.executeUpdate("UPDATE IOTADMIN.ORDERS SET ORDERDATE = \'" + date +"\' , ISPAYED =" + isPayed + " WHERE ORDERID = " + order.getOrderID());
+        st.executeUpdate("UPDATE IOTADMIN.ORDERS SET ORDERDATE = \'" + date +"\' , ISPAYED =" + isPayed + ", CUSTOMERID = "+userID+" WHERE ORDERID = " + order.getOrderID());
         deleteOrderLine(order.getOrderID());
         for(OrderLine orderLine : order.getOrderLine()){
             addOrderLine(orderLine);

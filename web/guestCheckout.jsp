@@ -21,7 +21,7 @@
         %>
         <jsp:include page = "orderPreview.jsp" flush = "true"/>
         <div align = "center">
-            <p>Please select to pay or save your order</p>
+            <p>Please select to pay or save your order and enter an email</p>
             <form method = "post" action = "/GuestCheckOutController">
                <label> Enter email: </label> <input type = "email" name = "email" required><br>
                <label style="color: red;"><%=(emailErr != null ? emailErr : "")%></label><br>
