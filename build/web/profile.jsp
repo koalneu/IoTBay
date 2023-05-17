@@ -61,8 +61,6 @@
         </table>
         <button><a href="index.jsp">Back</a></button>
         <button><a href="edit.jsp">Edit Details</a></button>
-        <button><a href="OrderHistoryController?action=<%=saved%>">View Saved orders</a></button>
-        <button><a href="OrderHistoryController?action=<%=payed%>"">View Order History</a></button>
     </body>
     
 </html>

@@ -33,7 +33,7 @@ public class OrderLineController extends HttpServlet {
         String productName = request.getParameter("productName");
         String operation = request.getParameter("operation");
         if(productName == null && operation == null){
-           request.getRequestDispatcher("products.jsp").include(request, response);
+           request.getRequestDispatcher("staffProducts.jsp").include(request, response);
         }
         else{
             Order order = (Order) session.getAttribute("order");
@@ -49,17 +49,19 @@ public class OrderLineController extends HttpServlet {
             for(Product product : products){
                 if(product.getProductName().equals(productName)){
                     productAdded = product;
-                }
+                }  
             }
             OrderLine productToUpdate = order.checkProduct(productAdded);
             if (operation.equals("-")){
                 order.subtractQuantity(productToUpdate);
                 //System.out.println("subtracting to order");
+                if(productToUpdate.getQuantity() > productAdded.getProductStock()){
+                    session.setAttribute("stockErr", "Not enough stock for " + productAdded.getProductName());
+                }
             }
             //else if(operation.equals("+")){
             else{
                 order.addQuantity(productToUpdate);
-                //System.out.println("adding to order");
             }
             request.getRequestDispatcher("cart.jsp").include(request, response);
         }    
@@ -76,7 +78,14 @@ public class OrderLineController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("checkout.jsp").include(request, response);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if(user.getUserType().equals("guest")){
+            request.getRequestDispatcher("guestCheckout.jsp").include(request, response);
+        }
+        else{
+            request.getRequestDispatcher("checkout.jsp").include(request, response);
+        }
     }
 
     

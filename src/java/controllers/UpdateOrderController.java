@@ -53,39 +53,38 @@ public class UpdateOrderController extends HttpServlet {
             try{
                 order = manager.findOrder(orderID);
                 order.setOrderLine(manager.getOrderLine(orderID));
-//                for(OrderLine orderLine : order.getOrderLine()){
-//                    orderLine.setOrderID(order.getOrderID());
-//                }
+                if(user == null){
+                   user = new User();
+                   order.setUserID(0);
+               }
+               if(user.getUserType().equals("guest")){
+                   order.setUserID(0);
+               }
                 session.setAttribute("order", order);
                 request.getRequestDispatcher("cart.jsp").include(request, response);
             }catch(SQLException ex){
-                System.out.println("error in trying to delete order in updateOrderController " + ex.getMessage());
+                System.out.println("error in trying to edit order in updateOrderController " + ex.getMessage());
             }
         }
-        else if(action.equals("add")){
-            if(order == null){
-                try{
-                   order = new Order(manager.countOrderRows(), manager.getUserID(user.getUserEmail()));
-                   order.setOrderLine(manager.getOrderLine(orderID));
-                   for(OrderLine orderLine : order.getOrderLine()){
-                       orderLine.setOrderID(order.getOrderID());
-                   }
-                }catch(SQLException ex){
-                    System.out.println("error seting order in UpdateOrderController " + ex.getMessage());
-                }
-            }
-            else{
-                try{
-                    ArrayList<OrderLine> orderLineToAdd = manager.getOrderLine(orderID);
-                    for(OrderLine orderLine : orderLineToAdd){
-                        order.getOrderLine().add(orderLine);
-                    }
-                }catch(SQLException ex){
-                    System.out.println("error getting orderLine in UpdateOrderController " + ex.getMessage());
-                }
+        else if(action.equals("set")){
+            try{
+               order = manager.findOrder(orderID);
+               order.setOrderLine(manager.getOrderLine(orderID));
+               if(user == null){
+                   user = new User();
+                   order.setUserID(0);
+               }
+               if(user.getUserType().equals("guest")){
+                   order.setUserID(0);
+               }
+               for(OrderLine orderLine : order.getOrderLine()){
+                   orderLine.setOrderID(order.getOrderID());
+               }
+            }catch(SQLException ex){
+                System.out.println("error seting order in UpdateOrderController " + ex.getMessage());
             }
             session.setAttribute("order", order);
-            request.getRequestDispatcher("index.jsp").include(request, response);
+            request.getRequestDispatcher("cart.jsp").include(request, response);
         } 
     }
 

@@ -4,6 +4,7 @@
     Author     : mjra9
 --%>
 
+<%@page import="models.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,9 +16,18 @@
         <%
             String saveOrder = "save";
             String payOrder = "pay";
+            User user = (User) session.getAttribute("user");
         %>
-        <h1>Insert checkout here!</h1>
-        <button><a href = "CheckoutController?action=<%=saveOrder%>"> Pay later</a></button>
-        <button><a href = "CheckoutController?action=<%=payOrder%>"> Pay Order</a></button>
+        <div>
+            <jsp:include page = "orderPreview.jsp" flush = "true"/>
+        </div>
+        
+        <div align = "center">
+            <button><a href = "CheckoutController?action=<%=saveOrder%>"> Pay later</a></button>
+            <button><a href = "CheckoutController?action=<%=payOrder%>"> Pay Order</a></button>
+            <button> <a href = "cart.jsp"> Back to cart </a></button>
+            <button><a href = "index.jsp"> Return to home page </a> </button>
+            <button><a href = "cancelOrderController"> Cancel order </a> </button>
+        </div>
     </body>
 </html>

@@ -49,9 +49,10 @@ public class Test {
                         " " +o.getProduct().getProductID() + " " + o.getQuantity());
                 }
             }
-            Order order = new Order(3, 1, "Processing", "03/16/2023", false, manager.getOrderLine(3));
-            order.getOrderLine().add(new OrderLine(manager.searchProduct(6), order.getOrderID(), 4));
-            manager.updateOrder(order);
+//            Order order = new Order(3, 1, "Processing", "03/16/2023", false, manager.getOrderLine(3));
+//            order.getOrderLine().add(new OrderLine(manager.searchProduct(6), order.getOrderID(), 4));
+//            manager.updateOrder(order);
+            manager.addGuestUser("5@gmail.com");
             
         } catch(ClassNotFoundException | SQLException ex){
             System.out.println("no connection" + ex.getMessage());
@@ -60,6 +61,7 @@ public class Test {
         if(!order.getOrderLine().isEmpty()){
             System.out.println("orderLine is empty");
         }
+        
         
 //        HashMap<Product, Integer> productsOrdered = order.getProducts();
 //        int i = 1;

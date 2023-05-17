@@ -54,8 +54,9 @@ public class loginController extends HttpServlet {
                 } catch (SQLException ex) {
                     // Handle the exception
                 }
+                session.removeAttribute("order");
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException ex) {
             // Handle the exception
         }
     }

@@ -32,6 +32,7 @@ public class Order implements Serializable{
         this.status = "Processing";
         this.isPayed = false;
     }
+    
 
     public Order(int orderID, int userID, String status, String date, boolean isPayed, ArrayList<OrderLine> orderLine) {
         this.orderID = orderID;
@@ -75,8 +76,6 @@ public class Order implements Serializable{
     public ArrayList<OrderLine> getOrderLine() {
         return orderLine;
     }
-
-
 
     public void setOrderID(int orderID) {
         this.orderID = orderID;
@@ -133,7 +132,14 @@ public class Order implements Serializable{
         }
         return null;
     }
-
+    public boolean isValid(){
+        for(OrderLine p : orderLine){
+            if(!p.isInStock()){
+                return false;
+            }
+        }
+        return true;
+    }  
     @Override
     public int hashCode() {
         int hash = 7;

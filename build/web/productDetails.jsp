@@ -41,7 +41,7 @@
         <%
             } else {
         %>
-        <button><a href="!!!!!!!!!CART VIEW GOES HERE!!!!!!!!!.jsp">Add to cart</a></button>
+            <button><a href="OrderController?productName=<%=product.getProductName()%>">Add to cart</a></button>
         <%
             }
         %>

@@ -45,6 +45,20 @@ public class User implements Serializable {
         this.userCountry = userCountry;
         this.userType = userType;
     }
+
+    public User() {
+        this.userFirstName = "";
+        this.userLastName = "";
+        this.userEmail = "";
+        this.userPassword = "";
+        this.userStreet = "";
+        this.userPostCode = "";
+        this.userCity = "";
+        this.userState = "";
+        this.userCountry = "";
+        this.userType = "guest";
+    }
+    
     
     /*
     initialize getters and setters

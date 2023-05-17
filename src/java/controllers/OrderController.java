@@ -52,11 +52,17 @@ public class OrderController extends HttpServlet {
                     productAdded = product;
                 }
             } if(user == null){
-                //user = new User();
+                user = new User();
+                session.setAttribute("user", user);
             }
             if(order == null){
                 try{
-                    order = new Order (manager.countOrderRows(), manager.getUserID(user.getUserEmail()));
+                    if(user.getUserType().equals("guest")){
+                        order = new Order (manager.countOrderRows(), 0);
+                    } else {
+                        order = new Order (manager.countOrderRows(), manager.getUserID(user.getUserEmail()));
+                    }
+                    
                 }catch(SQLException ex){
                     System.out.print("unable to get user ID in orderController");
                 }
@@ -70,7 +76,7 @@ public class OrderController extends HttpServlet {
                 order.addToOrderLine(new OrderLine(productAdded, order.getOrderID(), 1));
             }
             session.setAttribute("order", order);
-            request.getRequestDispatcher("products.jsp").include(request, response);
+            request.getRequestDispatcher("cart.jsp").include(request, response);
         } 
         else{
             request.getRequestDispatcher("cart.jsp").include(request, response);

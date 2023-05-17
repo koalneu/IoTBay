@@ -52,14 +52,38 @@
         <servlet-name>UpdateOrderController</servlet-name>
         <servlet-class>controllers.UpdateOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SavedOrderController</servlet-name>
+        <servlet-class>controllers.SavedOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PayedOrderSearchController</servlet-name>
+        <servlet-class>controllers.PayedOrderSearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuestCheckOutController</servlet-name>
+        <servlet-class>controllers.GuestCheckOutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuestPayedHistoryController</servlet-name>
+        <servlet-class>controllers.GuestPayedHistoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuestSavedHistoryController</servlet-name>
+        <servlet-class>controllers.GuestSavedHistoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuestOrderHistoryController</servlet-name>
+        <servlet-class>controllers.GuestOrderHistoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cancelOrderController</servlet-name>
+        <servlet-class>controllers.cancelOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>ProductServlet</servlet-name>
-        <servlet-class>controllers.ProductController</servlet-class>
-    </servlet>
     <servlet>
         <servlet-name>OrderController</servlet-name>
         <servlet-class>controllers.OrderController</servlet-class>
@@ -93,14 +117,9 @@
         <url-pattern>/staffServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProductServlet</servlet-name>
-        <url-pattern>/ProductServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>SearchProductController</servlet-name>
         <servlet-class>controllers.SearchProductController</servlet-class>
@@ -141,7 +160,6 @@
         <servlet-name>DeleteProductController</servlet-name>
         <url-pattern>/DeleteProductController</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>OrderLineController</servlet-name>
         <url-pattern>/OrderLineController</url-pattern>
@@ -161,6 +179,34 @@
     <servlet-mapping>
         <servlet-name>UpdateOrderController</servlet-name>
         <url-pattern>/UpdateOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SavedOrderController</servlet-name>
+        <url-pattern>/SavedOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayedOrderSearchController</servlet-name>
+        <url-pattern>/PayedOrderSearchController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuestCheckOutController</servlet-name>
+        <url-pattern>/GuestCheckOutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuestPayedHistoryController</servlet-name>
+        <url-pattern>/GuestPayedHistoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuestSavedHistoryController</servlet-name>
+        <url-pattern>/GuestSavedHistoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuestOrderHistoryController</servlet-name>
+        <url-pattern>/GuestOrderHistoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cancelOrderController</servlet-name>
+        <url-pattern>/cancelOrderController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

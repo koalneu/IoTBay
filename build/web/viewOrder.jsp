@@ -4,6 +4,7 @@
     Author     : mjra9
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="models.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,9 +17,10 @@
         <%
             Order order = (Order) session.getAttribute("orderToView");
             String type = (String) session.getAttribute("viewOrderType");
+            DecimalFormat format = new DecimalFormat("$#.00");
             String delete = "delete";
             String edit = "edit";
-            String add ="add";
+            String add ="set";
             double totalPrice = 0.0;
         %>
         <div align = "center">
@@ -41,17 +43,19 @@
                     <tr>
                         <td> <%=name%> </td>
                         <td> <%=quantity%> </td>
-                        <td> $<%=price%> </td>
+                        <td> <%=format.format(price)%> </td>
                     </tr>
                 <% }%>
             </table>
-            <p>Total price = <%=totalPrice%></p>
+            <p>Total price = <%=format.format(totalPrice)%></p>
+
             <%if (type.equals("saved")){%>
             <button> <a href = "UpdateOrderController?orderID=<%=order.getOrderID()%>&action=<%=delete%>"> Delete Order</a> </button>
             <button> <a href = "UpdateOrderController?orderID=<%=order.getOrderID()%>&action=<%=edit%>"> Edit Order </a> </button>
             <%} else {%>
-                <button> <a href = "UpdateOrderController?orderID=<%=order.getOrderID()%>&action=<%=add%>"> Add to current order</a> </button>
+                <button> <a href = "UpdateOrderController?orderID=<%=order.getOrderID()%>&action=<%=add%>"> Set  current order</a> </button>
             <%}%>
+            <button><a href = "index.jsp"> Return to home page </a> </button>
         </div>
     </body>
 </html>

@@ -31,22 +31,35 @@ public class OrderHistoryController extends HttpServlet {
         String action = request.getParameter("action");
         if(action.equals("saved")){
             try{            
-               orderHistory = manager.getOrderHistory(manager.getUserID(user.getUserEmail()), false); 
+               orderHistory = manager.getOrderHistory(manager.getUserID(user.getUserEmail()), false);
+               
             }
             catch (SQLException ex){
                 System.out.println("unable to retrieve saved orders " + ex.getMessage());
             }
+            session.setAttribute("orderHistory", orderHistory);
+            session.setAttribute("action", action);
+            request.getRequestDispatcher("savedOrders.jsp").include(request, response);
         }
         else if(action.equals("payed")){
             try{
-               orderHistory = manager.getOrderHistory(manager.getUserID(user.getUserEmail()), true); 
+               if(user.getUserType().equals("guest")){
+                   //int ID = manager.checkGuestID(request.getParameter)
+               }
+               else{
+                   orderHistory = manager.getOrderHistory(manager.getUserID(user.getUserEmail()), true);
+               }
+               
+               
             } catch (SQLException ex){
                 System.out.println("unable to retrieve saved orders " + ex.getMessage());
             }
-        }
-        session.setAttribute("orderHistory", orderHistory);
-        session.setAttribute("action", action);
-        request.getRequestDispatcher("orderHistory.jsp").include(request, response);
+            
+            session.setAttribute("orderHistory", orderHistory);
+            session.setAttribute("action", action);
+            request.getRequestDispatcher("orderHistory.jsp").include(request, response);
+        }        
+        
     }
 
     @Override

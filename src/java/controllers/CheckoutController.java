@@ -82,6 +82,20 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+//        HttpSession session = request.getSession();
+//        DBManager manager = (DBManager) session.getAttribute("manager");
+//        Order order = (Order) session.getAttribute("order");
+//        User user = (User) session.getAttribute("user");
+//        String email = request.getParameter("email");
+//        try{
+//            if(manager.getGuestUser(email) != null){
+//                order.setUserID(manager.checkGuestID(email));
+//                manager.addOrder(order);
+//            }else{
+//            
+//            }
+//        } catch(SQLException ex){
+//            System.out.println(error in guest checkout);
+//        }   
     }
 }

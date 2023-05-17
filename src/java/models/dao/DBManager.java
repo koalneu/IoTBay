@@ -20,40 +20,40 @@ public class DBManager {
     }
     
     public User authenticateUser(String email, String password) {
-    try {
-        System.out.println("here1");
-        ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
-        //Check if a email has not been found
-        if(!resultSet.next()){
-            return null;
-            
+        try {
+            System.out.println("here1");
+            ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
+            //Check if a email has not been found
+            if(!resultSet.next()){
+                return null;
+
+            }
+            //Copy items from DB into a user object
+            User user = new User(
+                resultSet.getString("CUSTOMERFIRSTNAME"), 
+                resultSet.getString("CUSTOMERLASTNAME"), 
+                email, 
+                resultSet.getString("CUSTOMERPASSWORD"), 
+                resultSet.getString("CUSTOMERSTREET"),  
+                resultSet.getString("CUSTOMERPOSTCODE"),
+                resultSet.getString("CUSTOMERCITY"),
+                resultSet.getString("CUSTOMERSTATE"), 
+                resultSet.getString("CUSTOMERCOUNTRY"), 
+                resultSet.getString("USERTYPE")
+            );
+            //Check if the password matches the user's input
+            if(password.equals(user.getUserPassword())){
+                return user;
+            }
+            else{
+                return null;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error Establishing Connection!");
+            ex.printStackTrace();
         }
-        //Copy items from DB into a user object
-        User user = new User(
-            resultSet.getString("CUSTOMERFIRSTNAME"), 
-            resultSet.getString("CUSTOMERLASTNAME"), 
-            email, 
-            resultSet.getString("CUSTOMERPASSWORD"), 
-            resultSet.getString("CUSTOMERSTREET"),  
-            resultSet.getString("CUSTOMERPOSTCODE"),
-            resultSet.getString("CUSTOMERCITY"),
-            resultSet.getString("CUSTOMERSTATE"), 
-            resultSet.getString("CUSTOMERCOUNTRY"), 
-            resultSet.getString("USERTYPE")
-        );
-        //Check if the password matches the user's input
-        if(password.equals(user.getUserPassword())){
-            return user;
-        }
-        else{
-            return null;
-        }
-    } catch (SQLException ex) {
-        System.out.println("Error Establishing Connection!");
-        ex.printStackTrace();
+        return null;
     }
-    return null;
-}
 
     
     public String userType(String email) {
@@ -161,151 +161,35 @@ public class DBManager {
            
     }
     
-    //functions from wilson's branch
-    
-    public User authenticateUser(String email, String password) throws SQLException {
-    try {
-        System.out.println("here1");
-        ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
-        //Check if a email has not been found
-        if(!resultSet.next()){
-            return null;
-            
-        }
-        //Copy items from DB into a user object
-        User user = new User(
-            resultSet.getString("CUSTOMERFIRSTNAME"), 
-            resultSet.getString("CUSTOMERLASTNAME"), 
-            email, 
-            resultSet.getString("CUSTOMERPASSWORD"), 
-            resultSet.getString("CUSTOMERSTREET"),  
-            resultSet.getString("CUSTOMERPOSTCODE"),
-            resultSet.getString("CUSTOMERCITY"),
-            resultSet.getString("CUSTOMERSTATE"), 
-            resultSet.getString("CUSTOMERCOUNTRY"), 
-            resultSet.getString("USERTYPE")
-        );
-        //Check if the password matches the user's input
-        if(password.equals(user.getUserPassword())){
-            return user;
-        }
-        else{
-            return null;
-        }
-    } catch (SQLException ex) {
-        System.out.println("Error Establishing Connection!");
-        ex.printStackTrace();
-    }
-    return null;
-}
-
-    
-    public String userType(String email) throws SQLException {
-        try {
-            ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
-            if (resultSet.next()) {
-                String userType = resultSet.getString("USERTYPE");
-                return userType;
-            }
-            
-        } catch (SQLException ex) {
-            System.out.println("Error Establishing Connection!");
-        }
-
-        return null;
-    }
-    
-    //Add user function
-    public void addUser(String fname, String lname, String email, String password, String street, String postcode, String city, String state, String country, String userType) throws SQLException, ClassNotFoundException{
-        try{
-            String command = "INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERFIRSTNAME,CUSTOMERLASTNAME,CUSTOMEREMAIL,CUSTOMERPASSWORD,CUSTOMERSTREET,CUSTOMERPOSTCODE,CUSTOMERCITY,CUSTOMERSTATE,CUSTOMERCOUNTRY,USERTYPE) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement pst = conn.prepareStatement(command);
-            
-            //calculate the new ID
-            String rows = "select count(*) from CUSTOMER";
-            ResultSet retrieveResult = st.executeQuery(rows);
-            retrieveResult.next();
-            int ID = retrieveResult.getInt(1);
-            
-            pst.setObject(1, ID);
-            pst.setObject(2, fname);
-            pst.setObject(3, lname);
-            pst.setObject(4, email);
-            pst.setObject(5, password);
-            pst.setObject(6, street);
-            pst.setObject(7, Integer.parseInt(postcode));
-            pst.setObject(8, city);
-            pst.setObject(9, state);
-            pst.setObject(10, country);
-            pst.setObject(11, userType);
-            pst.executeUpdate();
-        }
-        catch(Error e){
-        }
-            
-    }
-    
-    //update
-    public void updateUser(String originalEmail, String fname, String lname, String email, String password, String street, String postcode, String city, String state, String country) throws SQLException, ClassNotFoundException{
-        try {
-            //update is used to seelct
-            //Statement to update the correct columns
-            PreparedStatement update = conn.prepareStatement("UPDATE CUSTOMER SET CUSTOMERFIRSTNAME=?, CUSTOMERLASTNAME=?, CUSTOMEREMAIL=?, CUSTOMERPASSWORD=?, CUSTOMERSTREET=?, CUSTOMERPOSTCODE=?, CUSTOMERCITY=?, CUSTOMERSTATE=?, CUSTOMERCOUNTRY=? WHERE CUSTOMEREMAIL=?");
-            //Set the variables for the "update" statement
-            update.setString(1, fname);
-            update.setString(2, lname);
-            update.setString(3, email);
-            update.setString(4, password);
-            update.setString(5, street);
-            update.setInt(6, Integer.parseInt(postcode));
-            update.setString(7, city);
-            update.setString(8, state);
-            update.setString(9, country);
-            update.setString(10, originalEmail);
-
-            update.executeUpdate();
-        }
-        catch(Error e){
-        }
-    }
-    
-    public void addAccessLogEntry(String email, String fname, String action) throws SQLException, ClassNotFoundException{
-        try{
-            String command = "INSERT INTO ACCESSLOGS(ACCESSLOGID,USERID,USERNAME,ACCESSTIME,ACTION) VALUES(?,?,?,?,?)";
-            PreparedStatement pst = conn.prepareStatement(command);
-
-            //calculate the ACCESSLOGID
-            String rows = "select count(*) from ACCESSLOGS";
-            ResultSet retrieveResult = st.executeQuery(rows);
-            retrieveResult.next();
-            int ACCESSLOGID = retrieveResult.getInt(1);
-
-            //retrieve userID from DB
-            String getUserID = "SELECT CUSTOMERID FROM CUSTOMER WHERE CUSTOMEREMAIL = ?";
-            PreparedStatement userIDStatement = conn.prepareStatement(getUserID);
-            userIDStatement.setObject(1, email);
-            ResultSet retrieveID = userIDStatement.executeQuery();
-            retrieveID.next();
-            int userID = retrieveID.getInt(1);
-
-            //get timestamp
-            long timestamp = System.currentTimeMillis();
-            java.sql.Timestamp accessTime = new java.sql.Timestamp(timestamp);
-
-            pst.setObject(1, ACCESSLOGID);
-            pst.setObject(2, userID);
-            pst.setObject(3, fname);
-            pst.setObject(4, accessTime);
-            pst.setObject(5, action);
-
-            pst.executeUpdate();
-        }
-        catch(Error e){
-        }
-           
-    }
     //order implementation CRUD
     //Functions from Mark's branch
+    
+    public void addGuestUser(String email) throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.CUSTOMER";
+        ResultSet rs = st.executeQuery(fetch);
+        int ID = 0;
+        while(rs.next()){
+            int temp = rs.getInt(1) + 1;
+            if(temp > ID){
+                ID = temp;
+            }
+        }
+        st.executeUpdate("INSERT INTO IOTADMIN.CUSTOMER (CUSTOMERID, CUSTOMEREMAIL, USERTYPE)" +
+                "VALUES ( " +ID + ", \'" +email+ "\', \'guest\')");
+    }
+    public User getGuestUser(String email) throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.CUSTOMER WHERE CUSTOMEREMAIL = \'" +email+"\' AND USERTYPE = \'guest\'";
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+            String userEmail = rs.getString("CUSTOMEREMAIL");
+            if(userEmail.equals(email)){
+                User user = new User();
+                user.setUserEmail(userEmail);
+                return user;
+            }
+        }
+        return null;
+    }
     public int countOrderRows() throws SQLException {
         String fetch = "SELECT * FROM IOTADMIN.ORDERS";
         ResultSet rs = st.executeQuery(fetch);
@@ -321,10 +205,23 @@ public class DBManager {
     public int getUserID(String email) throws SQLException {
         String fetch = "SELECT * FROM IOTADMIN.CUSTOMER WHERE CUSTOMEREMAIL = " + "\'" + email + "\'";
         ResultSet rs = st.executeQuery(fetch);
-        rs.next();
-        int ID = rs.getInt("CUSTOMERID");
-        return ID;
+        if(rs.next()){
+           int ID = rs.getInt("CUSTOMERID");
+           return ID;
+        }
+        return -1;
     }
+    
+    public int checkGuestID(String email) throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.CUSTOMER WHERE CUSTOMEREMAIL = " + "\'" + email + "\' AND USERTYPE = \'guest\'";
+        ResultSet rs = st.executeQuery(fetch);
+        if(rs.next()){
+           int ID = rs.getInt("CUSTOMERID");
+           return ID;
+        }
+        return -1;
+    }
+    
     
     public void addOrder(Order order) throws SQLException{
         SimpleDateFormat sm = new SimpleDateFormat("MM/dd/yyyy");
@@ -345,9 +242,7 @@ public class DBManager {
         }
     }
     
-//    public void updateOrderLine(OrderLine orderLine){
-//        st.executeUpdate()
-//    }
+    
     public boolean findOrderLine(OrderLine orderLine) throws SQLException{
         String fetch = "SELECT  * FROM IOTADMIN.ORDERLINEITEM WHERE PRODUCTID=" + orderLine.getProduct().getProductID() + " AND ORDERID =" + orderLine.getOrderID();
         ResultSet rs = st.executeQuery(fetch);
@@ -390,6 +285,59 @@ public class DBManager {
         }
        
         return orders;
+    }
+    
+    public ArrayList<Order> findOrders(String date, int userID, boolean isPayed) throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.ORDERS WHERE CUSTOMERID =" + userID + "AND ORDERDATE =\'" + date +"\'" + "AND ISPAYED =" + isPayed;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Order> orders = new ArrayList<Order>();
+        while(rs.next()){ 
+            Order order = new Order();
+            order.setOrderID(rs.getInt("ORDERID"));
+            order.setUserID(rs.getInt("CUSTOMERID"));
+            order.setDate(rs.getString("ORDERDATE"));
+            order.setStatus(rs.getString("ORDERSTATUS"));
+            order.setIsPayed(rs.getBoolean("ISPAYED"));
+            //order.setOrderLine(getOrderLine(order.getOrderID()));
+            orders.add(order);
+        }
+        for(Order order : orders){
+            order.setOrderLine(getOrderLine(order.getOrderID())); 
+        }
+        return orders;
+    }
+    // using orderID, userID, isPayed, date
+    public Order findOrder(int orderID, int userID, boolean isPayed, String date)throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.ORDERS WHERE CUSTOMERID =" + userID + " AND ORDERID = " + orderID + " AND ORDERDATE =\'" + date +"\'" + "AND ISPAYED =" + isPayed;
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+            int ID = rs.getInt("ORDERID");
+            if(orderID == ID){
+                int uID = rs.getInt("CUSTOMERID");
+                String dt = rs.getString("ORDERDATE");
+                String status = rs.getString("ORDERSTATUS");
+                boolean payed = rs.getBoolean("ISPAYED");
+                ArrayList<OrderLine> orderLine= new ArrayList<>();
+                return new Order(ID, uID, status, dt, payed, orderLine); 
+            }  
+        }
+        return null;
+    }
+    public Order findOrder(int orderID, int userID, boolean isPayed)throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.ORDERS WHERE CUSTOMERID =" + userID + " AND ORDERID = " + orderID  + "AND ISPAYED =" + isPayed;
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+            int ID = rs.getInt("ORDERID");
+            if(orderID == ID){
+                int uID = rs.getInt("CUSTOMERID");
+                String dt = rs.getString("ORDERDATE");
+                String status = rs.getString("ORDERSTATUS");
+                boolean payed = rs.getBoolean("ISPAYED");
+                ArrayList<OrderLine> orderLine= new ArrayList<>();
+                return new Order(ID, uID, status, dt, payed, orderLine); 
+            }  
+        }
+        return null;
     }
     //delete order and its orderline
     public void deleteOrder(int orderID) throws SQLException{
@@ -462,6 +410,9 @@ public class DBManager {
         deleteOrderLine(order.getOrderID());
         for(OrderLine orderLine : order.getOrderLine()){
             addOrderLine(orderLine);
+            if(isPayed){
+                updateProductStock(orderLine.getProduct().getProductID(), orderLine.getProduct().getProductStock() - orderLine.getQuantity());
+            }
         }
     }
     

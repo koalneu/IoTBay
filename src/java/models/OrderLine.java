@@ -64,6 +64,10 @@ public class OrderLine implements Serializable{
     public void setProduct(Product product) {
         this.product = product;
     }
+    
+    public boolean isInStock(){
+        return quantity <= product.getProductStock();
+    }
 
     @Override
     public int hashCode() {
