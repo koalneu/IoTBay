@@ -111,6 +111,8 @@
     <servlet-mapping>
         <servlet-name>DeleteProductController</servlet-name>
         <url-pattern>/DeleteProductController</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>accesslogController</servlet-name>
         <servlet-class>controllers.accesslogController</servlet-class>
     </servlet>
