@@ -80,6 +80,14 @@
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>accesslogController</servlet-name>
+        <servlet-class>controllers.accesslogController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>accesslogController</servlet-name>
+        <url-pattern>/accesslogController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
