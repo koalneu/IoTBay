@@ -68,11 +68,11 @@
                         
         </div>
         </div>
-        <div>
+        <div class="center">
         <h1>Profile Page</h1>
         
-        <h2><%= user.getUserFirstName() + " " + user.getUserLastName() + "'s Details:" %></h2> 
-        <table id="profile-table">
+        <h2 align="center"><%= user.getUserFirstName() + " " + user.getUserLastName() + "'s Details:" %></h2> 
+        <table id="profile-table" align="center">
            <thead>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -96,8 +96,9 @@
                 <td>${user.userCountry}</td>
             </tr>
         </table>
-        <button><a href="index.jsp">Back</a></button>
-        <button><a href="edit.jsp">Edit Details</a></button>
+        <button class="center"><a href="edit.jsp">Edit Details</a></button>    
+        <button class="center"><a href="index.jsp">Back</a></button>
+        
     </div>
     </body>
 </html>

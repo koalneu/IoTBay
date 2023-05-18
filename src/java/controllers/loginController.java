@@ -45,7 +45,7 @@ public class loginController extends HttpServlet {
                 String userType = manager.userType(email);
                 if (userType.equals("Staff") || userType.equals("Admin")) {
                     // Staff or Admin -> staff page
-                    request.getRequestDispatcher("staff.jsp").include(request, response);
+                    request.getRequestDispatcher("index.jsp").include(request, response);
 
                 } else {
                     // Customer -> index page
