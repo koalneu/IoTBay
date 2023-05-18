@@ -3,15 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/legob/Desktop/Uni%20Stuff/Yr%203/Intro%20to%20Software%20Dev/IoTBay/src/java/models/Product.java</file>
-            <file>file:/C:/Users/legob/Desktop/Uni%20Stuff/Yr%203/Intro%20to%20Software%20Dev/IoTBay/web/index.jsp</file>
-            <file>file:/C:/Users/legob/Desktop/Uni%20Stuff/Yr%203/Intro%20to%20Software%20Dev/IoTBay/src/java/models/dao/DBManager.java</file>
-            <file>file:/C:/Users/legob/Desktop/Uni%20Stuff/Yr%203/Intro%20to%20Software%20Dev/IoTBay/src/java/controllers/loginController.java</file>
-            <file>file:/C:/Users/legob/Desktop/Uni%20Stuff/Yr%203/Intro%20to%20Software%20Dev/IoTBay/web/productDetails.jsp</file>
-            <file>file:/C:/Users/legob/Desktop/Uni%20Stuff/Yr%203/Intro%20to%20Software%20Dev/IoTBay/src/java/controllers/ConnServlet.java</file>
-            <file>file:/C:/Users/legob/Desktop/Uni%20Stuff/Yr%203/Intro%20to%20Software%20Dev/IoTBay/web/register.jsp</file>
-            <file>file:/C:/Users/legob/Desktop/Uni%20Stuff/Yr%203/Intro%20to%20Software%20Dev/IoTBay/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/legob/Desktop/Uni%20Stuff/Yr%203/Intro%20to%20Software%20Dev/IoTBay/web/css/productPage.css</file>
+            <file>file:/C:/Users/Milad/Documents/NetBeansProjects/IoTBay%206/web/shipmentDetails.jsp</file>
+            <file>file:/C:/Users/Milad/Documents/NetBeansProjects/IoTBay%206/src/java/controllers/AddShipmentController.java</file>
+            <file>file:/C:/Users/Milad/Documents/NetBeansProjects/IoTBay%206/src/java/controllers/DeleteShipmentController.java</file>
+            <file>file:/C:/Users/Milad/Documents/NetBeansProjects/IoTBay%206/web/editShipment.jsp</file>
+            <file>file:/C:/Users/Milad/Documents/NetBeansProjects/IoTBay%206/src/java/controllers/EditShipment.java</file>
+            <file>file:/C:/Users/Milad/Documents/NetBeansProjects/IoTBay%206/web/shipmentSearchDetails.jsp</file>
+            <file>file:/C:/Users/Milad/Documents/NetBeansProjects/IoTBay%206/src/java/models/dao/DBManager.java</file>
+            <file>file:/C:/Users/Milad/Documents/NetBeansProjects/IoTBay%206/src/java/controllers/OrderController.java</file>
         </group>
     </open-files>
 </project-private>

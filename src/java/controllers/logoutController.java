@@ -27,7 +27,7 @@ public class logoutController extends HttpServlet {
         try {
             manager.addAccessLogEntry(user.getUserEmail(), user.getUserFirstName(), "Log out");
             session.invalidate();
-            
+  
             response.sendRedirect("index.jsp");
         } catch (SQLException ex) {
             Logger.getLogger(logoutController.class.getName()).log(Level.SEVERE, null, ex);

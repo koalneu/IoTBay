@@ -32,6 +32,66 @@
         <servlet-name>staffServlet</servlet-name>
         <servlet-class>controllers.staffServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderLineController</servlet-name>
+        <servlet-class>controllers.OrderLineController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckoutController</servlet-name>
+        <servlet-class>controllers.CheckoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderHistoryController</servlet-name>
+        <servlet-class>controllers.OrderHistoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewOrderController</servlet-name>
+        <servlet-class>controllers.ViewOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateOrderController</servlet-name>
+        <servlet-class>controllers.UpdateOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SavedOrderController</servlet-name>
+        <servlet-class>controllers.SavedOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PayedOrderSearchController</servlet-name>
+        <servlet-class>controllers.PayedOrderSearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuestCheckOutController</servlet-name>
+        <servlet-class>controllers.GuestCheckOutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuestPayedHistoryController</servlet-name>
+        <servlet-class>controllers.GuestPayedHistoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuestSavedHistoryController</servlet-name>
+        <servlet-class>controllers.GuestSavedHistoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuestOrderHistoryController</servlet-name>
+        <servlet-class>controllers.GuestOrderHistoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cancelOrderController</servlet-name>
+        <servlet-class>controllers.cancelOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddShipmentController</servlet-name>
+        <servlet-class>controllers.AddShipmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditShipment</servlet-name>
+        <servlet-class>controllers.EditShipment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteShipmentController</servlet-name>
+        <servlet-class>controllers.DeleteShipmentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -40,6 +100,30 @@
         <servlet-name>OrderController</servlet-name>
         <servlet-class>controllers.OrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PaymentController</servlet-name>
+        <servlet-class>controllers.PaymentController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PaymentController</servlet-name>
+        <url-pattern>/PaymentController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>EditPaymentController</servlet-name>
+        <servlet-class>controllers.EditPaymentController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditPaymentController</servlet-name>
+        <url-pattern>/EditPaymentController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeletePaymentController</servlet-name>
+        <servlet-class>controllers.DeletePaymentController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeletePaymentController</servlet-name>
+        <url-pattern>/DeletePaymentController</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>
         <url-pattern>/ConnServlet</url-pattern>
@@ -111,6 +195,66 @@
     <servlet-mapping>
         <servlet-name>DeleteProductController</servlet-name>
         <url-pattern>/DeleteProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderLineController</servlet-name>
+        <url-pattern>/OrderLineController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutController</servlet-name>
+        <url-pattern>/CheckoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryController</servlet-name>
+        <url-pattern>/OrderHistoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOrderController</servlet-name>
+        <url-pattern>/ViewOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateOrderController</servlet-name>
+        <url-pattern>/UpdateOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SavedOrderController</servlet-name>
+        <url-pattern>/SavedOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayedOrderSearchController</servlet-name>
+        <url-pattern>/PayedOrderSearchController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuestCheckOutController</servlet-name>
+        <url-pattern>/GuestCheckOutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuestPayedHistoryController</servlet-name>
+        <url-pattern>/GuestPayedHistoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuestSavedHistoryController</servlet-name>
+        <url-pattern>/GuestSavedHistoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuestOrderHistoryController</servlet-name>
+        <url-pattern>/GuestOrderHistoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cancelOrderController</servlet-name>
+        <url-pattern>/cancelOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddShipmentController</servlet-name>
+        <url-pattern>/AddShipmentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditShipment</servlet-name>
+        <url-pattern>/EditShipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteShipmentController</servlet-name>
+        <url-pattern>/DeleteShipmentController</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>accesslogController</servlet-name>

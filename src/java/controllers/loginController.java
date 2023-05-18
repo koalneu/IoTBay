@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.User;
+import models.PaymentMethod;
 
 /**
  *
@@ -26,9 +27,10 @@ public class loginController extends HttpServlet {
         Validator validator = new Validator();
         validator.clear(session);
         User user = null;
+        PaymentMethod paymethod = null;
         try {
             user = manager.authenticateUser(email, password);
-           
+            paymethod = manager.getPayMethod(user.getUserEmail());
             if (user == null) {
                 // Incorrect details
                 // Take the user back to the login.jsp page
@@ -38,6 +40,7 @@ public class loginController extends HttpServlet {
             } else {
                 // Correct details
                 session.setAttribute("user", user);
+                session.setAttribute("paymethod",paymethod);
                 // Take them to the correct page
                 String userType = manager.userType(email);
                 if (userType.equals("Staff") || userType.equals("Admin")) {
@@ -55,7 +58,8 @@ public class loginController extends HttpServlet {
                     // Handle the exception
                 }
             }
-        } catch (ClassNotFoundException e) {
+            session.setAttribute("order", null);
+        } catch (ClassNotFoundException | SQLException e) {
             // Handle the exception
         }
     }

@@ -1,11 +1,12 @@
 package models.dao;
 
-import models.Product;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import models.*;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.User;
 
 /**
  *
@@ -20,7 +21,9 @@ public class DBManager {
         this.conn = conn;
     }
     
-    public User authenticateUser(String email, String password) {
+    //functions from wilson's branch
+    
+    public User authenticateUser(String email, String password) throws SQLException {
     try {
         System.out.println("here1");
         ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
@@ -57,7 +60,7 @@ public class DBManager {
 }
 
     
-    public String userType(String email) {
+    public String userType(String email) throws SQLException {
         try {
             ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
             if (resultSet.next()) {
@@ -204,20 +207,260 @@ public class DBManager {
            
     }
     
+    //order implementation CRUD
     //Functions from Mark's branch
-    public int countOrderRows() throws SQLException {
-        String fetch = "SELECT COUNT (*) FROM ORDERS";
+    
+    public void addGuestUser(String email) throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.CUSTOMER";
         ResultSet rs = st.executeQuery(fetch);
-        rs.next();
-        int ID = rs.getInt(1);
+        int ID = 0;
+        while(rs.next()){
+            int temp = rs.getInt(1) + 1;
+            if(temp > ID){
+                ID = temp;
+            }
+        }
+        st.executeUpdate("INSERT INTO IOTADMIN.CUSTOMER (CUSTOMERID, CUSTOMEREMAIL, USERTYPE)" +
+                "VALUES ( " +ID + ", \'" +email+ "\', \'guest\')");
+    }
+    public User getGuestUser(String email) throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.CUSTOMER WHERE CUSTOMEREMAIL = \'" +email+"\' AND USERTYPE = \'guest\'";
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+            String userEmail = rs.getString("CUSTOMEREMAIL");
+            if(userEmail.equals(email)){
+                User user = new User();
+                user.setUserEmail(userEmail);
+                return user;
+            }
+        }
+        return null;
+    }
+    public int countOrderRows() throws SQLException {
+        String fetch = "SELECT * FROM IOTADMIN.ORDERS";
+        ResultSet rs = st.executeQuery(fetch);
+        int ID = 0;
+        while(rs.next()){
+            int temp = rs.getInt(1) + 1;
+            if(temp > ID){
+                ID = temp;
+            }
+        }
         return ID;
     }
     public int getUserID(String email) throws SQLException {
-        String fetch = "SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = " + "\'" + email + "\'";
+        String fetch = "SELECT * FROM IOTADMIN.CUSTOMER WHERE CUSTOMEREMAIL = " + "\'" + email + "\'";
         ResultSet rs = st.executeQuery(fetch);
-        rs.next();
-        int ID = rs.getInt("CUSTOMERID");
-        return ID;
+        if(rs.next()){
+           int ID = rs.getInt("CUSTOMERID");
+           return ID;
+        }
+        return -1;
+    }
+    
+    public int checkGuestID(String email) throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.CUSTOMER WHERE CUSTOMEREMAIL = " + "\'" + email + "\' AND USERTYPE = \'guest\'";
+        ResultSet rs = st.executeQuery(fetch);
+        if(rs.next()){
+           int ID = rs.getInt("CUSTOMERID");
+           return ID;
+        }
+        return -1;
+    }
+    
+    
+    public void addOrder(Order order) throws SQLException{
+        SimpleDateFormat sm = new SimpleDateFormat("MM/dd/yyyy");
+        int orderID = order.getOrderID();
+        int userID = order.getUserID();
+        String date = sm.format(new Date());
+        String status = order.getStatus();
+        boolean isPayed = order.isIsPayed();
+        
+        st.executeUpdate("INSERT INTO IOTADMIN.ORDERS" + "(ORDERID, CUSTOMERID, ORDERDATE, ORDERSTATUS, ISPAYED)" + 
+                "VALUES(" + orderID + ", " + userID + ", \'" + date + "\'," + "\'" + status + "\', " + isPayed + ")");
+        
+        for(OrderLine product : order.getOrderLine()){
+            addOrderLine(product);
+            if(isPayed){
+                updateProductStock(product.getProduct().getProductID(), product.getProduct().getProductStock() - product.getQuantity());
+            }
+        }
+    }
+    
+    
+    public boolean findOrderLine(OrderLine orderLine) throws SQLException{
+        String fetch = "SELECT  * FROM IOTADMIN.ORDERLINEITEM WHERE PRODUCTID=" + orderLine.getProduct().getProductID() + " AND ORDERID =" + orderLine.getOrderID();
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+            int oID = rs.getInt("ORDERID");
+            int pID = rs.getInt("PRODUCTID");
+            if(pID == orderLine.getProduct().getProductID() && oID == orderLine.getOrderID()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void addOrderLine(OrderLine orderLine) throws SQLException {
+        int orderID = orderLine.getOrderID();
+        int productID = orderLine.getProduct().getProductID();
+        int quantity = orderLine.getQuantity();
+        double price = orderLine.getPrice();
+        st.executeUpdate("INSERT INTO IOTADMIN.ORDERLINEITEM" + "(ORDERID, PRODUCTID, ORDERLINEQUANTITY, ORDERLINEPRICE)" +
+                "VALUES("+orderID+", " +productID+ ", "+quantity+", " +price+ ")");
+    }
+    
+    public ArrayList<Order> getOrderHistory(int userID, boolean isSaved) throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.ORDERS WHERE CUSTOMERID =" + userID + "AND ISPAYED =" + isSaved;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Order> orders = new ArrayList<Order>();
+        while(rs.next()){ 
+            Order order = new Order();
+            order.setOrderID(rs.getInt("ORDERID"));
+            order.setUserID(rs.getInt("CUSTOMERID"));
+            order.setDate(rs.getString("ORDERDATE"));
+            order.setStatus(rs.getString("ORDERSTATUS"));
+            order.setIsPayed(rs.getBoolean("ISPAYED"));
+            //order.setOrderLine(getOrderLine(order.getOrderID()));
+            orders.add(order);
+        }
+        
+        for(Order order : orders){
+            order.setOrderLine(getOrderLine(order.getOrderID())); 
+        }
+       
+        return orders;
+    }
+    
+    public ArrayList<Order> findOrders(String date, int userID, boolean isPayed) throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.ORDERS WHERE CUSTOMERID =" + userID + "AND ORDERDATE =\'" + date +"\'" + "AND ISPAYED =" + isPayed;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Order> orders = new ArrayList<Order>();
+        while(rs.next()){ 
+            Order order = new Order();
+            order.setOrderID(rs.getInt("ORDERID"));
+            order.setUserID(rs.getInt("CUSTOMERID"));
+            order.setDate(rs.getString("ORDERDATE"));
+            order.setStatus(rs.getString("ORDERSTATUS"));
+            order.setIsPayed(rs.getBoolean("ISPAYED"));
+            //order.setOrderLine(getOrderLine(order.getOrderID()));
+            orders.add(order);
+        }
+        for(Order order : orders){
+            order.setOrderLine(getOrderLine(order.getOrderID())); 
+        }
+        return orders;
+    }
+    // using orderID, userID, isPayed, date
+    public Order findOrder(int orderID, int userID, boolean isPayed, String date)throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.ORDERS WHERE CUSTOMERID =" + userID + " AND ORDERID = " + orderID + " AND ORDERDATE =\'" + date +"\'" + "AND ISPAYED =" + isPayed;
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+            int ID = rs.getInt("ORDERID");
+            if(orderID == ID){
+                int uID = rs.getInt("CUSTOMERID");
+                String dt = rs.getString("ORDERDATE");
+                String status = rs.getString("ORDERSTATUS");
+                boolean payed = rs.getBoolean("ISPAYED");
+                ArrayList<OrderLine> orderLine= new ArrayList<>();
+                return new Order(ID, uID, status, dt, payed, orderLine); 
+            }  
+        }
+        return null;
+    }
+    public Order findOrder(int orderID, int userID, boolean isPayed)throws SQLException{
+        String fetch = "SELECT * FROM IOTADMIN.ORDERS WHERE CUSTOMERID =" + userID + " AND ORDERID = " + orderID  + "AND ISPAYED =" + isPayed;
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+            int ID = rs.getInt("ORDERID");
+            if(orderID == ID){
+                int uID = rs.getInt("CUSTOMERID");
+                String dt = rs.getString("ORDERDATE");
+                String status = rs.getString("ORDERSTATUS");
+                boolean payed = rs.getBoolean("ISPAYED");
+                ArrayList<OrderLine> orderLine= new ArrayList<>();
+                return new Order(ID, uID, status, dt, payed, orderLine); 
+            }  
+        }
+        return null;
+    }
+    //delete order and its orderline
+    public void deleteOrder(int orderID) throws SQLException{
+        st.executeUpdate("DELETE FROM IOTADMIN.ORDERS WHERE ORDERID = " + orderID);
+        
+    }
+    public void deleteOrderLine(int orderID) throws SQLException{
+        st.executeUpdate("DELETE FROM IOTADMIN.ORDERLINEITEM WHERE ORDERID = " + orderID);
+    }
+    
+    public ArrayList<OrderLine> getOrderLine(int orderID) throws SQLException{
+        String fetch = "SELECT * FROM ORDERLINEITEM inner join PRODUCT ON ORDERLINEITEM.PRODUCTID = PRODUCT.PRODUCTID WHERE ORDERID = "+ orderID;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderLine> orderLines = new ArrayList<OrderLine>();
+        while(rs.next()){
+            OrderLine orderLine= new OrderLine();
+            // start here
+            orderLine.setProduct(new Product(rs.getInt("PRODUCTID"), rs.getString("PRODUCTNAME"), rs.getString("PRODUCTDESC"), 
+                    rs.getDouble("PRODUCTPRICE"), rs.getString("PRODUCTIMAGE"), rs.getInt("PRODUCTSTOCK")));
+            //return new Product(productID, productName, productDesc, productPrice, productImage, productStock); 
+            orderLine.setOrderID(rs.getInt("ORDERID"));
+            orderLine.setQuantity(rs.getInt("ORDERLINEQUANTITY"));
+            orderLine.setPrice(rs.getDouble("ORDERLINEPRICE"));
+            orderLines.add(orderLine);
+        }
+        return orderLines;
+    }
+    
+    //public ArrayList<Product>
+    
+    public Order findOrder(int ID) throws SQLException{
+        String fetch = "SELECT * FROM ORDERS WHERE ORDERID = "+ ID;
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+            int orderID = rs.getInt("ORDERID");
+            if(orderID == ID){
+                int userID = rs.getInt("CUSTOMERID");
+                String date = rs.getString("ORDERDATE");
+                String status = rs.getString("ORDERSTATUS");
+                boolean isPayed = rs.getBoolean("ISPAYED");
+                ArrayList<OrderLine> orderLine= new ArrayList<>();
+                return new Order(orderID, userID, status, date, isPayed, orderLine); 
+            }  
+        }
+        return null;
+    }
+    
+    //search product by ID
+    public Product searchProduct(int ID) throws SQLException{
+        String fetch = "select * from IOTADMIN.Product where PRODUCTID = " + ID;
+        ResultSet rs = st.executeQuery(fetch);
+        while(rs.next()){
+           int productID = rs.getInt(1);
+            String productName = rs.getString(2);
+            String productDesc = rs.getString(3);
+            double productPrice = rs.getDouble(4);
+            String productImage = rs.getString(5);
+            int productStock = rs.getInt(6);
+            return new Product(productID, productName, productDesc, productPrice, productImage, productStock); 
+        }
+        return null;       
+    }
+    
+    //updates order
+    public void updateOrder(Order order) throws SQLException{
+        SimpleDateFormat sm = new SimpleDateFormat("MM/dd/yyyy");
+        String date = sm.format(new Date());
+        int userID = order.getUserID();
+        boolean isPayed = order.isIsPayed();
+        st.executeUpdate("UPDATE IOTADMIN.ORDERS SET ORDERDATE = \'" + date +"\' , ISPAYED =" + isPayed + ", CUSTOMERID = "+userID+" WHERE ORDERID = " + order.getOrderID());
+        deleteOrderLine(order.getOrderID());
+        for(OrderLine orderLine : order.getOrderLine()){
+            addOrderLine(orderLine);
+            if(isPayed){
+                updateProductStock(orderLine.getProduct().getProductID(), orderLine.getProduct().getProductStock() - orderLine.getQuantity());
+            }
+        }
     }
     
     //Functions related to products in the database
@@ -287,6 +530,10 @@ public class DBManager {
     //update only the stock of a product by name
     public void updateProductStock(String name, int stock) throws SQLException {
         st.executeUpdate("UPDATE IOTADMIN.PRODUCT SET PRODUCTSTOCK="+stock+" WHERE PRODUCTNAME='"+name+"'");
+    }
+    //update only the stock of a product by ID
+    public void updateProductStock(int productID, int stock) throws SQLException {
+        st.executeUpdate("UPDATE IOTADMIN.PRODUCT SET PRODUCTSTOCK="+stock+" WHERE PRODUCTID="+productID );
     }
     //delete a product by name
     public void deleteProduct(String name) throws SQLException {
@@ -360,4 +607,284 @@ public class DBManager {
         }
         return false;
     }
+    //create payment entry
+    public void addPayment(int amount ) throws SQLException{
+        try {
+            //statement
+            Statement statement = conn.createStatement();
+            String command = "INSERT INTO PAYMENT(PAYMENTID, PAYMETHODID, PAYMENTAMOUNT) VALUES(?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(command);
+            //calculate the new ID
+            String rows = "select count(*) from PAYMENT";
+            ResultSet retrieveResult = statement.executeQuery(rows);
+            retrieveResult.next();
+            int ID = retrieveResult.getInt(1);
+            pst.setObject(1, ID);
+            pst.setObject(2, ID);
+            pst.setObject(3, amount);
+            
+            pst.executeUpdate();
+            
+            //copy items into a new payment + payment method object
+            
+        } catch (Error e) {
+            
+        }
+    }
+    //create paymethod entry
+    public void addPayMethod(String email, int cardno, String cardname, String cardDate, int cardcvv) throws SQLException {
+        try {
+            //statement
+            Statement statement = conn.createStatement();
+            String command = "INSERT INTO PAYMENTMETHOD(PAYMETHODID, PAYMETHODCARDNO, PAYMETHODCARDHOLDER, PAYMETHODCARDSECURITY,PAYMETHODCARDEXPIRY) VALUES(?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(command);
+            //set id to customer's id
+            ResultSet retrieveResult = statement.executeQuery("SELECT CUSTOMERID FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
+            retrieveResult.next();
+            int ID = retrieveResult.getInt(1);
+            pst.setObject(1, ID);
+            pst.setObject(2, cardno);
+            pst.setObject(3, cardname);
+            pst.setObject(4, cardcvv);
+            pst.setDate(5, java.sql.Date.valueOf(cardDate));
+            pst.executeUpdate();   
+            
+            System.out.println("done");
+        } catch (Error e){
+        }
+    }
+    //get payment method
+    public PaymentMethod getPayMethod(String email){
+        try {
+        System.out.println("here1");
+        //get all payment methods using customer email to get customer id
+        //paymethodid == customerid
+        ResultSet resultSet = st.executeQuery("SELECT*FROM PAYMENTMETHOD WHERE PAYMETHODID=(SELECT CUSTOMERID FROM CUSTOMER WHERE  CUSTOMEREMAIL = '" + email + "')");
+        if(!resultSet.next()){
+            return null;
+        }        
+        //Copy items from DB into a payment method object
+        PaymentMethod paymethod = new PaymentMethod(
+            resultSet.getInt("PAYMETHODID"),
+            resultSet.getInt("PAYMETHODCARDNO"),
+            resultSet.getString("PAYMETHODCARDHOLDER"), 
+            resultSet.getInt("PAYMETHODCARDSECURITY"), 
+            resultSet.getDate("PAYMETHODCARDEXPIRY")
+        );
+        return paymethod;
+    } catch (SQLException ex) {
+        System.out.println("Error Establishing Connection!");
+        ex.printStackTrace();
+    }
+    return null;
+    }
+    //update payment method entry
+    public void updatePaymentMethod(String email, int cardno, String cardname, String cardDate, int cardcvv) throws Exception{
+        try {
+            ResultSet resultSet = st.executeQuery("SELECT * FROM PAYMENTMETHOD WHERE PAYMETHODID=(SELECT CUSTOMERID FROM CUSTOMER WHERE  CUSTOMEREMAIL = '" + email + "')");
+            resultSet.next();
+            //update statement
+            PreparedStatement update = conn.prepareStatement("UPDATE PAYMENTMETHOD SET PAYMETHODID=?, PAYMETHODCARDNO=?, PAYMETHODCARDHOLDER=?, PAYMETHODCARDSECURITY=?, PAYMETHODCARDEXPIRY=? WHERE PAYMETHODID=?");
+            //Set the variables for the "update" statement
+            update.setInt(1, resultSet.getInt("PAYMETHODID"));
+            update.setInt(2, cardno);
+            update.setString(3, cardname);
+            update.setInt(4, cardcvv);
+            update.setDate(5, java.sql.Date.valueOf(cardDate));
+            update.setInt(6, resultSet.getInt("PAYMETHODID"));
+            update.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Error Establishing Connection!");
+            ex.printStackTrace();
+        }
+    }
+    //delete payment method entry
+    public void deletePaymentMethod(String email){
+        try{
+            PreparedStatement delete = conn.prepareStatement("DELETE FROM PAYMENTMETHOD WHERE PAYMETHODID=(SELECT CUSTOMERID FROM CUSTOMER WHERE CUSTOMEREMAIL='"+email+"')");
+            delete.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error Establishing Connection!");
+            ex.printStackTrace();
+        }
+    }
+    
+    public int getOrderID(int ID) throws SQLException {
+        String fetch = "SELECT ORDERID FROM ORDERS WHERE ORDERID = " + "\'" + ID + "\'";
+        ResultSet rs = st.executeQuery(fetch);
+        rs.next();
+        int orderID = rs.getInt("ORDERID");
+        return orderID;
+    }
+    public Shipment findShipment(int ID) throws SQLException {
+        String fetch = "select * from IOTADMIN.DELIVERY where DELIVERYID = " + ID + "";
+        ResultSet rs = st.executeQuery(fetch);
+        
+        while (rs.next()) {
+            int shipmentID = rs.getInt(1);
+            if (shipmentID == ID) {
+                String shipmentStreet = rs.getString(2);
+                int shipmentPostCode = rs.getInt(3);
+                String shipmentCity = rs.getString(4);
+                String shipmentState = rs.getString(5);
+                String shipmentCountry = rs.getString(6);
+                int orderID = rs.getInt(7);
+                String shipmentMethod = rs.getString(8);
+              
+
+                return new Shipment(shipmentID,orderID, shipmentStreet, shipmentPostCode, shipmentCity,shipmentCountry, shipmentMethod,shipmentState );            }
+        }
+        return null;
+    }
+    
+     public Shipment findShipment(String street) throws SQLException {
+        String fetch = "select * from IOTADMIN.DELIVERY where DELIVERYSTREET = '" + street + "'";
+        ResultSet rs = st.executeQuery(fetch);
+        
+        while (rs.next()) {
+            String shipmentStreet = rs.getString(2);
+            if (shipmentStreet.equals(street)) {
+                 int shipmentID = rs.getInt(1);
+               
+                int shipmentPostCode = rs.getInt(3);
+                String shipmentCity = rs.getString(4);
+                String shipmentState = rs.getString(5);
+                String shipmentCountry = rs.getString(6);
+                int orderID = rs.getInt(7);
+                String shipmentMethod = rs.getString(8);
+              
+
+                return new Shipment(shipmentID,orderID, shipmentStreet, shipmentPostCode, shipmentCity,shipmentCountry, shipmentMethod,shipmentState );
+            }
+        }
+        return null;
+    }
+     
+    /**
+     *
+     * @param street
+     * @param postCode
+     * @param city
+     * @param state
+     * @param orderID
+     * @param country
+     * @param method
+     * @throws SQLException
+     */
+    public void addShipment(String street, int postCode, String city,String state,String country,int orderID, String method) throws SQLException {
+          /*String rows = "SELECT COUNT(*) FROM DELIVERY";
+        ResultSet retrieveResult = st.executeQuery(rows);
+        retrieveResult.next();
+        
+        int ID = retrieveResult.getInt(1);
+        int orderID = retrieveResult.getInt(1);*/
+        String rows = "SELECT COUNT(*) FROM DELIVERY";
+        ResultSet rs = st.executeQuery(rows);
+        int shipmentID = 0;
+        
+        while (rs.next()) {
+            int temp = rs.getInt(1) + 1;
+            if (temp > shipmentID) {
+              shipmentID = temp;
+             
+            }   
+        }
+        
+        
+        st.executeUpdate("INSERT INTO IOTADMIN.DELIVERY " + "(DELIVERYID,DELIVERYSTREET,DELIVERYPOSTCODE,DELIVERYCITY,DELIVERYSTATE,DELIVERYCOUNTRY,ORDERID,DELIVERYMETHOD)" + " VALUES ("+shipmentID+", '"+street+"', "+postCode+", '"+city+"','"+state+"','"+country+"',"+orderID+", '"+method+"')");
+    }
+     public void linkShipment(int shipmentID, int orderID) throws SQLException{
+       
+        try{
+            //statement
+            String command ="INSERT INTO DELIVERY(DELIVERYID,ORDERID) VALUES ("+shipmentID+","+orderID+")";
+            PreparedStatement pst = conn.prepareStatement(command);
+            
+            String rows = "select count(*) from IOTADMIN.DELIVERY";
+            String row = "select count(*) FROM IOTADMIN.ORDERS";
+            ResultSet retrieveResult = st.executeQuery(rows);
+            ResultSet rs = st.executeQuery(row);
+            retrieveResult.next();
+            shipmentID = retrieveResult.getInt(1);
+            orderID = rs.getInt(1);
+            pst.setObject(1, shipmentID);
+            pst.setObject(7, orderID);
+           
+            
+                
+            pst.executeUpdate();
+               
+            conn.close();
+        }
+        catch(Error e){
+        }
+     }
+     
+     
+    public void updateShipment(int shipmentID, String street, int postCode, String city,String country, String method,int orderID, String state) throws SQLException {
+        st.executeUpdate("UPDATE IOTADMIN.DELIVERY SET DELIVERYSTREET= '"+street+"',DELIVERYPOSTCODE= "+postCode+",DELIVERYCITY= '"+city+"',DELIVERYSTATE= '"+state+"',DELIVERYCOUNTRY= '"+country+"',ORDERID= "+orderID+" ,DELIVERYMETHOD= '"+method+"' WHERE DELIVERYID= "+shipmentID+"");
+    }         
+    
+     public void deleteShipment(int ID) throws SQLException {
+        st.executeUpdate("DELETE FROM IOTADMIN.DELIVERY WHERE DELIVERYID="+ID+"");
+        
+    }
+         //fetch list of shipments
+    public ArrayList<Shipment> fetchShipment() throws SQLException {
+        String fetch = "SELECT * FROM DELIVERY";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Shipment> temp = new ArrayList();
+        
+        while (rs.next()) {
+            int ID = rs.getInt(1);
+            String street = rs.getString(2);
+            int postCode = rs.getInt(3);
+            String city = rs.getString(4);
+            String state = rs.getString(5);
+            String country = rs.getString(6);
+            int orderID = rs.getInt(7);
+            String method = rs.getString(8);
+            temp.add(new Shipment(ID,orderID, street, postCode, city,state, country, method));
+        }
+        return temp;
+    }
+     public boolean checkShipment(int ID) throws SQLException {
+        String fetch = "SELECT * FROM IOTADMIN.DELIVERY WHERE DELIVERYID="+ID+"";
+        ResultSet rs = st.executeQuery(fetch);
+        
+        while (rs.next()) {
+            int shipmentID = rs.getInt(1);
+            if (shipmentID == ID) {
+                return true;
+            }
+        }
+        return false;
+    }
+      public Shipment getShipment(int shipmentID){
+        try {
+        
+        ResultSet resultSet = st.executeQuery("SELECT*FROM DELIVERY WHERE DELIVERYID = " + shipmentID + ")");
+        if(!resultSet.next()){
+            return null;
+        }        
+        //Copy items from DB into a payment method object
+        Shipment shipment = new Shipment(
+            resultSet.getInt("DELIVERYID"),
+            resultSet.getInt("ORDERID"),
+            resultSet.getString("DELIVERYSTREET"), 
+            resultSet.getInt("DELIVERYPOSTCODE"),
+            resultSet.getString("DELIVERYCITY"),
+            resultSet.getString("DELIVERYCOUNTRY"),
+            resultSet.getString("DELIVERYMETHOD"), 
+            resultSet.getString("DELIVERYSTATE")
+             
+        );
+        return shipment;
+    } catch (SQLException ex) {
+        System.out.println("Error Establishing Connection!");
+        ex.printStackTrace();
+    }
+    return null;
+      }
 }
