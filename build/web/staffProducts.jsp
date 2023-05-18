@@ -51,6 +51,7 @@
                     <th><button class="headerBtn"><a href="cart.jsp">View Order</a></button></th>
                     <th><button class="headerBtn"><a href="GuestOrderHistoryController?action=<%=saved%>">View Saved orders</a></button></th>
                     <th><button class="headerBtn"><a href="GuestOrderHistoryController?action=<%=payed%>">View Order History</a></button></th>
+                    <button class="headerBtn"><a href="staffProducts.jsp">Products</a></button>
                 <%
                     }
                 %>

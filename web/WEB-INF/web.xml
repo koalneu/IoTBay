@@ -255,6 +255,7 @@
     <servlet-mapping>
         <servlet-name>DeleteShipmentController</servlet-name>
         <url-pattern>/DeleteShipmentController</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>accesslogController</servlet-name>
         <servlet-class>controllers.accesslogController</servlet-class>
