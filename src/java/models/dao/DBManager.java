@@ -19,44 +19,46 @@ public class DBManager {
         this.conn = conn;
     }
     
-    public User authenticateUser(String email, String password) {
-        try {
-            System.out.println("here1");
-            ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
-            //Check if a email has not been found
-            if(!resultSet.next()){
-                return null;
-
-            }
-            //Copy items from DB into a user object
-            User user = new User(
-                resultSet.getString("CUSTOMERFIRSTNAME"), 
-                resultSet.getString("CUSTOMERLASTNAME"), 
-                email, 
-                resultSet.getString("CUSTOMERPASSWORD"), 
-                resultSet.getString("CUSTOMERSTREET"),  
-                resultSet.getString("CUSTOMERPOSTCODE"),
-                resultSet.getString("CUSTOMERCITY"),
-                resultSet.getString("CUSTOMERSTATE"), 
-                resultSet.getString("CUSTOMERCOUNTRY"), 
-                resultSet.getString("USERTYPE")
-            );
-            //Check if the password matches the user's input
-            if(password.equals(user.getUserPassword())){
-                return user;
-            }
-            else{
-                return null;
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error Establishing Connection!");
-            ex.printStackTrace();
+    //functions from wilson's branch
+    
+    public User authenticateUser(String email, String password) throws SQLException {
+    try {
+        System.out.println("here1");
+        ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
+        //Check if a email has not been found
+        if(!resultSet.next()){
+            return null;
+            
         }
-        return null;
+        //Copy items from DB into a user object
+        User user = new User(
+            resultSet.getString("CUSTOMERFIRSTNAME"), 
+            resultSet.getString("CUSTOMERLASTNAME"), 
+            email, 
+            resultSet.getString("CUSTOMERPASSWORD"), 
+            resultSet.getString("CUSTOMERSTREET"),  
+            resultSet.getString("CUSTOMERPOSTCODE"),
+            resultSet.getString("CUSTOMERCITY"),
+            resultSet.getString("CUSTOMERSTATE"), 
+            resultSet.getString("CUSTOMERCOUNTRY"), 
+            resultSet.getString("USERTYPE")
+        );
+        //Check if the password matches the user's input
+        if(password.equals(user.getUserPassword())){
+            return user;
+        }
+        else{
+            return null;
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error Establishing Connection!");
+        ex.printStackTrace();
     }
+    return null;
+}
 
     
-    public String userType(String email) {
+    public String userType(String email) throws SQLException {
         try {
             ResultSet resultSet = st.executeQuery("SELECT * FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
             if (resultSet.next()) {
@@ -561,4 +563,108 @@ public class DBManager {
         }
         return false;
     }
+    //create payment entry
+    public void addPayment(int amount ) throws SQLException{
+        try {
+            //statement
+            Statement statement = conn.createStatement();
+            String command = "INSERT INTO PAYMENT(PAYMENTID, PAYMETHODID, PAYMENTAMOUNT) VALUES(?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(command);
+            //calculate the new ID
+            String rows = "select count(*) from PAYMENT";
+            ResultSet retrieveResult = statement.executeQuery(rows);
+            retrieveResult.next();
+            int ID = retrieveResult.getInt(1);
+            pst.setObject(1, ID);
+            pst.setObject(2, ID);
+            pst.setObject(3, amount);
+            
+            pst.executeUpdate();
+            
+            //copy items into a new payment + payment method object
+            
+        } catch (Error e) {
+            
+        }
+    }
+    //create paymethod entry
+    public void addPayMethod(String email, int cardno, String cardname, String cardDate, int cardcvv) throws SQLException {
+        try {
+            //statement
+            Statement statement = conn.createStatement();
+            String command = "INSERT INTO PAYMENTMETHOD(PAYMETHODID, PAYMETHODCARDNO, PAYMETHODCARDHOLDER, PAYMETHODCARDSECURITY,PAYMETHODCARDEXPIRY) VALUES(?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(command);
+            //set id to customer's id
+            ResultSet retrieveResult = statement.executeQuery("SELECT CUSTOMERID FROM CUSTOMER WHERE CUSTOMEREMAIL = '" + email + "'");
+            retrieveResult.next();
+            int ID = retrieveResult.getInt(1);
+            pst.setObject(1, ID);
+            pst.setObject(2, cardno);
+            pst.setObject(3, cardname);
+            pst.setObject(4, cardcvv);
+            pst.setDate(5, java.sql.Date.valueOf(cardDate));
+            pst.executeUpdate();   
+            
+            System.out.println("done");
+        } catch (Error e){
+        }
+    }
+    //get payment method
+    public PaymentMethod getPayMethod(String email){
+        try {
+        System.out.println("here1");
+        //get all payment methods using customer email to get customer id
+        //paymethodid == customerid
+        ResultSet resultSet = st.executeQuery("SELECT*FROM PAYMENTMETHOD WHERE PAYMETHODID=(SELECT CUSTOMERID FROM CUSTOMER WHERE  CUSTOMEREMAIL = '" + email + "')");
+        if(!resultSet.next()){
+            return null;
+        }        
+        //Copy items from DB into a payment method object
+        PaymentMethod paymethod = new PaymentMethod(
+            resultSet.getInt("PAYMETHODID"),
+            resultSet.getInt("PAYMETHODCARDNO"),
+            resultSet.getString("PAYMETHODCARDHOLDER"), 
+            resultSet.getInt("PAYMETHODCARDSECURITY"), 
+            resultSet.getDate("PAYMETHODCARDEXPIRY")
+        );
+        return paymethod;
+    } catch (SQLException ex) {
+        System.out.println("Error Establishing Connection!");
+        ex.printStackTrace();
+    }
+    return null;
+    }
+    //update payment method entry
+    public void updatePaymentMethod(String email, int cardno, String cardname, String cardDate, int cardcvv) throws Exception{
+        try {
+            ResultSet resultSet = st.executeQuery("SELECT * FROM PAYMENTMETHOD WHERE PAYMETHODID=(SELECT CUSTOMERID FROM CUSTOMER WHERE  CUSTOMEREMAIL = '" + email + "')");
+            resultSet.next();
+            //update statement
+            PreparedStatement update = conn.prepareStatement("UPDATE PAYMENTMETHOD SET PAYMETHODID=?, PAYMETHODCARDNO=?, PAYMETHODCARDHOLDER=?, PAYMETHODCARDSECURITY=?, PAYMETHODCARDEXPIRY=? WHERE PAYMETHODID=?");
+            //Set the variables for the "update" statement
+            update.setInt(1, resultSet.getInt("PAYMETHODID"));
+            update.setInt(2, cardno);
+            update.setString(3, cardname);
+            update.setInt(4, cardcvv);
+            update.setDate(5, java.sql.Date.valueOf(cardDate));
+            update.setInt(6, resultSet.getInt("PAYMETHODID"));
+            update.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Error Establishing Connection!");
+            ex.printStackTrace();
+        }
+    }
+    //delete payment method entry
+    public void deletePaymentMethod(String email){
+        try{
+            PreparedStatement delete = conn.prepareStatement("DELETE FROM PAYMENTMETHOD WHERE PAYMETHODID=(SELECT CUSTOMERID FROM CUSTOMER WHERE CUSTOMEREMAIL='"+email+"')");
+            delete.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error Establishing Connection!");
+            ex.printStackTrace();
+        }
+    }
 }
+    
+    

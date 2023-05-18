@@ -32,6 +32,10 @@
             <button class="headerBtn"><a href="cart.jsp">View Order</a></button>
             <button class="headerBtn"><a href="OrderHistoryController?action=<%=saved%>">View Saved orders</a></button>
             <button class="headerBtn"><a href="OrderHistoryController?action=<%=payed%>"">View Order History</a></button>
+            <button class="headerBtn"><a href="products.jsp">Product</a></button>
+            <button class="headerBtn"><a href="payment.jsp">Payment</a></button>
+            <button class="headerBtn"><a href="order.jsp">Order</a></button>
+
         <%
             } else {
                 //Guest User ${pageContext.request.contextPath}/
