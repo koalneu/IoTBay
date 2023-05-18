@@ -16,7 +16,7 @@ public class PaymentValidator {
     //patterns
     private final String cvvPattern = "^\\d{3}+$";
     private final String namePattern = "([A-Z][a-z]+[\\s])+[A-Z][a-z]*";
-    private final String cardNoPattern = "\\d{5}+$";
+    private final String cardNoPattern = "\\d{16}+$";
     
     public boolean validate(String pattern, String input){
         Pattern regex = Pattern.compile(pattern);
