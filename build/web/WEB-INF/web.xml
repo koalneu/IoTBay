@@ -255,6 +255,13 @@
     <servlet-mapping>
         <servlet-name>DeleteShipmentController</servlet-name>
         <url-pattern>/DeleteShipmentController</url-pattern>
+    <servlet>
+        <servlet-name>accesslogController</servlet-name>
+        <servlet-class>controllers.accesslogController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>accesslogController</servlet-name>
+        <url-pattern>/accesslogController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
