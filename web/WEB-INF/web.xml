@@ -80,6 +80,18 @@
         <servlet-name>cancelOrderController</servlet-name>
         <servlet-class>controllers.cancelOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddShipmentController</servlet-name>
+        <servlet-class>controllers.AddShipmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditShipment</servlet-name>
+        <servlet-class>controllers.EditShipment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteShipmentController</servlet-name>
+        <servlet-class>controllers.DeleteShipmentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -231,6 +243,18 @@
     <servlet-mapping>
         <servlet-name>cancelOrderController</servlet-name>
         <url-pattern>/cancelOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddShipmentController</servlet-name>
+        <url-pattern>/AddShipmentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditShipment</servlet-name>
+        <url-pattern>/EditShipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteShipmentController</servlet-name>
+        <url-pattern>/DeleteShipmentController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
