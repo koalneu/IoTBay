@@ -48,6 +48,9 @@ public class GuestSavedHistoryController extends HttpServlet {
         if(!validator.validateEmail(email)){
             session.setAttribute("emailErr", "Invalid email. Please try again.");
             request.getRequestDispatcher("guestSavedOrders.jsp").include(request, response);
+        }else if(!validator.validateOrderID(ID)){
+            session.setAttribute("idErr", "Invalid ID entered. Please try again.");
+            request.getRequestDispatcher("guestSavedOrders.jsp").include(request, response);
         }
         else if(date.equals("") && ID.equals("")){
             try{

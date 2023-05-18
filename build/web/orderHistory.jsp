@@ -20,6 +20,7 @@
             ArrayList<Order> orders = (ArrayList<Order>) session.getAttribute("orderHistory");
             String type = (String) session.getAttribute("action");
             User user = (User) session.getAttribute("user");
+            String idErr = (String) session.getAttribute("idErr");
             if(user == null) user = new User();
         %>
         <div class="header">
@@ -63,10 +64,13 @@
             <h1>Order History</h1>
             <form method = "get" action = "/PayedOrderSearchController">
                 <table>
+                    <tr>
                     <td>Search by Date: <input type="date" name ="date"/></td>
                     <td> Search by ID: <input type = "text" name = "ID"/></td>
-                    <td><input type = "submit" value = "Search"/></td>
+                    </tr>
                 </table>
+                    <label style="color: red;"> <%= idErr == null ? "" : idErr%></label> <br><br>   
+                    <input type = "submit" value = "Search"/>
             </form>
             <%if (!orders.isEmpty()){%>
                 <h2> User: <%=user.getUserFirstName() + " " + user.getUserLastName()%> </h2>

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.Order;
+import models.User;
 import models.dao.DBManager;
 
 /**
@@ -46,6 +47,9 @@ public class GuestPayedHistoryController extends HttpServlet {
         if(!validator.validateEmail(email)){
             session.setAttribute("emailErr", "Invalid email. Please try again.");
             request.getRequestDispatcher("guestOrderHistory.jsp").include(request, response);
+        } else if(!validator.validateOrderID(ID)){
+            session.setAttribute("idErr", "Invalid ID entered. Please try again.");
+            request.getRequestDispatcher("guestOrderHistory.jsp").include(request, response);
         }
         else if(date.equals("") && ID.equals("")){
             try{
@@ -56,14 +60,13 @@ public class GuestPayedHistoryController extends HttpServlet {
             session.setAttribute("orderHistory", orderHistory);
             request.getRequestDispatcher("guestOrderHistory.jsp").include(request, response);
         }
-        else if(!date.equals("") && ID.equals("")){
+        else if(!(date.equals("")) && ID.equals("")){
             try{
                 orderHistory = manager.findOrders(date, manager.checkGuestID(email), true);
             }catch(SQLException ex){
                 System.out.println("error in searching for orders with date in sacedordercontoller " + ex.getMessage());
             }
             session.setAttribute("orderHistory", orderHistory);
-            validator.clear(session);
             request.getRequestDispatcher("guestOrderHistory.jsp").include(request, response);
         }
         else if(date.equals("") && !ID.equals("")){

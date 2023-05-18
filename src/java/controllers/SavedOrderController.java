@@ -41,7 +41,13 @@ public class SavedOrderController extends HttpServlet {
         User user =(User) session.getAttribute("user");
         String date = request.getParameter("date");
         String ID = request.getParameter("ID");
-        if(date.equals("") && ID.equals("")){
+        Validator validator = new Validator();
+        validator.clear(session);
+        if(!validator.validateOrderID(ID)){
+            session.setAttribute("idErr", "Invalid ID entered. Please try again.");
+            request.getRequestDispatcher("savedOrders.jsp").include(request, response);
+        }
+        else if(date.equals("") && ID.equals("")){
             try{
                 orderHistory = manager.getOrderHistory(manager.getUserID(user.getUserEmail()), false);
             }catch(SQLException ex){
@@ -49,13 +55,16 @@ public class SavedOrderController extends HttpServlet {
             } 
             
             session.setAttribute("orderHistory", orderHistory);
+            request.getRequestDispatcher("savedOrders.jsp").include(request, response);
         }
         else if(!date.equals("") && ID.equals("")){
             try{
                 orderHistory = manager.findOrders(date, manager.getUserID(user.getUserEmail()), false);
             }catch(SQLException ex){
                 System.out.println("error in searching for orders with date in sacedordercontoller " + ex.getMessage());
-            } 
+            }
+            session.setAttribute("orderHistory", orderHistory);
+            request.getRequestDispatcher("savedOrders.jsp").include(request, response);
         }
         else if(date.equals("") && !ID.equals("")){
             int orderID = Integer.parseInt(ID);
@@ -67,7 +76,9 @@ public class SavedOrderController extends HttpServlet {
                 }
             }catch(SQLException ex){
                 System.out.println("error in searching for orders with ID in sacedordercontoller " + ex.getMessage());
-            } 
+            }
+            session.setAttribute("orderHistory", orderHistory);
+            request.getRequestDispatcher("savedOrders.jsp").include(request, response);
         }
         else{
             int orderID = Integer.parseInt(ID);
@@ -79,10 +90,10 @@ public class SavedOrderController extends HttpServlet {
                 }
             }catch(SQLException ex){
                 System.out.println("error in searching for orders with ID in sacedordercontoller " + ex.getMessage());
-            }   
+            }  
+            session.setAttribute("orderHistory", orderHistory);
+            request.getRequestDispatcher("savedOrders.jsp").include(request, response);
         }
-        session.setAttribute("orderHistory", orderHistory);
-        request.getRequestDispatcher("savedOrders.jsp").include(request, response);
     }
 
     /**

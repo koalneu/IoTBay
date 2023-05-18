@@ -30,7 +30,7 @@ public class loginController extends HttpServlet {
         PaymentMethod paymethod = null;
         try {
             user = manager.authenticateUser(email, password);
-            paymethod = manager.getPayMethod(user.getUserEmail());
+            paymethod = manager.getPayMethod(email);
             if (user == null) {
                 // Incorrect details
                 // Take the user back to the login.jsp page
@@ -57,8 +57,8 @@ public class loginController extends HttpServlet {
                 } catch (SQLException ex) {
                     // Handle the exception
                 }
-            }
-            session.setAttribute("order", null);
+                session.setAttribute("order", null);
+            }            
         } catch (ClassNotFoundException | SQLException e) {
             // Handle the exception
         }

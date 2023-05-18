@@ -53,6 +53,7 @@ public class CheckoutController extends HttpServlet {
                 System.out.println("error adding order to database " + order.getOrderID() + " " + ex.getMessage()); 
             }
             session.setAttribute("order", null);
+            response.sendRedirect("index.jsp");
         }
         else if(action.equals("pay")){
             order.setIsPayed(true);
@@ -67,9 +68,8 @@ public class CheckoutController extends HttpServlet {
             } catch(ClassNotFoundException | SQLException ex){
                 System.out.println("error adding order to database"  + order.getOrderID() + " " + ex.getMessage());
             }
+            response.sendRedirect("shipmentDetails.jsp");
         }
-        
-        response.sendRedirect("shipmentDetails.jsp");
     }
 
     /**

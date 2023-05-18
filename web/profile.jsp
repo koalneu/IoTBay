@@ -98,6 +98,7 @@
         </table>
         <button class="center"><a href="edit.jsp">Edit Details</a></button>    
         <button class="center"><a href="index.jsp">Back</a></button>
+        <button class="center"><a href="accesslog.jsp">Access logs</a></button>
         
     </div>
     </body>
