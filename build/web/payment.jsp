@@ -50,6 +50,12 @@
         <%
             } else {
                 //No payment details so create a new payment
+
+                //retrieve errors
+                String nameErr = (String) session.getAttribute("cardName");
+                String cvvErr = (String) session.getAttribute("cvvNo");
+                String cardNoErr = (String) session.getAttribute("cardNo");
+                String dateErr = (String) session.getAttribute("cardDate");
         %>
         <h1>Add New Payment Details</h1>
         <form method="post" action="PaymentController" >
@@ -89,6 +95,14 @@
                 <tr>
                     <th><button><a href="index.jsp">Cancel</a></button></th>
                     <th><input type="submit" value="Save payment details" /></th>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <label style="color: red;"><%=(nameErr != null ? nameErr : "")%></label>
+                        <label style="color: red;"><%=(cvvErr != null ? cvvErr : "")%></label>
+                        <label style="color: red;"><%=(cardNoErr != null ? cardNoErr : "")%></label>
+                        <label style="color: red;"><%=(dateErr != null ? dateErr : "")%></label>
+                    </td>
                 </tr>
             </table>
         </form>

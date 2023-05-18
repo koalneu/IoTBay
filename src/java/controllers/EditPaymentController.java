@@ -25,7 +25,8 @@ public class EditPaymentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        
+        PaymentValidator payvalidator = new PaymentValidator();
+
         //Retrieve updated payment details
         //int amount = Integer.parseInt(request.getParameter("paymentAmount"));
         int cardNo = Integer.parseInt(request.getParameter("cardno"));
@@ -35,17 +36,33 @@ public class EditPaymentController extends HttpServlet {
         DBManager manager = (DBManager) session.getAttribute("manager");
         User user = (User)session.getAttribute("user");
 
-        try {
-            //update payment details to customer's payment details using email value column
-            manager.updatePaymentMethod(user.getUserEmail(),cardNo, cardName, cardDate, cvv);
-            //set session attribute for payment to be the returned payment object
-            PaymentMethod paymethod = manager.getPayMethod(user.getUserEmail());
-            session.setAttribute("paymethod", paymethod);
-            request.getRequestDispatcher("index.jsp").include(request, response);
-        } catch (SQLException ex) {
-             Logger.getLogger(EditPaymentController.class.getName()).log(Level.SEVERE, null, ex);
-         } catch (Exception ex) {
-            Logger.getLogger(EditPaymentController.class.getName()).log(Level.SEVERE, null, ex);
+        payvalidator.clear(session);
+        //validate
+        if (!payvalidator.validateCardNo(request.getParameter("cardno"))){
+            session.setAttribute("cardNo", "Error: must be numeric input and 16 digits only");
+            request.getRequestDispatcher("editpaymentprofile.jsp").include(request, response);
+        } else if (!payvalidator.validateName(cardName)){
+            session.setAttribute("cardName", "Error: must be string input, with last and first name");
+            request.getRequestDispatcher("editpaymentprofile.jsp").include(request, response);
+        } else if (!payvalidator.validateExpiry(java.sql.Date.valueOf(cardDate))){
+            session.setAttribute("cardDate", "Error: card must not be expired");
+            request.getRequestDispatcher("editpaymentprofile.jsp").include(request, response);
+        } else if (!payvalidator.validateCVV(request.getParameter("cardcvv"))){
+            session.setAttribute("cvvNo", "Error: must be 3 numeric input only");
+            request.getRequestDispatcher("editpaymentprofile.jsp").include(request, response);
+        } else {
+            try {
+                //update payment details to customer's payment details using email value column
+                manager.updatePaymentMethod(user.getUserEmail(),cardNo, cardName, cardDate, cvv);
+                //set session attribute for payment to be the returned payment object
+                PaymentMethod paymethod = manager.getPayMethod(user.getUserEmail());
+                session.setAttribute("paymethod", paymethod);
+                request.getRequestDispatcher("index.jsp").include(request, response);
+            } catch (SQLException ex) {
+                 Logger.getLogger(EditPaymentController.class.getName()).log(Level.SEVERE, null, ex);
+             } catch (Exception ex) {
+                Logger.getLogger(EditPaymentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
