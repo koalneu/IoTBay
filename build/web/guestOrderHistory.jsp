@@ -27,7 +27,7 @@
             User user = (User) session.getAttribute("user");
             String emailErr = (String) session.getAttribute("emailErr");
             String idErr = (String) session.getAttribute("idErr");
-            if(user == null) user = new User();
+            //if(user == null) user = new User();
         %>
         <div class="header">
         <a href="index.jsp" class="left">IOT Store</a>

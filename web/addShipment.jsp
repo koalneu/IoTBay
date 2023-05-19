@@ -16,7 +16,6 @@
     <title>Add Shipment</title>
 </head>
 <body>
-    <h1>Shipment</h1>
      <%-- Checking if the user is logged in and has address details 
    <%String errorMessage = (String) request.getSession().getAttribute("errorMessage"); 
 
@@ -84,6 +83,7 @@
         
         </div>
         </div>
+        <h1>Shipment</h1>
     <form method="post" action="AddShipmentController" >
          <table align="center" >
            

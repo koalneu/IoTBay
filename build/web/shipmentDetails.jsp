@@ -125,20 +125,22 @@
             
 
         </table>
-             <button align="center"><a href = "editShipment.jsp"> Edit Shipment </a></button>
+            <div align = "center">
+             <button><a href = "editShipment.jsp"> Edit Shipment </a></button>
             
                 <form align="center" action="DeleteShipmentController" method="post">
                 <button align="center" type="submit">Delete Shipment</button>
                 </form>
+            </div>
     <% } else { %>
         <p>No shipment details found.</p>
-        
+        <div align = "center">
             <button align="center"><a href = "addShipment.jsp"> add </a></button>
-        
+        </div>
     <% } %>
-
-    <button align="center"><a href="index">Return to home page</a></button>
-       
+    <div align = "center">
+        <button><a href="index">Return to home page</a></button>
+    </div>
 </body>
 </html>
 <link rel="stylesheet" href="./css/index.css"/>
