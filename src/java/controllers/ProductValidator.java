@@ -11,7 +11,7 @@ public class ProductValidator {
     //Patterns
     private final String namePattern = "^.{0,50}$";
     //private final String descPattern = "^[a-zA-Z0-9]{0,32700}$"; ^[a-zA-Z0-9_@./#&+-]
-    private final String pricePattern = "[+-]?([0-9]*[.])?[0-9]+{0,52}";
+    private final String pricePattern = "[+]?([0-9]*[.])?[0-9]+{0,52}";
     private final String imagePattern = "[a-zA-Z0-9@./#&+-]{0,50}$";
     private final String stockPattern = "^[0-9]{0,59}$";
     

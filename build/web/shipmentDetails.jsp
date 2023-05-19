@@ -139,7 +139,7 @@
         </div>
     <% } %>
     <div align = "center">
-        <button><a href="index">Return to home page</a></button>
+        <button><a href="index.jsp">Return to home page</a></button>
     </div>
 </body>
 </html>
