@@ -24,7 +24,7 @@
             String type = (String) session.getAttribute("action");
             User user = (User) session.getAttribute("user");
             String emailErr = (String) session.getAttribute("emailErr");
-            if(user == null) user = new User();
+            //if(user == null) user = new User();
             String idErr = (String) session.getAttribute("idErr");;
         %>
         <div class="header">

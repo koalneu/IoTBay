@@ -8,13 +8,14 @@ package models;
  *
  * @author milad
  */
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import java.sql.*;
 
-public class Shipment {
+public class Shipment implements Serializable{
     private int shipmentID;
     private String shipmentStreet;
     private String shipmentCountry;
