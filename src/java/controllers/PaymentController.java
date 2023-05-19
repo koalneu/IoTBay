@@ -42,7 +42,7 @@ public class PaymentController extends HttpServlet{
         payvalidator.clear(session);
         //validate
         if (!payvalidator.validateCardNo(request.getParameter("cardno"))){
-            session.setAttribute("cardNo", "Error: must be numeric input and 16 digits only");
+            session.setAttribute("cardNo", "Error: must be numeric input and 8 digits only");
             request.getRequestDispatcher("payment.jsp").include(request, response);
         } else if (!payvalidator.validateName(cardName)){
             session.setAttribute("cardName", "Error: must be string input");
