@@ -21,7 +21,6 @@
             ArrayList<Order> orders = (ArrayList<Order>) session.getAttribute("orderHistory");
             String type = (String) session.getAttribute("action");
             User user = (User) session.getAttribute("user");
-            if(user == null) user = new User();
         %>
         <div class="header">
         <a href="index.jsp" class="left">IOT Store</a>
@@ -29,6 +28,7 @@
             <%
             boolean isLoggedIn = (user != null && !Objects.equals(user.getUserEmail(), ""));
             DBManager manager = (DBManager) session.getAttribute("manager");
+            String idErr = (String) session.getAttribute("idErr");
             String saved = "saved";
             String payed = "payed";
              
@@ -64,10 +64,13 @@
             <h1> Saved Orders </h1>
             <form method = "get" action = "/SavedOrderController">
                 <table>
+                    <tr>
                     <td>Search by Date: <input type="date" name ="date"/></td>
-                    <td> Search by ID: <input type = "text" name = "ID" pattern = "\d{0,8}"/></td>
-                    <td><input type = "submit" value = "Search"/></td>
+                    <td> Search by ID: <input type = "text" name = "ID"/></td>
+                    </tr>
                 </table>
+                    <label style="color: red;"> <%= idErr == null ? "" : idErr%></label> <br><br>   
+                    <input type = "submit" value = "Search"/>
             </form>
             <%if (!orders.isEmpty()){%>
                 <h2> User: <%=user.getUserFirstName() + " " + user.getUserLastName()%> </h2>

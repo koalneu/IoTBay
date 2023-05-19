@@ -10,7 +10,7 @@ public class Validator {
     private final String emailPattern = "([a-zA-Z0-9]+)(([._-])([a-zA-Z0-9]+))*(@)([a-z]+)(.)([a-z]{3})((([.])[a-z]{0,2})*)"; //Copied from tut
     private final String passwordPattern = "^.{8,}$"; //Minimum string length = 8
     private final String postcodePattern = "\\d{4}"; //4 digits
-    
+    private final String orderIDPattern = "\\d{0,8}"; //order ID must be 0 -8 digits 
     
     public boolean validate(String pattern, String input){
         Pattern regex = Pattern.compile(pattern);
@@ -34,6 +34,10 @@ public class Validator {
         return validate(postcodePattern,postcode);
     }
     
+    public boolean validateOrderID(String ID){
+        return validate(orderIDPattern,ID);
+    }
+    
     public void clear(HttpSession session){
         session.removeAttribute("loginErr");
         session.removeAttribute("fnameErr");
@@ -44,5 +48,6 @@ public class Validator {
         session.removeAttribute("cityErr");
         session.removeAttribute("postcodeErr");
         session.removeAttribute("countryErr");
+        session.removeAttribute("idErr");
     }
 }

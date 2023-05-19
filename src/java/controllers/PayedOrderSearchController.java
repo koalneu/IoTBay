@@ -43,21 +43,29 @@ public class PayedOrderSearchController extends HttpServlet {
         User user =(User) session.getAttribute("user");
         String date = request.getParameter("date");
         String ID = request.getParameter("ID");
-        if(date.equals("") && ID.equals("")){
+        Validator validator = new Validator();
+        validator.clear(session);
+        if(!validator.validateOrderID(ID)){
+            session.setAttribute("idErr", "Invalid ID entered. Please try again.");
+            request.getRequestDispatcher("orderHistory.jsp").include(request, response);
+        }
+        else if(date.equals("") && ID.equals("")){
             try{
                 orderHistory = manager.getOrderHistory(manager.getUserID(user.getUserEmail()), true);
             }catch(SQLException ex){
                 System.out.println("error in searching for orders with no search in payedordercontoller " + ex.getMessage());
             } 
-            
             session.setAttribute("orderHistory", orderHistory);
+            request.getRequestDispatcher("orderHistory.jsp").include(request, response);
         }
         else if(!date.equals("") && ID.equals("")){
             try{
                 orderHistory = manager.findOrders(date, manager.getUserID(user.getUserEmail()), true);
             }catch(SQLException ex){
                 System.out.println("error in searching for orders with date in payeddordercontoller " + ex.getMessage());
-            } 
+            }
+            session.setAttribute("orderHistory", orderHistory);
+            request.getRequestDispatcher("orderHistory.jsp").include(request, response);
         }
         else if(date.equals("") && !ID.equals("")){
             int orderID = Integer.parseInt(ID);
@@ -69,7 +77,9 @@ public class PayedOrderSearchController extends HttpServlet {
                 }
             }catch(SQLException ex){
                 System.out.println("error in searching for orders with ID in payedordercontoller " + ex.getMessage());
-            } 
+            }
+            session.setAttribute("orderHistory", orderHistory);
+            request.getRequestDispatcher("orderHistory.jsp").include(request, response);
         }
         else{
             int orderID = Integer.parseInt(ID);
@@ -81,10 +91,11 @@ public class PayedOrderSearchController extends HttpServlet {
                 }
             }catch(SQLException ex){
                 System.out.println("error in searching for orders with ID & date in payedordercontoller " + ex.getMessage());
-            }   
+            }
+            session.setAttribute("orderHistory", orderHistory);
+            request.getRequestDispatcher("orderHistory.jsp").include(request, response);
         }
-        session.setAttribute("orderHistory", orderHistory);
-        request.getRequestDispatcher("orderHistory.jsp").include(request, response);
+        
     }
 
     /**

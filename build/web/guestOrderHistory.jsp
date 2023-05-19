@@ -26,8 +26,7 @@
             String type = (String) session.getAttribute("action");
             User user = (User) session.getAttribute("user");
             String emailErr = (String) session.getAttribute("emailErr");
-            Validator validator = new Validator();
-            validator.clear(session);
+            String idErr = (String) session.getAttribute("idErr");
             if(user == null) user = new User();
         %>
         <div class="header">
@@ -74,10 +73,13 @@
                 <label>Enter email: </label><input type ="email" name ="email" required><br>
                 <label style="color: red;"><%=(emailErr != null ? emailErr : "")%></label><br>
                 <table>
+                    <tr>
                     <td>Search by Date: <input type="date" name ="date"/></td>
                     <td> Search by ID: <input type = "text" name = "ID"/></td>
-                    <td><input type = "submit" value = "Search"/></td>
+                    </tr>
                 </table>
+                    <label style="color: red;"> <%= idErr == null ? "" : idErr%></label> <br>   
+                    <input type = "submit" value = "Search"/>
             </form>
             <%if (!orders.isEmpty()){%>
                 <h2> User: <%=user.getUserFirstName() + " " + user.getUserLastName()%> </h2>
